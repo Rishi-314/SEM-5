@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cloud Computing — Unit VI Cloud Network &amp; Security Mindmap</title>
+<style>
+:root{
+  --bg:#f5f7fb;--ink:#172033;--muted:#586579;--line:#d8dfeb;
+  --net:#1d4ed8;--net-t:#dbeafe;
+  --ip:#0e7490;--ip-t:#cffafe;
+  --google:#7c3aed;--google-t:#ede9fe;
+  --routes:#15803d;--routes-t:#dcfce7;
+  --vpc:#b45309;--vpc-t:#fef3c7;
+  --hybrid:#0369a1;--hybrid-t:#e0f2fe;
+  --lb:#be185d;--lb-t:#fce7f3;
+  --security:#0f766e;--security-t:#ccfbf1;
+  --summary:#475569;--summary-t:#e2e8f0;
+  --hooks:#b91c1c;--hooks-t:#fee2e2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+
+.top{position:sticky;top:0;z-index:10;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:850;letter-spacing:.02em;margin-right:auto}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+button{border:1px solid #cbd5e1;background:white;color:#263247;border-radius:9px;padding:8px 11px;font:inherit;font-size:13px;cursor:pointer}
+button:hover{background:#eef4ff;border-color:#93b4f5}
+input{border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px;min-width:min(280px,75vw);font:inherit}
+input:focus{outline:2px solid #93b4f5;outline-offset:1px}
+
+.hero{max-width:1500px;margin:26px auto 18px;padding:0 20px;text-align:center}
+.hero h1{margin:0 auto 7px;font-size:clamp(25px,4vw,42px);line-height:1.15;letter-spacing:-.035em}
+.hero p{margin:0;color:var(--muted)}
+.legend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:15px 0}
+.legend span{font-size:12px;padding:5px 9px;border-radius:20px;background:white;border:1px solid var(--line)}
+
+.map{max-width:1600px;margin:auto;padding:0 18px 60px}
+.root{margin:20px auto 24px;max-width:760px;text-align:center;background:#173e78;color:white;padding:20px;border-radius:16px;box-shadow:0 8px 24px #173e7822}
+.root h2{margin:0;font-size:24px}
+.root small{opacity:.85}
+
+.branch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.branch{--accent:var(--summary);--tint:var(--summary-t);min-width:0;background:white;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #1e293b0a}
+.branch.net{--accent:var(--net);--tint:var(--net-t)}
+.branch.ip{--accent:var(--ip);--tint:var(--ip-t)}
+.branch.google{--accent:var(--google);--tint:var(--google-t)}
+.branch.routes{--accent:var(--routes);--tint:var(--routes-t)}
+.branch.vpc{--accent:var(--vpc);--tint:var(--vpc-t)}
+.branch.hybrid{--accent:var(--hybrid);--tint:var(--hybrid-t)}
+.branch.lb{--accent:var(--lb);--tint:var(--lb-t)}
+.branch.security{--accent:var(--security);--tint:var(--security-t)}
+.branch.summary{--accent:var(--summary);--tint:var(--summary-t)}
+.branch.hooks{--accent:var(--hooks);--tint:var(--hooks-t)}
+.branch>summary{list-style:none;cursor:pointer;background:var(--tint);padding:14px 15px;font-weight:850;font-size:16px;display:flex;gap:10px;align-items:center;line-height:1.3}
+.branch>summary::-webkit-details-marker{display:none}
+.num{flex:none;border-radius:8px;background:var(--accent);color:white;width:30px;height:30px;display:grid;place-items:center;font-size:14px;font-variant-numeric:tabular-nums}
+.branch-body{padding:12px}
+
+.sub{border:1px solid var(--line);border-radius:10px;margin:9px 0;background:#fff;overflow:hidden}
+.sub>summary{cursor:pointer;list-style:none;padding:10px 12px;font-weight:750;background:#f8fafc;border-bottom:1px solid transparent;font-size:14px}
+.sub>summary::-webkit-details-marker{display:none}
+.sub[open]>summary{border-bottom-color:var(--line)}
+.sub-body{padding:10px 14px 13px;font-size:14px}
+.sub-body p{margin:6px 0}
+.sub-body ul,.sub-body ol{margin:5px 0 8px;padding-left:21px}
+.sub-body li{margin:3px 0}
+.sub-body ul ul{margin-top:3px}
+.sub-body b{color:#111827}
+
+.hook{padding:10px 12px;border-left:4px solid var(--accent);background:var(--tint);border-radius:7px;margin:10px 0;font-weight:650}
+.diagram{border:1px dashed #94a3b8;border-radius:9px;padding:10px;margin:9px 0;text-align:center;background:#fafcff;font-weight:700;font-size:13px;line-height:1.8;overflow-x:auto}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:9px 0}
+.split div{border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:13px}
+.split div b{display:block;margin-bottom:3px;color:var(--accent)}
+.table-wrap{overflow-x:auto;margin:9px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:12px;letter-spacing:.03em;text-transform:uppercase}
+tbody tr:hover td{background:#f8fbff}
+code{background:#eef2ff;padding:1px 4px;border-radius:4px;font-size:12.5px}
+
+.wide{grid-column:1 / -1;margin-top:16px}
+.hook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.hook-grid .hook{margin:0}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+.hidden{display:none!important}
+.hit{outline:3px solid #f59e0b;outline-offset:2px;background:#fffbeb!important}
+.no-results{display:none;text-align:center;padding:20px;color:#64748b}
+
+@media(max-width:1100px){.branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+  .branch-grid{grid-template-columns:1fr}
+  .top{position:static}
+  .brand{width:100%}
+  .hero{margin-top:18px}
+  .map{padding:0 10px 35px}
+  .root{padding:16px}
+  .branch>summary{font-size:15px}
+  .split{grid-template-columns:1fr}
+}
+
+@media print{
+  .top{display:none}
+  .hero{margin:0 auto 12px}
+  .map{max-width:none;padding:0}
+  .branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .branch,.sub{break-inside:avoid;box-shadow:none}
+  details:not([open])>.branch-body,details:not([open])>.sub-body{display:block}
+  .branch>summary,.sub>summary,.root{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  body{background:white;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">☁ CLOUD COMPUTING • UNIT VI MINDMAP</div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search any concept… (e.g. VPC, peering, VPN, load balancer, CMEK)">
+    <button onclick="expandAll(true)">Expand all</button>
+    <button onclick="expandAll(false)">Collapse all</button>
+    <button onclick="resetView()">Reset</button>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Cloud Network &amp; Security — Unit VI</h1>
+  <p>MM0301A Cloud Computing · complete study mindmap with expandable branches</p>
+  <div class="legend">
+    <span style="background:var(--net-t)">1 Cloud Networking</span>
+    <span style="background:var(--ip-t)">2 IP Address Basics</span>
+    <span style="background:var(--google-t)">3 Google's Network</span>
+    <span style="background:var(--routes-t)">4 Routes &amp; Firewalls</span>
+    <span style="background:var(--vpc-t)">5 VPC Networks</span>
+    <span style="background:var(--hybrid-t)">6 Hybrid Connectivity</span>
+    <span style="background:var(--lb-t)">7 Load Balancing</span>
+    <span style="background:var(--security-t)">8 Cloud Security</span>
+    <span style="background:var(--summary-t)">★ Summary</span>
+    <span style="background:var(--hooks-t)">🎯 Hooks</span>
+  </div>
+</section>
+
+<main class="map">
+  <div class="root">
+    <h2>☁ CLOUD NETWORK &amp; SECURITY — UNIT VI</h2>
+    <small>Eight connected knowledge branches · select a heading to expand its details</small>
+  </div>
+
+  <div class="branch-grid">
+
+    <!-- ============ 1. CLOUD NETWORKING ============ -->
+    <details class="branch net" open>
+      <summary><span class="num">1</span> Introduction to Cloud Networking</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is cloud networking?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>The practice of <b>designing, configuring and managing network infrastructure</b> within a cloud computing environment.</li>
+              <li>Enables communication between cloud resources (virtual machines, containers, databases, storage) and external users over <b>secure, scalable and high-performance</b> networks.</li>
+              <li>Replaces or extends traditional physical networking using <b>software-defined technologies</b>, allowing flexible and cost-effective network infrastructures.</li>
+            </ul>
+            <div class="hook">Memory hook: Cloud networking = software-defined networking inside a cloud.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Objectives</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Connect cloud resources <b>securely</b>.</li>
+              <li>Enable communication between applications and services.</li>
+              <li>Provide <b>high availability and reliability</b>.</li>
+              <li>Support <b>scalability and flexibility</b>.</li>
+              <li>Ensure secure access to cloud resources.</li>
+              <li>Optimize network performance and reduce latency.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Advantages</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Scalability on demand.</li>
+              <li>High availability and reliability.</li>
+              <li>Centralized network management.</li>
+              <li>Improved security with firewalls and IAM.</li>
+              <li>Cost-effective — pay for what you use.</li>
+              <li>Faster deployment and easier maintenance.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Challenges</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Security threats such as cyberattacks.</li>
+              <li>Network latency for geographically distant users.</li>
+              <li>Complexity in hybrid and multi-cloud environments.</li>
+              <li>Vendor-specific networking features.</li>
+              <li>Dependence on Internet connectivity.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Types of cloud networks</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Public Cloud Network</b> — infrastructure owned and managed by a cloud provider; accessible over the Internet. Examples: GCP, AWS, Microsoft Azure.</li>
+              <li><b>Private Cloud Network</b> — dedicated to a single organization; greater control, privacy and security.</li>
+              <li><b>Hybrid Cloud Network</b> — combines private and public cloud environments; enables workload and data sharing between them.</li>
+              <li><b>Multi-Cloud Network</b> — uses services from multiple cloud providers; improves flexibility and reduces vendor lock-in.</li>
+            </ol>
+            <div class="hook">Memory hook: Public · Private · Hybrid · Multi-Cloud.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 2. IP ADDRESS BASICS ============ -->
+    <details class="branch ip" open>
+      <summary><span class="num">2</span> IP Address Basics</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is an IP address?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A <b>unique numerical identifier</b> assigned to every device connected to a network.</li>
+              <li>Enables devices to communicate by identifying the <b>source and destination</b> of data packets.</li>
+              <li>Works like a <b>postal address</b> — just as a postal address delivers mail to the right house, an IP address delivers data to the right device.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Functions of an IP address</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Identifies devices on a network.</li>
+              <li>Enables communication between devices.</li>
+              <li>Supports routing of data packets.</li>
+              <li>Helps locate the source and destination of network traffic.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Importance in cloud computing</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Enables communication between cloud resources.</li>
+              <li>Supports virtual machine networking.</li>
+              <li>Allows secure Internet access.</li>
+              <li>Facilitates routing and load balancing.</li>
+              <li>Supports hybrid and multi-cloud connectivity.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. IPv4 address classes</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Class</th><th>Address range</th><th>Default use</th></tr></thead>
+                <tbody>
+                  <tr><td><b>A</b></td><td>1.0.0.0 – 126.255.255.255</td><td>Large networks</td></tr>
+                  <tr><td><b>B</b></td><td>128.0.0.0 – 191.255.255.255</td><td>Medium networks</td></tr>
+                  <tr><td><b>C</b></td><td>192.0.0.0 – 223.255.255.255</td><td>Small networks</td></tr>
+                  <tr><td><b>D</b></td><td>224.0.0.0 – 239.255.255.255</td><td>Multicast</td></tr>
+                  <tr><td><b>E</b></td><td>240.0.0.0 – 255.255.255.255</td><td>Experimental</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: A = largest networks · B = medium · C = small · D = multicast · E = experimental.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 3. GOOGLE'S NETWORK ARCHITECTURE ============ -->
+    <details class="branch google" open>
+      <summary><span class="num">3</span> Google's Network Architecture</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Overview</summary>
+          <div class="sub-body">
+            <ul>
+              <li>GCP uses one of the world's largest <b>private global fiber-optic networks</b>, connecting data centres across the globe.</li>
+              <li>This infrastructure ensures <b>high availability, low latency and secure communication</b>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Components</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Regions</b> — independent geographic locations containing multiple zones.</li>
+              <li><b>Zones</b> — isolated data centers within a region where resources run.</li>
+              <li><b>Edge Locations (Points of Presence — PoPs)</b> — bring services closer to users for faster access.</li>
+              <li><b>Global Private Backbone</b> — Google's high-speed private network connecting all regions.</li>
+            </ul>
+            <div class="diagram">
+Edge PoP → Region (Zone · Zone · Zone) → Global Private Backbone → Region (Zone · Zone · Zone) → Edge PoP
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Features</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Global private fiber network.</li>
+              <li>High-speed connectivity.</li>
+              <li>Low latency.</li>
+              <li>High availability.</li>
+              <li>Automatic traffic optimization.</li>
+              <li>Secure communication.</li>
+            </ul>
+            <div class="hook">Memory hook: Regions → Zones → Edge PoPs → Global Private Backbone.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 4. ROUTES & FIREWALL RULES ============ -->
+    <details class="branch routes" open>
+      <summary><span class="num">4</span> Routes &amp; Firewall Rules</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Cloud routes — definition</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A networking rule that determines the <b>path or next hop</b> for packets based on their <b>destination IP address</b>.</li>
+              <li>In Google Cloud, routes enable communication between VPC subnets and provide connectivity to external networks through <b>gateways, VPN tunnels or other next hops</b>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Types of routes</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>System-generated Routes</b> — automatically created for subnets.</li>
+              <li><b>Static Routes</b> — manually configured by administrators.</li>
+              <li><b>Dynamic Routes</b> — learned using <b>Cloud Router and BGP</b>.</li>
+            </ul>
+            <p><b>Route components</b></p>
+            <ul>
+              <li>Destination IP range</li>
+              <li>Next hop</li>
+              <li>Priority</li>
+              <li>Network tags (optional)</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Firewall rules — definition</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Security rules that control which network traffic is <b>allowed or denied</b> between cloud resources and other networks.</li>
+              <li>Control incoming (<b>Ingress</b>) and outgoing (<b>Egress</b>) traffic.</li>
+              <li>Based on parameters such as <b>source, destination, protocol, port and target resources</b>.</li>
+              <li>Help protect cloud resources from unauthorized network access.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. How firewall rules work — 7 parameters</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Direction</b> — ingress or egress</li>
+              <li><b>Source</b> — where traffic originates</li>
+              <li><b>Destination</b> — where traffic is going</li>
+              <li><b>Protocol</b> — TCP, UDP, ICMP, etc.</li>
+              <li><b>Port</b> — e.g. 22, 80, 443</li>
+              <li><b>Target</b> — which cloud resources the rule applies to</li>
+              <li><b>Action</b> — allow or deny</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Route vs Firewall — comparison</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Route</th><th>Firewall</th></tr></thead>
+                <tbody>
+                  <tr><td>Determines <b>where</b> traffic goes</td><td>Determines <b>whether</b> traffic is allowed</td></tr>
+                  <tr><td>Concerned with path selection</td><td>Concerned with security</td></tr>
+                  <tr><td>Uses destination IP / routing info</td><td>Uses source, destination, protocol, port, etc.</td></tr>
+                  <tr><td>Example: send traffic through VPN</td><td>Example: allow TCP port 443</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Route = <b>where</b> · Firewall = <b>whether</b>.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 5. MULTIPLE VPC NETWORKS ============ -->
+    <details class="branch vpc" open>
+      <summary><span class="num">5</span> Multiple VPC Networks</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Overview</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A project can contain <b>multiple Virtual Private Cloud (VPC) networks</b> to isolate workloads and improve security.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Types of VPC networks</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Auto Mode VPC</b> — automatically creates subnets in every region; suitable for beginners and small deployments.</li>
+              <li><b>Custom Mode VPC</b> — user creates and manages subnets; greater flexibility and control.</li>
+              <li><b>Shared VPC</b> — multiple projects share a centrally managed VPC; common in large organizations.</li>
+              <li><b>VPC Peering</b> — connects two VPC networks privately; no traffic over the public Internet; low latency and high bandwidth.</li>
+            </ul>
+            <div class="hook">Memory hook: Auto · Custom · Shared · Peered.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Benefits</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Network isolation.</li>
+              <li>Improved security.</li>
+              <li>Simplified management.</li>
+              <li>Better scalability.</li>
+            </ul>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 6. HYBRID CLOUDS ============ -->
+    <details class="branch hybrid" open>
+      <summary><span class="num">6</span> Building Hybrid Clouds</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Overview</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A hybrid cloud combines <b>on-premises infrastructure</b> with Google Cloud resources.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Cloud VPN</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Creates a <b>secure encrypted tunnel over the Internet</b>.</li>
+            </ul>
+            <p><b>Features</b></p>
+            <ul>
+              <li>IPSec encryption</li>
+              <li>Secure communication</li>
+              <li>Easy deployment</li>
+              <li>Cost-effective</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Cloud Interconnect</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Provides <b>dedicated private connectivity</b> between on-premises networks and Google Cloud.</li>
+            </ul>
+            <p><b>Types</b></p>
+            <ul>
+              <li><b>Dedicated Interconnect</b> — direct physical connection; high bandwidth (10–100 Gbps); suitable for large enterprises.</li>
+              <li><b>Partner Interconnect</b> — connectivity through a supported service provider; flexible bandwidth options; easier deployment.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Direct Peering</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Allows organizations to connect <b>directly to Google's edge network</b>.</li>
+            </ul>
+            <p><b>Features</b></p>
+            <ul>
+              <li>Lower latency</li>
+              <li>Improved network performance</li>
+              <li>Suitable for large Internet service providers and enterprises</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Hybrid options — comparison</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Option</th><th>Connection</th><th>Best for</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Cloud VPN</b></td><td>Encrypted tunnel over the Internet (IPSec)</td><td>Cost-effective, easy, quick setup</td></tr>
+                  <tr><td><b>Dedicated Interconnect</b></td><td>Direct physical link, 10–100 Gbps</td><td>Large enterprises needing high bandwidth</td></tr>
+                  <tr><td><b>Partner Interconnect</b></td><td>Via a supported service provider</td><td>Flexible bandwidth, easier deployment</td></tr>
+                  <tr><td><b>Direct Peering</b></td><td>Direct to Google's edge network</td><td>ISPs and enterprises wanting low latency</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: VPN = encrypted over Internet · Interconnect = private dedicated · Peering = direct to Google edge.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 7. LOAD BALANCING ============ -->
+    <details class="branch lb" open>
+      <summary><span class="num">7</span> Load Balancing</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Overview &amp; benefits</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A load balancer distributes incoming traffic across multiple servers to improve <b>availability and performance</b>.</li>
+            </ul>
+            <p><b>Benefits</b></p>
+            <ul>
+              <li>High availability</li>
+              <li>Fault tolerance</li>
+              <li>Better performance</li>
+              <li>Automatic scaling</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Types of load balancers</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Global External HTTP(S) Load Balancer</b> — Layer 7 (Application Layer); global traffic distribution; supports SSL termination.</li>
+              <li><b>Regional External Application Load Balancer</b> — Layer 7; regional traffic management.</li>
+              <li><b>Internal Application Load Balancer</b> — internal traffic distribution; private IP addresses.</li>
+              <li><b>Network Load Balancer</b> — Layer 4 (TCP/UDP); high-performance networking.</li>
+              <li><b>Proxy Load Balancer</b> — terminates client connections; supports SSL offloading.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Layer 7 vs Layer 4 — quick check</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Layer</th><th>Scope</th><th>Examples</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Layer 7</b> (Application)</td><td>Global / Regional, HTTP(S), SSL termination</td><td>Global External HTTP(S), Regional External Application, Internal Application, Proxy</td></tr>
+                  <tr><td><b>Layer 4</b> (Transport)</td><td>TCP / UDP, high performance</td><td>Network Load Balancer</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Layer 7 = HTTP(S) smart routing · Layer 4 = TCP/UDP raw throughput.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 8. CLOUD SECURITY ============ -->
+    <details class="branch security" open>
+      <summary><span class="num">8</span> Cloud Security &amp; Encryption</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Introduction &amp; objectives</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Cloud security protects applications, data and infrastructure hosted in cloud environments.</li>
+            </ul>
+            <p><b>Objectives — CIA Triad</b></p>
+            <ul>
+              <li><b>Confidentiality</b></li>
+              <li><b>Integrity</b></li>
+              <li><b>Availability</b></li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Security layers</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Physical security</li>
+              <li>Network security</li>
+              <li>Identity management</li>
+              <li>Application security</li>
+              <li>Data protection</li>
+            </ul>
+            <div class="hook">Memory hook: Physical → Network → Identity → Application → Data.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Shared Responsibility Model</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Security responsibilities are divided between the cloud provider and the customer.</li>
+            </ul>
+            <div class="split">
+              <div>
+                <b>Google secures…</b>
+                The cloud — physical infrastructure, data centres, hardware, core network and the managed-service foundations.
+              </div>
+              <div>
+                <b>Customer secures…</b>
+                What is put in the cloud — data, identities, applications and configurations.
+              </div>
+            </div>
+            <div class="hook">Memory hook: Google secures the cloud · you secure what's IN the cloud.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Encryption at rest &amp; in transit</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Encryption protects data from unauthorized access by converting it into <b>unreadable ciphertext</b>.</li>
+            </ul>
+            <p><b>A. Encryption at Rest</b></p>
+            <ul>
+              <li>Protects <b>stored data</b>.</li>
+              <li>Enabled by default.</li>
+              <li>Uses <b>AES-256</b> encryption.</li>
+              <li>Managed by Google or the customer.</li>
+            </ul>
+            <p><b>B. Encryption in Transit</b></p>
+            <ul>
+              <li>Protects data <b>while moving across networks</b>.</li>
+              <li>TLS/SSL encryption.</li>
+              <li>IPSec VPN.</li>
+              <li>HTTPS communication.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Customer key options</summary>
+          <div class="sub-body">
+            <p><b>C. Customer-Managed Encryption Keys (CMEK)</b></p>
+            <ul>
+              <li>Keys stored in <b>Cloud Key Management Service (Cloud KMS)</b>.</li>
+              <li>Customer controls <b>key rotation and lifecycle</b>.</li>
+            </ul>
+            <p><b>D. Customer-Supplied Encryption Keys (CSEK)</b></p>
+            <ul>
+              <li>Customer provides encryption keys for selected storage services.</li>
+              <li>Google <b>does not store the keys</b>.</li>
+            </ul>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Option</th><th>Who manages the key</th><th>Where stored</th></tr></thead>
+                <tbody>
+                  <tr><td>Encryption at rest (default)</td><td>Google</td><td>Google-managed</td></tr>
+                  <tr><td>CMEK</td><td>Customer</td><td>Cloud KMS</td></tr>
+                  <tr><td>CSEK</td><td>Customer</td><td>Not stored by Google</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: REST = AES-256 by default · TRANSIT = TLS/SSL · CMEK = KMS · CSEK = you supply, Google doesn't keep.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ MASTER SUMMARY ============ -->
+    <details class="branch summary wide" open>
+      <summary><span class="num">★</span> Master Summary — Unit VI at a Glance</summary>
+      <div class="branch-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Concept</th><th>Type</th><th>Key idea</th></tr></thead>
+            <tbody>
+              <tr><td>Cloud Networking</td><td>Discipline</td><td>Software-defined networking of cloud resources and external users</td></tr>
+              <tr><td>Cloud network types</td><td>Deployment</td><td>Public · Private · Hybrid · Multi-Cloud</td></tr>
+              <tr><td>IP address</td><td>Identifier</td><td>Unique numerical identifier; source / destination of packets</td></tr>
+              <tr><td>IPv4 classes</td><td>Addressing</td><td>A = large · B = medium · C = small · D = multicast · E = experimental</td></tr>
+              <tr><td>Google's network</td><td>Architecture</td><td>Regions → Zones → Edge PoPs → Global Private Backbone</td></tr>
+              <tr><td>Routes</td><td>Networking</td><td>Decide <b>where</b> traffic goes (destination IP → next hop)</td></tr>
+              <tr><td>Firewall rules</td><td>Security</td><td>Decide <b>whether</b> traffic is allowed (ingress/egress, source, port, action)</td></tr>
+              <tr><td>VPC networks</td><td>Isolation</td><td>Auto · Custom · Shared · Peered</td></tr>
+              <tr><td>Cloud VPN</td><td>Hybrid</td><td>Encrypted IPSec tunnel over the Internet</td></tr>
+              <tr><td>Cloud Interconnect</td><td>Hybrid</td><td>Dedicated private link (Dedicated or Partner)</td></tr>
+              <tr><td>Direct Peering</td><td>Hybrid</td><td>Direct connection to Google's edge network</td></tr>
+              <tr><td>Load balancing</td><td>Traffic</td><td>Layer 7 (HTTP/S) and Layer 4 (TCP/UDP) options</td></tr>
+              <tr><td>CIA Triad</td><td>Security</td><td>Confidentiality · Integrity · Availability</td></tr>
+              <tr><td>Shared Responsibility</td><td>Security model</td><td>Google secures the cloud; customer secures what is in it</td></tr>
+              <tr><td>Encryption at rest / in transit</td><td>Encryption</td><td>AES-256 stored data · TLS/SSL/IPSec moving data</td></tr>
+              <tr><td>CMEK / CSEK</td><td>Key management</td><td>Customer-managed in Cloud KMS · customer-supplied not stored by Google</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============ MEMORY HOOKS ============ -->
+    <details class="branch hooks wide" open>
+      <summary><span class="num">🎯</span> Key Memory Hooks</summary>
+      <div class="branch-body">
+        <div class="hook-grid">
+          <div class="hook">Cloud networking = software-defined networking inside a cloud</div>
+          <div class="hook">Types: Public · Private · Hybrid · Multi-Cloud</div>
+          <div class="hook">IP = postal address for devices · identifies source and destination</div>
+          <div class="hook">IPv4 classes: A large · B medium · C small · D multicast · E experimental</div>
+          <div class="hook">Google network: Regions → Zones → Edge PoPs → Global Private Backbone</div>
+          <div class="hook">Routes = <b>where</b> traffic goes · Firewalls = <b>whether</b> it is allowed</div>
+          <div class="hook">Route types: system-generated · static · dynamic (Cloud Router + BGP)</div>
+          <div class="hook">Firewall params: direction · source · destination · protocol · port · target · action</div>
+          <div class="hook">VPC types: Auto · Custom · Shared · Peered</div>
+          <div class="hook">VPC peering = private link · no public Internet · low latency</div>
+          <div class="hook">VPN = encrypted over Internet · Interconnect = private dedicated · Peering = direct to Google edge</div>
+          <div class="hook">LB layers: L7 = HTTP(S) smart routing · L4 = TCP/UDP throughput</div>
+          <div class="hook">CIA Triad = Confidentiality · Integrity · Availability</div>
+          <div class="hook">Shared model: Google secures the cloud · you secure what's IN the cloud</div>
+          <div class="hook">Encryption: REST = AES-256 default · TRANSIT = TLS/SSL/IPSec</div>
+          <div class="hook">CMEK = key in Cloud KMS · CSEK = customer supplies, Google doesn't store</div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <p class="no-results" id="noResults">No matching topics. Try another search term.</p>
+  <div class="foot">Single-file offline mindmap · Expand/collapse each branch · Search highlights matching topics · Print to PDF for a study copy</div>
+</main>
+
+<script>
+const allDetails = [...document.querySelectorAll('details')];
+
+function expandAll(open){ allDetails.forEach(d => d.open = open); }
+
+function resetView(){
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.hidden').forEach(e => e.classList.remove('hidden'));
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+  expandAll(true);
+  document.getElementById('noResults').style.display = 'none';
+}
+
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const q = search.value.trim().toLowerCase();
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+
+  if (!q){
+    document.querySelectorAll('.branch,.sub').forEach(e => e.classList.remove('hidden'));
+    document.getElementById('noResults').style.display = 'none';
+    return;
+  }
+
+  let count = 0;
+
+  document.querySelectorAll('.branch').forEach(branch => {
+    const branchMatch = branch.innerText.toLowerCase().includes(q);
+    const subMatches = [...branch.querySelectorAll('.sub')]
+      .filter(s => s.innerText.toLowerCase().includes(q));
+
+    if (branchMatch || subMatches.length){
+      branch.classList.remove('hidden');
+      branch.open = true;
+
+      subMatches.forEach(s => {
+        s.classList.remove('hidden');
+        s.open = true;
+        s.classList.add('hit');
+        count++;
+      });
+
+      branch.querySelectorAll('.sub').forEach(s => {
+        if (!subMatches.includes(s)) s.classList.add('hidden');
+      });
+
+      if (!subMatches.length){
+        branch.classList.add('hit');
+        count++;
+      }
+    } else {
+      branch.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('noResults').style.display = count ? 'none' : 'block';
+});
+</script>
+</body>
+</html>

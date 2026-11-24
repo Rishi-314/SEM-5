@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cloud Computing — Unit I Complete Mindmap</title>
+<style>
+:root{
+  --bg:#f5f7fb;--ink:#172033;--muted:#586579;--line:#d8dfeb;
+  --intro:#1d4ed8;--intro-t:#dbeafe;
+  --ideas:#0e7490;--ideas-t:#cffafe;
+  --cluster:#7c3aed;--cluster-t:#ede9fe;
+  --evo:#15803d;--evo-t:#dcfce7;
+  --trad:#b45309;--trad-t:#fef3c7;
+  --arch:#0369a1;--arch-t:#e0f2fe;
+  --service:#be185d;--service-t:#fce7f3;
+  --deploy:#0f766e;--deploy-t:#ccfbf1;
+  --summary:#475569;--summary-t:#e2e8f0;
+  --hooks:#b91c1c;--hooks-t:#fee2e2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+
+/* ---------- top bar ---------- */
+.top{position:sticky;top:0;z-index:10;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:850;letter-spacing:.02em;margin-right:auto}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+button{border:1px solid #cbd5e1;background:white;color:#263247;border-radius:9px;padding:8px 11px;font:inherit;font-size:13px;cursor:pointer}
+button:hover{background:#eef4ff;border-color:#93b4f5}
+input{border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px;min-width:min(280px,75vw);font:inherit}
+input:focus{outline:2px solid #93b4f5;outline-offset:1px}
+
+/* ---------- hero ---------- */
+.hero{max-width:1500px;margin:26px auto 18px;padding:0 20px;text-align:center}
+.hero h1{margin:0 auto 7px;font-size:clamp(25px,4vw,42px);line-height:1.15;letter-spacing:-.035em}
+.hero p{margin:0;color:var(--muted)}
+.legend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:15px 0}
+.legend span{font-size:12px;padding:5px 9px;border-radius:20px;background:white;border:1px solid var(--line)}
+
+/* ---------- map ---------- */
+.map{max-width:1600px;margin:auto;padding:0 18px 60px}
+.root{margin:20px auto 24px;max-width:740px;text-align:center;background:#173e78;color:white;padding:20px;border-radius:16px;box-shadow:0 8px 24px #173e7822}
+.root h2{margin:0;font-size:24px}
+.root small{opacity:.85}
+
+/* ---------- branch grid ---------- */
+.branch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.branch{--accent:var(--summary);--tint:var(--summary-t);min-width:0;background:white;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #1e293b0a}
+.branch.intro{--accent:var(--intro);--tint:var(--intro-t)}
+.branch.ideas{--accent:var(--ideas);--tint:var(--ideas-t)}
+.branch.cluster{--accent:var(--cluster);--tint:var(--cluster-t)}
+.branch.evo{--accent:var(--evo);--tint:var(--evo-t)}
+.branch.trad{--accent:var(--trad);--tint:var(--trad-t)}
+.branch.arch{--accent:var(--arch);--tint:var(--arch-t)}
+.branch.service{--accent:var(--service);--tint:var(--service-t)}
+.branch.deploy{--accent:var(--deploy);--tint:var(--deploy-t)}
+.branch.summary{--accent:var(--summary);--tint:var(--summary-t)}
+.branch.hooks{--accent:var(--hooks);--tint:var(--hooks-t)}
+.branch>summary{list-style:none;cursor:pointer;background:var(--tint);padding:14px 15px;font-weight:850;font-size:16px;display:flex;gap:10px;align-items:center;line-height:1.3}
+.branch>summary::-webkit-details-marker{display:none}
+.num{flex:none;border-radius:8px;background:var(--accent);color:white;width:30px;height:30px;display:grid;place-items:center;font-size:14px;font-variant-numeric:tabular-nums}
+.branch-body{padding:12px}
+
+/* ---------- sub blocks ---------- */
+.sub{border:1px solid var(--line);border-radius:10px;margin:9px 0;background:#fff;overflow:hidden}
+.sub>summary{cursor:pointer;list-style:none;padding:10px 12px;font-weight:750;background:#f8fafc;border-bottom:1px solid transparent;font-size:14px}
+.sub>summary::-webkit-details-marker{display:none}
+.sub[open]>summary{border-bottom-color:var(--line)}
+.sub-body{padding:10px 14px 13px;font-size:14px}
+.sub-body p{margin:6px 0}
+.sub-body ul,.sub-body ol{margin:5px 0 8px;padding-left:21px}
+.sub-body li{margin:3px 0}
+.sub-body ul ul{margin-top:3px}
+.sub-body b{color:#111827}
+
+/* ---------- extras ---------- */
+.tag{display:inline-block;background:var(--tint);color:var(--accent);font-size:11px;font-weight:800;border-radius:5px;padding:2px 7px;margin:2px 3px 2px 0}
+.hook{padding:10px 12px;border-left:4px solid var(--accent);background:var(--tint);border-radius:7px;margin:10px 0;font-weight:650}
+.diagram{border:1px dashed #94a3b8;border-radius:9px;padding:10px;margin:9px 0;text-align:center;background:#fafcff;font-weight:700;font-size:13px;line-height:1.8}
+.stack{display:grid;gap:5px;max-width:400px;margin:10px auto}
+.stack div{padding:9px;border-radius:7px;text-align:center;color:#142033;font-weight:800;font-size:13px}
+.stack div:nth-child(1){background:#bfdbfe}
+.stack div:nth-child(2){background:#bbf7d0}
+.stack div:nth-child(3){background:#fed7aa}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:10px 0}
+.flow span{background:var(--tint);color:var(--accent);border:1px solid var(--line);border-radius:7px;padding:5px 9px;font-size:12px;font-weight:800}
+.flow i{color:#94a3b8;font-style:normal;font-weight:800}
+.table-wrap{overflow-x:auto;margin:9px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:12px;letter-spacing:.03em;text-transform:uppercase}
+tbody tr:hover td{background:#f8fbff}
+code{background:#eef2ff;padding:1px 4px;border-radius:4px;font-size:12.5px}
+
+/* wide sections */
+.wide{grid-column:1 / -1;margin-top:16px}
+.hook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.hook-grid .hook{margin:0}
+
+/* misc */
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+.hidden{display:none!important}
+.hit{outline:3px solid #f59e0b;outline-offset:2px;background:#fffbeb!important}
+.no-results{display:none;text-align:center;padding:20px;color:#64748b}
+
+/* ---------- responsive ---------- */
+@media(max-width:1100px){.branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+  .branch-grid{grid-template-columns:1fr}
+  .top{position:static}
+  .brand{width:100%}
+  .hero{margin-top:18px}
+  .map{padding:0 10px 35px}
+  .root{padding:16px}
+  .branch>summary{font-size:15px}
+}
+
+/* ---------- print ---------- */
+@media print{
+  .top{display:none}
+  .hero{margin:0 auto 12px}
+  .map{max-width:none;padding:0}
+  .branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .branch,.sub{break-inside:avoid;box-shadow:none}
+  details:not([open])>.branch-body,details:not([open])>.sub-body{display:block}
+  .branch>summary,.sub>summary,.root{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  body{background:white;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">☁ CLOUD COMPUTING • UNIT I MINDMAP</div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search any concept… (e.g. hypervisor, IaaS, cluster, SLA)">
+    <button onclick="expandAll(true)">Expand all</button>
+    <button onclick="expandAll(false)">Collapse all</button>
+    <button onclick="resetView()">Reset</button>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Cloud Computing — Unit I</h1>
+  <p>Introduction to Cloud Computing · MM0301A · complete study mindmap with expandable branches</p>
+  <div class="legend">
+    <span style="background:var(--intro-t)">1 Introduction</span>
+    <span style="background:var(--ideas-t)">2 Central Ideas</span>
+    <span style="background:var(--cluster-t)">3 Cluster vs Distributed</span>
+    <span style="background:var(--evo-t)">4 Evolution</span>
+    <span style="background:var(--trad-t)">5 Cloud vs Traditional</span>
+    <span style="background:var(--arch-t)">6 Architecture</span>
+    <span style="background:var(--service-t)">7 Service Models</span>
+    <span style="background:var(--deploy-t)">8 Deployment Models</span>
+    <span style="background:var(--summary-t)">★ Summary</span>
+    <span style="background:var(--hooks-t)">🎯 Hooks</span>
+  </div>
+</section>
+
+<main class="map">
+  <div class="root">
+    <h2>☁ CLOUD COMPUTING — UNIT I</h2>
+    <small>Introduction to Cloud Computing · eight connected knowledge branches · select a heading to expand its details</small>
+  </div>
+
+  <div class="branch-grid">
+
+    <!-- ============ 1. INTRODUCTION & DEFINITIONS ============ -->
+    <details class="branch intro" open>
+      <summary><span class="num">1</span> Introduction &amp; Definitions</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Origin of the name</summary>
+          <div class="sub-body">
+            <ul>
+              <li>The name <b>cloud computing</b> was inspired by the <b>cloud symbol</b> often used to represent the Internet in flowcharts and diagrams.</li>
+              <li>Cloud computing is a general term for anything that involves <b>delivering hosted services over the Internet</b>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. What is Cloud Computing?</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Internet-based computing</b> — large groups of remote servers are networked.</li>
+              <li>Sharing of <b>data-processing tasks, centralized data storage, computer services and resources</b>.</li>
+              <li>Any computer-related task done <b>entirely on the Internet</b>.</li>
+              <li>Allows users to use software <b>without owning the hardware</b>.</li>
+              <li>Everything is done <b>remotely</b> — nothing is saved locally.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Cloud computing components</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Network</b> — connects users, applications and data to the cloud.</li>
+              <li><b>Without a network:</b>
+                <ul>
+                  <li>Users cannot access their cloud services.</li>
+                  <li>Applications, data and users cannot move between clouds.</li>
+                </ul>
+              </li>
+              <li>Infrastructure components must work together to create a cloud.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Attributes of cloud networking</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Scalability</b> — the cloud network must scale to the overall throughput level so it does not become a bottleneck.</li>
+              <li><b>Low Latency</b> — must deliver microsecond latency across the entire network fabric; improves application performance and server utilization.</li>
+              <li><b>Guaranteed Performance</b> — predictable performance for many simultaneous applications including video, voice and web traffic.</li>
+              <li><b>Extensible Management</b> — real-time upgrades and image/patch management across a large cloud network.</li>
+              <li><b>Self-Healing Resilience</b> — cloud networks run 24×7, so downtime is not an option; requires self-healing and transparent in-service software updates.</li>
+            </ul>
+            <div class="hook">Memory hook: Cloud network = Scalable + Low-latency + Guaranteed + Extensible + Self-healing.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 2. CENTRAL IDEAS & CHARACTERISTICS ============ -->
+    <details class="branch ideas" open>
+      <summary><span class="num">2</span> Central Ideas &amp; Characteristics</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What cloud computing really is</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Cloud computing is a <b>paradigm of computing</b> — a new way of thinking about the IT industry, not any specific technology.</li>
+            </ul>
+            <div class="hook">Central ideas: <b>Utility Computing · SOA · SLA</b>.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Central ideas explained</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Utility Computing</b> — computing resources delivered as a metered, pay-per-use service.</li>
+              <li><b>SOA (Service-Oriented Architecture)</b> — building applications from independent, reusable, interoperable services.</li>
+              <li><b>SLA (Service Level Agreement)</b> — a contract defining the guaranteed level of service between provider and consumer.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Properties and characteristics</summary>
+          <div class="sub-body">
+            <ul>
+              <li>High <b>scalability and elasticity</b></li>
+              <li>High <b>availability and reliability</b></li>
+              <li>High <b>manageability and interoperability</b></li>
+              <li>High <b>accessibility and portability</b></li>
+              <li>High <b>performance and optimization</b></li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Enabling techniques</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Hardware virtualization</b> — abstracting logical resources from physical hardware.</li>
+              <li><b>Parallelized and distributed computing</b> — splitting work across many machines.</li>
+              <li><b>Web service</b> — standardized interfaces for app-to-app communication over the Internet.</li>
+            </ul>
+            <div class="hook">Memory hook: Characteristics — Scale · Available · Manageable · Accessible · Performant.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 3. CLUSTER vs DISTRIBUTED ============ -->
+    <details class="branch cluster" open>
+      <summary><span class="num">3</span> Cluster vs Distributed Computing</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Cluster computing</summary>
+          <div class="sub-body">
+            <p>Focuses on:</p>
+            <ul>
+              <li><b>High performance</b></li>
+              <li><b>Parallel processing</b></li>
+              <li><b>Fault tolerance</b></li>
+            </ul>
+            <p><b>Structure</b></p>
+            <ul>
+              <li>Nodes are typically <b>centralized</b>, located in the same physical space.</li>
+              <li>Run <b>identical or similar hardware/software</b> configurations.</li>
+            </ul>
+            <p><b>Key mechanisms</b></p>
+            <ul>
+              <li>High-speed, low-latency network interconnects (e.g. <b>InfiniBand</b>).</li>
+              <li>Built-in <b>failover</b> — if one node drops, another immediately takes over its workload.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Distributed computing</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A much <b>broader network of independent systems</b>.</li>
+              <li>May span <b>different geographies</b> and network infrastructures.</li>
+            </ul>
+            <p><b>Structure</b></p>
+            <ul>
+              <li>Nodes are often <b>heterogeneous</b> — different hardware, operating systems and resources.</li>
+              <li>Operate on <b>public networks</b> like the Internet.</li>
+            </ul>
+            <p><b>Key mechanisms</b></p>
+            <ul>
+              <li>Nodes do <b>not</b> act as one single computer.</li>
+              <li>Collaborate by <b>passing messages</b> to coordinate activities.</li>
+              <li>Designed to <b>scale infinitely</b> and gracefully handle partial system failures without bringing the entire network down.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Cluster vs Distributed — comparison</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Aspect</th><th>Cluster Computing</th><th>Distributed Computing</th></tr></thead>
+                <tbody>
+                  <tr><td>Focus</td><td>High performance, parallelism</td><td>Broad collaboration of independent systems</td></tr>
+                  <tr><td>Location</td><td>Centralized, same physical space</td><td>Geographically dispersed</td></tr>
+                  <tr><td>Hardware</td><td>Identical / similar</td><td>Heterogeneous</td></tr>
+                  <tr><td>Network</td><td>High-speed, low-latency (InfiniBand)</td><td>Public networks like the Internet</td></tr>
+                  <tr><td>Coordination</td><td>Acts as one computer with failover</td><td>Message passing between nodes</td></tr>
+                  <tr><td>Failure style</td><td>Failover to another node</td><td>Graceful partial failure handling</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Cluster = tight &amp; identical · Distributed = loose &amp; heterogeneous.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 4. EVOLUTION ============ -->
+    <details class="branch evo" open>
+      <summary><span class="num">4</span> Evolution of Cloud Computing</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Eight stages of evolution</summary>
+          <div class="sub-body">
+            <div class="flow">
+              <span>Mainframe</span><i>→</i>
+              <span>PC</span><i>→</i>
+              <span>Client-Server</span><i>→</i>
+              <span>Distributed</span><i>→</i>
+              <span>Grid</span><i>→</i>
+              <span>Utility</span><i>→</i>
+              <span>Virtualization</span><i>→</i>
+              <span>Cloud</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Stages 1–4</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Mainframe Computing (1950s–1960s)</b>
+                <ul>
+                  <li>Large, centralized computers used by multiple users.</li>
+                  <li>Users accessed the mainframe through <b>dumb terminals</b>.</li>
+                  <li>Computing resources were expensive and shared.</li>
+                  <li>Example: IBM Mainframe Systems.</li>
+                </ul>
+              </li>
+              <li><b>Personal Computing (1980s)</b>
+                <ul>
+                  <li>Introduction of affordable personal computers (PCs).</li>
+                  <li>Computing became <b>decentralized</b>.</li>
+                  <li>Software installed and executed on individual machines.</li>
+                  <li>Example: IBM PC, Apple Macintosh.</li>
+                </ul>
+              </li>
+              <li><b>Client-Server Computing (1990s)</b>
+                <ul>
+                  <li>Applications divided between client computers and central servers.</li>
+                  <li>Improved resource sharing and data management.</li>
+                  <li>Commonly used for databases and enterprise applications.</li>
+                  <li>Example: web browsers communicating with web servers.</li>
+                </ul>
+              </li>
+              <li><b>Distributed Computing (1990s–2000s)</b>
+                <ul>
+                  <li>Multiple computers worked together to solve complex problems.</li>
+                  <li>Improved performance, reliability and fault tolerance.</li>
+                  <li>Includes Grid Computing and Cluster Computing.</li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Stages 5–8</summary>
+          <div class="sub-body">
+            <ol start="5">
+              <li><b>Grid Computing (late 1990s)</b>
+                <ul>
+                  <li>Resources from multiple geographically distributed computers were combined.</li>
+                  <li>Suitable for scientific research and large-scale computations.</li>
+                  <li>Example: SETI@home.</li>
+                </ul>
+              </li>
+              <li><b>Utility Computing (early 2000s)</b>
+                <ul>
+                  <li>Computing resources provided as a <b>metered service</b>.</li>
+                  <li>Users paid only for resources consumed.</li>
+                  <li>Introduced the <b>Pay-as-you-Go</b> model.</li>
+                  <li>Laid the foundation for cloud computing.</li>
+                </ul>
+              </li>
+              <li><b>Virtualization (2000s)</b>
+                <ul>
+                  <li>Multiple virtual machines (VMs) run on a single physical server.</li>
+                  <li>Improved hardware utilization and reduced infrastructure costs.</li>
+                  <li>Enabled rapid provisioning and resource isolation.</li>
+                  <li>Hypervisors: VMware ESXi, Xen, KVM.</li>
+                </ul>
+              </li>
+              <li><b>Cloud Computing (2006–present)</b>
+                <ul>
+                  <li>Computing resources delivered over the Internet on demand.</li>
+                  <li>Resources automatically provisioned and scaled.</li>
+                  <li>Users pay only for actual usage.</li>
+                  <li>Major providers: Google Cloud Platform (GCP), Amazon Web Services (AWS), Microsoft Azure.</li>
+                </ul>
+              </li>
+            </ol>
+            <div class="hook">Memory hook: Mainframe → PC → Client-Server → Distributed → Grid → Utility → Virtualization → Cloud.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 5. CLOUD vs TRADITIONAL ============ -->
+    <details class="branch trad" open>
+      <summary><span class="num">5</span> Cloud vs Traditional Architecture</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Cloud storage vs traditional storage</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Parameter</th><th>Cloud Storage</th><th>Traditional Storage</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>Performance</td>
+                    <td>Performs better due to use of <b>NoSQL</b>.</td>
+                    <td>A bit slow compared to cloud.</td>
+                  </tr>
+                  <tr>
+                    <td>Maintenance</td>
+                    <td>Easy to maintain — the service provider takes care of maintenance.</td>
+                    <td>Heavy to manage — manual maintenance tools required.</td>
+                  </tr>
+                  <tr>
+                    <td>Reliability</td>
+                    <td>Highly reliable; takes less time to get back into functioning.</td>
+                    <td>Requires high initial effort and is less reliable.</td>
+                  </tr>
+                  <tr>
+                    <td>File Sharing</td>
+                    <td>Supports dynamic file sharing from anywhere with network access.</td>
+                    <td>Requires physical drives; network must be established between both.</td>
+                  </tr>
+                  <tr>
+                    <td>File access time</td>
+                    <td>Depends on network speed.</td>
+                    <td>Fast access time compared to cloud storage.</td>
+                  </tr>
+                  <tr>
+                    <td>Security</td>
+                    <td>More secure — integrates with many security tools.</td>
+                    <td>Can be attacked easily through viruses and malware.</td>
+                  </tr>
+                  <tr>
+                    <td>Applications</td>
+                    <td>Amazon Drive, Dropbox, AutoSync.</td>
+                    <td>HDD, SSD, pen drives.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Architecture note &amp; the Inter-cloud</summary>
+          <div class="sub-body">
+            <ul>
+              <li>The software systems involved in delivery communicate over a <b>loose coupling mechanism</b>.</li>
+              <li><b>Inter-cloud</b> — an interconnected global <b>“cloud of clouds”</b> and an extension of the Internet.</li>
+            </ul>
+            <div class="hook">Memory hook: Cloud = provider-managed · Traditional = you-manage.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 6. CLOUD ARCHITECTURE ============ -->
+    <details class="branch arch" open>
+      <summary><span class="num">6</span> Cloud &amp; Google Cloud Architecture</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Cloud architecture — basic layers</summary>
+          <div class="sub-body">
+            <div class="stack">
+              <div>SaaS — Software</div>
+              <div>PaaS — Platform</div>
+              <div>IaaS — Infrastructure</div>
+            </div>
+            <ul>
+              <li>Software systems involved in delivery communicate over a <b>loose coupling mechanism</b>.</li>
+              <li><b>Inter-cloud</b> — interconnected global “cloud of clouds”, an extension of the Internet.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Google Cloud — core architectural pillars</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Operational Excellence</b> — automated deployment pipelines and robust monitoring.</li>
+              <li><b>Security &amp; Compliance</b> — identity management and encryption to protect sensitive data.</li>
+              <li><b>Reliability &amp; Performance</b> — built-in redundancy and auto-scaling spanning compute engines and serverless components.</li>
+              <li><b>Cost Optimization</b> — tools to evaluate active vs. archival storage and budget controls to manage resources efficiently.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Deployment archetypes (6)</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Zonal</b> — runs in a single zone to minimize latency, but vulnerable to localized failures.</li>
+              <li><b>Regional</b> — operates across multiple zones within a single region for fault tolerance.</li>
+              <li><b>Multi-Regional</b> — spans multiple zones across two or more regions.</li>
+              <li><b>Global</b> — distributed across regions worldwide.</li>
+              <li><b>Hybrid</b> — connects Google Cloud resources with on-premises data centers.</li>
+              <li><b>Multicloud</b> — integrates workloads between Google Cloud and other cloud providers (e.g. AWS, Azure).</li>
+            </ol>
+            <div class="hook">Memory hook: Zonal → Regional → Multi-Regional → Global → Hybrid → Multicloud.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 7. SERVICE MODELS ============ -->
+    <details class="branch service" open>
+      <summary><span class="num">7</span> Service Models</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Overview — IaaS / PaaS / SaaS</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>IaaS</b> — users maintain software; rent IT infrastructure (servers, storage, networking).</li>
+              <li><b>PaaS</b> — users are given software and hardware automatically; rent a development platform to build and deploy apps.</li>
+              <li><b>SaaS</b> — all software and hardware is transparent; the user only knows their own access point; rent software and use applications through a web browser.</li>
+            </ul>
+            <div class="stack">
+              <div>SaaS — Software</div>
+              <div>PaaS — Platform</div>
+              <div>IaaS — Infrastructure</div>
+            </div>
+            <div class="hook">Memory hook: IaaS = Infrastructure · PaaS = Platform · SaaS = Software.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Infrastructure as a Service (IaaS)</summary>
+          <div class="sub-body">
+            <p><b>Definition</b></p>
+            <ul>
+              <li>Provision processing, storage, networks and other fundamental computing resources.</li>
+              <li>Consumer can deploy and run arbitrary software, including operating systems and applications.</li>
+              <li>Consumer does <b>not</b> manage the underlying cloud infrastructure but controls:
+                <ul>
+                  <li>Operating systems</li>
+                  <li>Storage</li>
+                  <li>Deployed applications</li>
+                  <li>Possibly limited control of select networking components</li>
+                </ul>
+              </li>
+            </ul>
+            <p><b>Examples:</b> Amazon EC2, Eucalyptus, OpenNebula.</p>
+            <p><b>Enabling technique — Virtualization</b></p>
+            <ul>
+              <li>Abstraction of logical resources away from underlying physical resources.</li>
+              <li>Shifts the OS onto a <b>hypervisor</b>; multiple OS share the physical hardware and provide different services.</li>
+              <li>Improves utilization, availability, security and convenience.</li>
+            </ul>
+            <div class="diagram">[ VM1 ] &nbsp; [ VM2 ] &nbsp; [ VM3 ]<br>↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓<br><b>HYPERVISOR</b><br>↓<br><b>PHYSICAL HARDWARE</b></div>
+            <p><b>Properties supported by virtualization</b></p>
+            <ul>
+              <li>Manageability and interoperability</li>
+              <li>Availability and reliability</li>
+              <li>Scalability and elasticity</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. IaaS — provided services</summary>
+          <div class="sub-body">
+            <p><b>1. Resource Management Interface</b></p>
+            <ul>
+              <li><b>Virtual Machine</b> — creation, suspension, resumption, termination.</li>
+              <li><b>Virtual Storage</b> — space allocation, space release, data writing, data reading.</li>
+              <li><b>Virtual Network</b> — IP address allocation, domain name registration, connection establishment, bandwidth provision.</li>
+            </ul>
+            <p><b>2. System Monitoring Interface</b></p>
+            <ul>
+              <li><b>Virtual Machine</b> — CPU loading, memory utilization, I/O loading, internal network loading.</li>
+              <li><b>Virtual Storage</b> — virtual space utilization, data duplication, storage-device access bandwidth.</li>
+              <li><b>Virtual Network</b> — virtual network bandwidth, network connectivity, network load balancing.</li>
+            </ul>
+            <div class="hook">IaaS summary: deployment platform that abstracts infrastructure · enabling technique = virtualization (server, storage, network) · services = Resource Management + System Monitoring interfaces.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Platform as a Service (PaaS)</summary>
+          <div class="sub-body">
+            <p><b>Definition</b></p>
+            <ul>
+              <li>Deploy consumer-created or acquired applications built with provider-supported languages and tools.</li>
+              <li>Consumer does <b>not</b> manage the underlying infrastructure (network, servers, OS, storage).</li>
+              <li>Consumer controls deployed applications and possibly application-hosting-environment configurations.</li>
+            </ul>
+            <p><b>Examples:</b> Microsoft Windows Azure, Google App Engine, Hadoop.</p>
+            <p><b>Enabling technique — Runtime Environment Design</b></p>
+            <ul>
+              <li>Collection of software services available to applications; usually implemented by <b>program libraries</b>.</li>
+              <li>Common properties: manageability &amp; interoperability, performance &amp; optimization, availability &amp; reliability, scalability &amp; elasticity.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. PaaS — provided services</summary>
+          <div class="sub-body">
+            <p><b>1. Programming IDE</b></p>
+            <ul>
+              <li>Users develop their service using the IDE.</li>
+              <li>IDE must integrate full functionalities supported by the underlying runtime environment.</li>
+              <li>IDE provides development tools: profiler, debugger, testing environment.</li>
+              <li>Programming APIs vary between providers but share common operating functions: computation, storage and communication resource operations.</li>
+            </ul>
+            <p><b>2. System Control Interface</b></p>
+            <ul>
+              <li><b>Policy-Based Control</b> — a principle or rule to guide decisions and achieve a rational outcome; makes decisions according to requirements.</li>
+              <li><b>Workflow Control</b> — describes the flow of installation and configuration of resources; a workflow-processing daemon delivers speedy, efficient construction and management of cloud resources.</li>
+            </ul>
+            <div class="hook">PaaS summary: development platform abstracting infrastructure, OS and middleware to drive developer productivity · enabling technique = runtime environment · services = Programming IDE + System Control Interface.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Software as a Service (SaaS)</summary>
+          <div class="sub-body">
+            <p><b>Definition</b></p>
+            <ul>
+              <li>Use the provider's applications running on cloud infrastructure.</li>
+              <li>Accessible from various client devices through a <b>thin-client interface</b> such as a web browser (e.g. web-based email).</li>
+              <li>Consumer does <b>not</b> manage the underlying infrastructure — network, servers, OS, storage or even individual application capabilities — with the possible exception of limited user-specific configuration settings.</li>
+            </ul>
+            <p><b>Examples:</b> Google Apps (Gmail, Google Docs, Google Sites), SalesForce.com, EyeOS.</p>
+            <p><b>Enabling technique — Web Service / Web 2.0</b></p>
+            <ul>
+              <li>Viewing the Internet as a computing platform.</li>
+              <li>Running interactive applications through a web browser.</li>
+              <li>Leveraging interconnectivity and mobility of devices.</li>
+              <li>Enhanced effectiveness with greater human participation.</li>
+              <li>Internet provides: <b>accessibility and portability</b>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>G. SaaS — provided services</summary>
+          <div class="sub-body">
+            <p><b>1. Web-based Applications</b> — conventional applications translate their access interface onto a web platform.</p>
+            <ul>
+              <li><b>General Applications</b> — office suite, multimedia, instant messaging.</li>
+              <li><b>Business Applications</b> — ERP, CRM, market trading system.</li>
+              <li><b>Scientific Applications</b> — aerospace simulation, biochemistry simulation.</li>
+              <li><b>Government Applications</b> — national medical system, public transportation system service.</li>
+            </ul>
+            <p><b>2. Web Portal</b></p>
+            <ul>
+              <li>Beyond search, offers email, news, stock prices, information, databases and entertainment.</li>
+              <li>Provides a consistent look and feel with access control and procedures for multiple applications and databases.</li>
+              <li><b>Examples:</b> iGoogle, MSNBC, Netvibes, Yahoo!</li>
+            </ul>
+            <div class="hook">SaaS summary: finished applications that you rent and customize · enabling technique = web service · services = Web-based Applications + Web Portal.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 8. DEPLOYMENT MODELS ============ -->
+    <details class="branch deploy" open>
+      <summary><span class="num">8</span> Deployment Models</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Four primary models</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Public cloud</b> — done by service providers.</li>
+              <li><b>Community cloud</b> — organizations from a specific community with common concerns.</li>
+              <li><b>Private cloud</b> — operated solely for a single organization.</li>
+              <li><b>Hybrid cloud</b> — composition of two or more clouds (private, community or public).</li>
+              <li><b>Private cloud rentals</b> — an option to consider when security is a concern.</li>
+            </ul>
+            <p>All can exhibit the same characteristics; differences lie primarily in the <b>scope and access</b> of published cloud services.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Public cloud</summary>
+          <div class="sub-body">
+            <p><b>Definition</b></p>
+            <ul>
+              <li>Infrastructure made available to the general public or a large industry group.</li>
+              <li>Owned by an organization selling cloud services.</li>
+              <li>Also known as <b>external cloud</b> or <b>multi-tenant cloud</b>; openly accessible.</li>
+            </ul>
+            <p><b>Basic characteristics</b></p>
+            <ul>
+              <li>Homogeneous infrastructure</li>
+              <li>Common policies</li>
+              <li>Shared resources and multi-tenant</li>
+              <li>Leased or rented infrastructure</li>
+              <li>Economies of scale</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Private cloud</summary>
+          <div class="sub-body">
+            <p><b>Definition</b></p>
+            <ul>
+              <li>Infrastructure operated solely for one organization.</li>
+              <li>May be managed by the organization or a third party.</li>
+              <li>May exist on-premise or off-premise.</li>
+              <li>Also called <b>internal cloud</b> or <b>on-premise cloud</b>; intentionally limits access to consumers of the same organization.</li>
+            </ul>
+            <p><b>Basic characteristics</b></p>
+            <ul>
+              <li>Heterogeneous infrastructure</li>
+              <li>Customized and tailored policies</li>
+              <li>Dedicated resources</li>
+              <li>In-house infrastructure</li>
+              <li>End-to-end control</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Public vs Private — comparison</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Aspect</th><th>Public Cloud</th><th>Private Cloud</th></tr></thead>
+                <tbody>
+                  <tr><td>Infrastructure</td><td>Homogeneous</td><td>Heterogeneous</td></tr>
+                  <tr><td>Policy Model</td><td>Common defined</td><td>Customized &amp; tailored</td></tr>
+                  <tr><td>Resource Model</td><td>Shared &amp; multi-tenant</td><td>Dedicated</td></tr>
+                  <tr><td>Cost Model</td><td>Operational expenditure (OpEx)</td><td>Capital expenditure (CapEx)</td></tr>
+                  <tr><td>Economy Model</td><td>Large economy of scale</td><td>End-to-end control</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Community &amp; Hybrid cloud</summary>
+          <div class="sub-body">
+            <p><b>Community cloud</b></p>
+            <ul>
+              <li>Infrastructure shared by several organizations.</li>
+              <li>Supports a specific community with shared concerns — mission, security requirements, policy and compliance considerations.</li>
+            </ul>
+            <p><b>Hybrid cloud</b></p>
+            <ul>
+              <li>Composition of two or more clouds (private, community or public).</li>
+              <li>Clouds remain unique entities but are bound together by standardized or proprietary technology.</li>
+              <li>Enables data and application portability.</li>
+              <li><b>Example:</b> cloud bursting for load-balancing between clouds.</li>
+            </ul>
+            <div class="hook">Memory hook: Public = shared/external · Private = dedicated/internal · Community = shared concerns · Hybrid = two or more clouds.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ MASTER SUMMARY (wide) ============ -->
+    <details class="branch summary wide" open>
+      <summary><span class="num">★</span> Master Summary — Unit I at a Glance</summary>
+      <div class="branch-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Concept</th><th>Type</th><th>Key idea</th></tr></thead>
+            <tbody>
+              <tr><td>Cloud Computing</td><td>Paradigm</td><td>Internet-based delivery of hosted services and resources on demand</td></tr>
+              <tr><td>Utility Computing</td><td>Central idea</td><td>Metered, pay-as-you-go computing resources</td></tr>
+              <tr><td>SOA</td><td>Central idea</td><td>Build apps from independent, reusable, interoperable services</td></tr>
+              <tr><td>SLA</td><td>Central idea</td><td>Contract defining guaranteed service levels</td></tr>
+              <tr><td>Cluster Computing</td><td>Computing model</td><td>Centralized, identical nodes, high performance and failover</td></tr>
+              <tr><td>Distributed Computing</td><td>Computing model</td><td>Heterogeneous, geographically spread, message passing</td></tr>
+              <tr><td>Virtualization</td><td>Enabling technique</td><td>Abstracts logical resources from physical hardware via a hypervisor</td></tr>
+              <tr><td>IaaS</td><td>Service model</td><td>Rent raw infrastructure; you manage OS, storage and apps</td></tr>
+              <tr><td>PaaS</td><td>Service model</td><td>Rent a development platform; you only manage applications</td></tr>
+              <tr><td>SaaS</td><td>Service model</td><td>Rent finished software through a thin-client interface</td></tr>
+              <tr><td>Public Cloud</td><td>Deployment model</td><td>Shared, multi-tenant, owned by a service provider</td></tr>
+              <tr><td>Private Cloud</td><td>Deployment model</td><td>Dedicated to one organization; end-to-end control</td></tr>
+              <tr><td>Community Cloud</td><td>Deployment model</td><td>Shared by organizations with common concerns</td></tr>
+              <tr><td>Hybrid Cloud</td><td>Deployment model</td><td>Two or more clouds bound together for portability</td></tr>
+              <tr><td>Google Cloud Pillars</td><td>Architecture</td><td>Operational excellence, security, reliability, cost optimization</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============ MEMORY HOOKS (wide) ============ -->
+    <details class="branch hooks wide" open>
+      <summary><span class="num">🎯</span> Key Memory Hooks</summary>
+      <div class="branch-body">
+        <div class="hook-grid">
+          <div class="hook">Definition: Internet-based computing · remote servers · nothing saved locally</div>
+          <div class="hook">Cloud network: Scalable + Low-latency + Guaranteed + Extensible + Self-healing</div>
+          <div class="hook">Central ideas: Utility Computing + SOA + SLA</div>
+          <div class="hook">Characteristics: Scalable · Available · Manageable · Accessible · Performant</div>
+          <div class="hook">Enabling techniques: Hardware virtualization + Parallel/distributed computing + Web service</div>
+          <div class="hook">Cluster = tight &amp; identical · Distributed = loose &amp; heterogeneous</div>
+          <div class="hook">Evolution: Mainframe → PC → Client-Server → Distributed → Grid → Utility → Virtualization → Cloud</div>
+          <div class="hook">Storage: Cloud = provider-managed · Traditional = you-manage</div>
+          <div class="hook">Google archetypes: Zonal → Regional → Multi-Regional → Global → Hybrid → Multicloud</div>
+          <div class="hook">IaaS: Infrastructure + Hypervisor + Resource Management &amp; Monitoring interfaces</div>
+          <div class="hook">PaaS: Platform + Runtime Environment + Programming IDE &amp; System Control Interface</div>
+          <div class="hook">SaaS: Software + Web Service + Web-based Apps &amp; Web Portal</div>
+          <div class="hook">Deployment: Public = shared · Private = dedicated · Community = shared concerns · Hybrid = mix</div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <p class="no-results" id="noResults">No matching topics. Try another search term.</p>
+  <div class="foot">Single-file offline mindmap · Expand/collapse each branch · Search highlights matching topics · Print to PDF for a study copy</div>
+</main>
+
+<script>
+const allDetails = [...document.querySelectorAll('details')];
+
+function expandAll(open){ allDetails.forEach(d => d.open = open); }
+
+function resetView(){
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.hidden').forEach(e => e.classList.remove('hidden'));
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+  expandAll(true);
+  document.getElementById('noResults').style.display = 'none';
+}
+
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const q = search.value.trim().toLowerCase();
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+
+  if (!q){
+    document.querySelectorAll('.branch,.sub').forEach(e => e.classList.remove('hidden'));
+    document.getElementById('noResults').style.display = 'none';
+    return;
+  }
+
+  let count = 0;
+
+  document.querySelectorAll('.branch').forEach(branch => {
+    const branchMatch = branch.innerText.toLowerCase().includes(q);
+    const subMatches = [...branch.querySelectorAll('.sub')]
+      .filter(s => s.innerText.toLowerCase().includes(q));
+
+    if (branchMatch || subMatches.length){
+      branch.classList.remove('hidden');
+      branch.open = true;
+
+      subMatches.forEach(s => {
+        s.classList.remove('hidden');
+        s.open = true;
+        s.classList.add('hit');
+        count++;
+      });
+
+      branch.querySelectorAll('.sub').forEach(s => {
+        if (!subMatches.includes(s)) s.classList.add('hidden');
+      });
+
+      if (!subMatches.length){
+        branch.classList.add('hit');
+        count++;
+      }
+    } else {
+      branch.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('noResults').style.display = count ? 'none' : 'block';
+});
+</script>
+</body>
+</html>

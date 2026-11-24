@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cloud Computing — Unit V Service Management Mindmap</title>
+<style>
+:root{
+  --bg:#f5f7fb;--ink:#172033;--muted:#586579;--line:#d8dfeb;
+  --sla:#1d4ed8;--sla-t:#dbeafe;
+  --billing:#0e7490;--billing-t:#cffafe;
+  --gcpbill:#7c3aed;--gcpbill-t:#ede9fe;
+  --security:#15803d;--security-t:#dcfce7;
+  --encrypt:#b45309;--encrypt-t:#fef3c7;
+  --iam:#0369a1;--iam-t:#e0f2fe;
+  --ansible:#be185d;--ansible-t:#fce7f3;
+  --devops:#0f766e;--devops-t:#ccfbf1;
+  --summary:#475569;--summary-t:#e2e8f0;
+  --hooks:#b91c1c;--hooks-t:#fee2e2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+
+.top{position:sticky;top:0;z-index:10;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:850;letter-spacing:.02em;margin-right:auto}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+button{border:1px solid #cbd5e1;background:white;color:#263247;border-radius:9px;padding:8px 11px;font:inherit;font-size:13px;cursor:pointer}
+button:hover{background:#eef4ff;border-color:#93b4f5}
+input{border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px;min-width:min(280px,75vw);font:inherit}
+input:focus{outline:2px solid #93b4f5;outline-offset:1px}
+
+.hero{max-width:1500px;margin:26px auto 18px;padding:0 20px;text-align:center}
+.hero h1{margin:0 auto 7px;font-size:clamp(25px,4vw,42px);line-height:1.15;letter-spacing:-.035em}
+.hero p{margin:0;color:var(--muted)}
+.legend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:15px 0}
+.legend span{font-size:12px;padding:5px 9px;border-radius:20px;background:white;border:1px solid var(--line)}
+
+.map{max-width:1600px;margin:auto;padding:0 18px 60px}
+.root{margin:20px auto 24px;max-width:760px;text-align:center;background:#173e78;color:white;padding:20px;border-radius:16px;box-shadow:0 8px 24px #173e7822}
+.root h2{margin:0;font-size:24px}
+.root small{opacity:.85}
+
+.branch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.branch{--accent:var(--summary);--tint:var(--summary-t);min-width:0;background:white;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #1e293b0a}
+.branch.sla{--accent:var(--sla);--tint:var(--sla-t)}
+.branch.billing{--accent:var(--billing);--tint:var(--billing-t)}
+.branch.gcpbill{--accent:var(--gcpbill);--tint:var(--gcpbill-t)}
+.branch.security{--accent:var(--security);--tint:var(--security-t)}
+.branch.encrypt{--accent:var(--encrypt);--tint:var(--encrypt-t)}
+.branch.iam{--accent:var(--iam);--tint:var(--iam-t)}
+.branch.ansible{--accent:var(--ansible);--tint:var(--ansible-t)}
+.branch.devops{--accent:var(--devops);--tint:var(--devops-t)}
+.branch.summary{--accent:var(--summary);--tint:var(--summary-t)}
+.branch.hooks{--accent:var(--hooks);--tint:var(--hooks-t)}
+.branch>summary{list-style:none;cursor:pointer;background:var(--tint);padding:14px 15px;font-weight:850;font-size:16px;display:flex;gap:10px;align-items:center;line-height:1.3}
+.branch>summary::-webkit-details-marker{display:none}
+.num{flex:none;border-radius:8px;background:var(--accent);color:white;width:30px;height:30px;display:grid;place-items:center;font-size:14px;font-variant-numeric:tabular-nums}
+.branch-body{padding:12px}
+
+.sub{border:1px solid var(--line);border-radius:10px;margin:9px 0;background:#fff;overflow:hidden}
+.sub>summary{cursor:pointer;list-style:none;padding:10px 12px;font-weight:750;background:#f8fafc;border-bottom:1px solid transparent;font-size:14px}
+.sub>summary::-webkit-details-marker{display:none}
+.sub[open]>summary{border-bottom-color:var(--line)}
+.sub-body{padding:10px 14px 13px;font-size:14px}
+.sub-body p{margin:6px 0}
+.sub-body ul,.sub-body ol{margin:5px 0 8px;padding-left:21px}
+.sub-body li{margin:3px 0}
+.sub-body ul ul{margin-top:3px}
+.sub-body b{color:#111827}
+
+.hook{padding:10px 12px;border-left:4px solid var(--accent);background:var(--tint);border-radius:7px;margin:10px 0;font-weight:650}
+.diagram{border:1px dashed #94a3b8;border-radius:9px;padding:10px;margin:9px 0;text-align:center;background:#fafcff;font-weight:700;font-size:13px;line-height:1.8;overflow-x:auto}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:10px 0}
+.flow span{background:var(--tint);color:var(--accent);border:1px solid var(--line);border-radius:7px;padding:5px 9px;font-size:12px;font-weight:800}
+.flow i{color:#94a3b8;font-style:normal;font-weight:800}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:9px 0}
+.split div{border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:13px}
+.split div b{display:block;margin-bottom:3px;color:var(--accent)}
+.table-wrap{overflow-x:auto;margin:9px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:12px;letter-spacing:.03em;text-transform:uppercase}
+tbody tr:hover td{background:#f8fbff}
+code{background:#eef2ff;padding:1px 4px;border-radius:4px;font-size:12.5px}
+
+.wide{grid-column:1 / -1;margin-top:16px}
+.hook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.hook-grid .hook{margin:0}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+.hidden{display:none!important}
+.hit{outline:3px solid #f59e0b;outline-offset:2px;background:#fffbeb!important}
+.no-results{display:none;text-align:center;padding:20px;color:#64748b}
+
+@media(max-width:1100px){.branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+  .branch-grid{grid-template-columns:1fr}
+  .top{position:static}
+  .brand{width:100%}
+  .hero{margin-top:18px}
+  .map{padding:0 10px 35px}
+  .root{padding:16px}
+  .branch>summary{font-size:15px}
+  .split{grid-template-columns:1fr}
+}
+
+@media print{
+  .top{display:none}
+  .hero{margin:0 auto 12px}
+  .map{max-width:none;padding:0}
+  .branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .branch,.sub{break-inside:avoid;box-shadow:none}
+  details:not([open])>.branch-body,details:not([open])>.sub-body{display:block}
+  .branch>summary,.sub>summary,.root{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  body{background:white;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">☁ CLOUD COMPUTING • UNIT V MINDMAP</div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search any concept… (e.g. SLA, CMEK, IAM, Ansible, DevOps)">
+    <button onclick="expandAll(true)">Expand all</button>
+    <button onclick="expandAll(false)">Collapse all</button>
+    <button onclick="resetView()">Reset</button>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Service Management — Unit V</h1>
+  <p>MM0301A Cloud Computing · complete study mindmap with expandable branches</p>
+  <div class="legend">
+    <span style="background:var(--sla-t)">1 Service Level Agreements</span>
+    <span style="background:var(--billing-t)">2 Billing &amp; Accounting</span>
+    <span style="background:var(--gcpbill-t)">3 Google Cloud Billing</span>
+    <span style="background:var(--security-t)">4 Cloud Security</span>
+    <span style="background:var(--encrypt-t)">5 Encryption Options</span>
+    <span style="background:var(--iam-t)">6 Cloud IAM</span>
+    <span style="background:var(--ansible-t)">7 Ansible</span>
+    <span style="background:var(--devops-t)">8 DevOps</span>
+    <span style="background:var(--summary-t)">★ Summary</span>
+    <span style="background:var(--hooks-t)">🎯 Hooks</span>
+  </div>
+</section>
+
+<main class="map">
+  <div class="root">
+    <h2>☁ SERVICE MANAGEMENT — UNIT V</h2>
+    <small>Eight connected knowledge branches · select a heading to expand its details</small>
+  </div>
+
+  <div class="branch-grid">
+
+    <!-- ============ 1. SERVICE LEVEL AGREEMENTS ============ -->
+    <details class="branch sla" open>
+      <summary><span class="num">1</span> Service Level Agreements</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is an SLA?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A formal <b>contract between a Cloud Service Provider (CSP) and a customer</b>.</li>
+              <li>Defines the expected level of service, performance standards, responsibilities, and remedies if the agreed service levels are not met.</li>
+              <li>Ensures customers know what level of service they can expect and how service quality will be measured.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Objectives of an SLA</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Define the <b>quality of service (QoS)</b>.</li>
+              <li>Guarantee service <b>availability and reliability</b>.</li>
+              <li>Specify <b>performance expectations</b>.</li>
+              <li>Clarify <b>responsibilities</b> of both provider and customer.</li>
+              <li>Establish <b>penalties or compensation</b> for service failures.</li>
+              <li>Build <b>trust</b> between provider and customer.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Types of SLAs</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Customer-Based SLA</b> — designed for a specific customer; covers all services used by that customer.
+                <ul><li>Example: a university signs an SLA with Google Cloud for hosting its student portal.</li></ul>
+              </li>
+              <li><b>Service-Based SLA</b> — applies to all customers using the same cloud service; same terms for everyone.
+                <ul><li>Example: an email hosting service guarantees 99.9% uptime to all users.</li></ul>
+              </li>
+              <li><b>Multi-Level SLA</b> — different service levels defined for different users.
+                <ul>
+                  <li>Corporate Level</li>
+                  <li>Customer Level</li>
+                  <li>Service Level</li>
+                </ul>
+              </li>
+            </ol>
+            <div class="hook">Memory hook: Customer-based = one customer · Service-based = all users · Multi-level = layered by audience.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Benefits of SLAs</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Clearly defines expectations.</li>
+              <li>Improves service reliability.</li>
+              <li>Ensures accountability.</li>
+              <li>Enhances customer satisfaction.</li>
+              <li>Facilitates risk management.</li>
+              <li>Provides compensation for service failures.</li>
+              <li>Helps maintain business continuity.</li>
+            </ul>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 2. BILLING & ACCOUNTING ============ -->
+    <details class="branch billing" open>
+      <summary><span class="num">2</span> Billing &amp; Accounting</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Definitions</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Billing</b> — process of calculating charges based on resource consumption.</li>
+              <li><b>Accounting</b> — process of recording, tracking and reporting resource usage for auditing, budgeting and cost analysis.</li>
+              <li>Billing and accounting help cloud providers measure resource usage, calculate costs, generate invoices and monitor customer spending.</li>
+              <li>Providers typically use a <b>Pay-as-You-Go (PAYG)</b> model — customers pay only for the resources they use.</li>
+              <li>Billing covers cloud services such as virtual machines, storage, databases, networking and other managed services.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Objectives of billing</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Calculate usage costs accurately.</li>
+              <li>Generate invoices for customers.</li>
+              <li>Support multiple pricing models.</li>
+              <li>Ensure transparent pricing.</li>
+              <li>Track customer expenses.</li>
+              <li>Enable cost optimization.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Billing models</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Pay-as-You-Go (PAYG)</b> — pay only for resources actually used; no upfront investment. Example: paying ₹8 per hour for a virtual machine.</li>
+              <li><b>Subscription-Based Billing</b> — fixed monthly or yearly payment; suitable for predictable workloads.</li>
+              <li><b>Reserved Instance Billing</b> — customer reserves resources for a long period; lower cost than on-demand usage.</li>
+              <li><b>Spot Pricing</b> — uses unused cloud capacity; lowest price, but resources may be interrupted.</li>
+              <li><b>Tiered Pricing</b> — cost decreases as usage increases.</li>
+            </ol>
+            <div class="hook">Memory hook: PAYG · Subscription · Reserved · Spot · Tiered.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 3. GOOGLE CLOUD BILLING ============ -->
+    <details class="branch gcpbill" open>
+      <summary><span class="num">3</span> Google Cloud Billing</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is Google Cloud Billing?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>System used to <b>track resource usage, calculate costs, generate invoices and manage payments</b> for Google Cloud services.</li>
+              <li>Billing is linked to a <b>Cloud Billing Account</b>, which can be associated with one or more Google Cloud projects.</li>
+              <li>Google Cloud follows a <b>Pay-as-You-Go (PAYG)</b> pricing model — customers pay only for the resources they consume.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Features of GCP billing</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Pay only for resources used.</li>
+              <li>Centralized billing account for multiple projects.</li>
+              <li>Cost tracking and usage reports.</li>
+              <li>Budget creation and alerts.</li>
+              <li>Billing export to <b>BigQuery</b> for detailed analysis.</li>
+              <li>Support for multiple payment methods.</li>
+              <li>Discounts such as <b>Sustained Use Discounts</b> and <b>Committed Use Discounts</b>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Google Cloud billing models</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Pay-as-You-Go (PAYG)</b> — pay only for actual usage.</li>
+              <li><b>Committed Use Discounts (CUDs)</b> — lower prices for long-term commitments.</li>
+              <li><b>Sustained Use Discounts (SUDs)</b> — automatic discounts for continuous usage.</li>
+              <li><b>Free Tier</b> — limited free usage for eligible services.</li>
+            </ul>
+            <div class="hook">Memory hook: GCP billing = PAYG + CUDs + SUDs + Free Tier + BigQuery export.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 4. CLOUD SECURITY & SHARED MODEL ============ -->
+    <details class="branch security" open>
+      <summary><span class="num">4</span> Cloud Security &amp; Shared Model</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Introduction to cloud security</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Collection of <b>technologies, policies and controls</b> that protect cloud-based applications, infrastructure and data from unauthorized access, cyberattacks and data loss.</li>
+            </ul>
+            <p><b>Objectives of cloud security</b></p>
+            <ul>
+              <li>Protect data <b>confidentiality</b>.</li>
+              <li>Maintain data <b>integrity</b>.</li>
+              <li>Ensure service <b>availability</b>.</li>
+              <li>Prevent unauthorized access.</li>
+              <li>Meet regulatory <b>compliance</b> requirements.</li>
+            </ul>
+            <div class="hook">Memory hook: CIA + Access control + Compliance.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. The Shared Responsibility Model</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Defines how security responsibilities are divided between the <b>Cloud Service Provider (Google Cloud)</b> and the <b>Customer</b>.</li>
+            </ul>
+            <div class="split">
+              <div>
+                <b>Google secures…</b>
+                The cloud — physical infrastructure, data centers, hardware, core network, and the managed service foundations.
+              </div>
+              <div>
+                <b>Customer secures…</b>
+                What is put in the cloud — data, applications, identities, access policies and configurations.
+              </div>
+            </div>
+            <div class="hook">Memory hook: Google secures the cloud · you secure what's IN the cloud.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 5. ENCRYPTION OPTIONS ============ -->
+    <details class="branch encrypt" open>
+      <summary><span class="num">5</span> Encryption Options</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Encryption at REST &amp; in TRANSIT</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Encryption protects data from unauthorized access by converting it into an <b>unreadable format</b>.</li>
+            </ul>
+            <p><b>1. Encryption at REST</b></p>
+            <ul>
+              <li>Data stored in Cloud Storage, Persistent Disks, Cloud SQL, etc. is <b>encrypted automatically</b>.</li>
+              <li>Google encrypts data <b>before writing it to storage</b>.</li>
+            </ul>
+            <p><b>2. Encryption in TRANSIT</b></p>
+            <ul>
+              <li>Data moving between users and Google Cloud services is protected using <b>TLS (Transport Layer Security)</b>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Customer-managed &amp; supplied keys</summary>
+          <div class="sub-body">
+            <p><b>3. Customer-Managed Encryption Keys (CMEK)</b></p>
+            <ul>
+              <li>Customers manage encryption keys using <b>Cloud Key Management Service (Cloud KMS)</b>.</li>
+              <li>Provides greater control over key rotation and access.</li>
+            </ul>
+            <p><b>4. Customer-Supplied Encryption Keys (CSEK)</b></p>
+            <ul>
+              <li>Customers provide their own encryption keys.</li>
+              <li>Google does <b>not</b> store these keys permanently.</li>
+            </ul>
+            <div class="hook">Memory hook: REST = auto · TRANSIT = TLS · CMEK = you manage in KMS · CSEK = you supply, Google doesn't keep.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 6. CLOUD IAM ============ -->
+    <details class="branch iam" open>
+      <summary><span class="num">6</span> Cloud IAM</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is Cloud IAM?</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Identity and Access Management</b> controls <b>who</b> (identity) can access <b>which resources</b> and <b>what actions</b> they are allowed to perform.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Authentication</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Verifies the <b>identity</b> of a user or service.</li>
+            </ul>
+            <p><b>Examples</b></p>
+            <ul>
+              <li>Username and password</li>
+              <li>Google Account</li>
+              <li>Service Account</li>
+              <li>Multi-Factor Authentication (MFA)</li>
+            </ul>
+            <div class="hook">Question answered: <b>Who are you?</b></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Authorization</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Determines <b>what an authenticated user is allowed to do</b>.</li>
+            </ul>
+            <p><b>Examples</b></p>
+            <ul>
+              <li>View resources</li>
+              <li>Create virtual machines</li>
+              <li>Delete storage buckets</li>
+              <li>Modify databases</li>
+            </ul>
+            <div class="hook">Question answered: <b>What are you allowed to do?</b></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Best practices for authorization using Cloud IAM</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Least privilege</b> — grant only the permissions needed to perform a task.</li>
+              <li><b>Use predefined roles</b> where possible; create custom roles only when necessary.</li>
+              <li><b>Prefer groups over individuals</b> — assign roles to Google Groups rather than users.</li>
+              <li><b>Avoid primitive roles</b> (Owner, Editor, Viewer) in production; use granular service-specific roles.</li>
+              <li><b>Use service accounts</b> with scoped permissions for applications and automation.</li>
+              <li><b>Enable MFA</b> for privileged accounts and audit access regularly.</li>
+              <li><b>Separate duties</b> — do not give one identity both deployment and approval permissions.</li>
+              <li><b>Audit with Cloud Audit Logs</b> — review who did what and when.</li>
+            </ul>
+            <div class="hook">Memory hook: Least privilege + Groups + Service accounts + Granular roles + Audit logs.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 7. ANSIBLE ============ -->
+    <details class="branch ansible" open>
+      <summary><span class="num">7</span> Ansible — Configuration Management</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Configuration management &amp; Ansible</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Configuration Management</b> — process of automating the installation, configuration, deployment and maintenance of servers and applications.</li>
+              <li>Ensures all systems remain <b>consistent, secure and correctly configured</b>.</li>
+              <li><b>Ansible</b> is an open-source configuration management, automation and orchestration tool developed by <b>Red Hat</b>.</li>
+              <li>Automates repetitive IT tasks such as software installation, system configuration, application deployment and server provisioning.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. How Ansible works</summary>
+          <div class="sub-body">
+            <div class="flow">
+              <span>Playbook</span><i>→</i>
+              <span>Inventory</span><i>→</i>
+              <span>SSH / WinRM</span><i>→</i>
+              <span>Modules</span><i>→</i>
+              <span>Status</span>
+            </div>
+            <ol>
+              <li>Administrator writes a <b>playbook</b>.</li>
+              <li>Ansible reads the <b>inventory file</b>.</li>
+              <li>Connects to managed nodes using <b>SSH or WinRM</b>.</li>
+              <li>Executes tasks using <b>modules</b>.</li>
+              <li>Reports the <b>execution status</b>.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Advantages</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Open source and free.</li>
+              <li><b>Agentless architecture</b>.</li>
+              <li>Easy to learn using <b>YAML</b>.</li>
+              <li>Fast deployment.</li>
+              <li>Supports <b>Infrastructure as Code (IaC)</b>.</li>
+              <li>Scalable and highly reliable.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Limitations</summary>
+          <div class="sub-body">
+            <ul>
+              <li>SSH-based communication may be slower than agent-based tools for very large deployments.</li>
+              <li>Complex workflows may require advanced playbook design.</li>
+              <li>Less suitable for extremely large-scale environments without optimization.</li>
+            </ul>
+            <div class="hook">Memory hook: Ansible = agentless + YAML + IaC + SSH + modules.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 8. DEVOPS ============ -->
+    <details class="branch devops" open>
+      <summary><span class="num">8</span> DevOps</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is DevOps?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Software development methodology that combines <b>Development (Dev)</b> and <b>Operations (Ops)</b>.</li>
+              <li>Aims to improve collaboration, automate workflows and deliver software <b>faster and more reliably</b>.</li>
+              <li>Integrates development, testing, deployment, monitoring and feedback into a <b>continuous lifecycle</b>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. DevOps architecture lifecycle</summary>
+          <div class="sub-body">
+            <div class="flow">
+              <span>Plan</span><i>→</i>
+              <span>Code</span><i>→</i>
+              <span>Build</span><i>→</i>
+              <span>Test</span><i>→</i>
+              <span>Release</span><i>→</i>
+              <span>Deploy</span><i>→</i>
+              <span>Monitor</span><i>→</i>
+              <span>Feedback</span>
+            </div>
+            <ul>
+              <li>Each stage feeds back into the next, forming a continuous loop.</li>
+              <li>Automation tools connect the stages end to end.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Benefits &amp; challenges</summary>
+          <div class="sub-body">
+            <p><b>Benefits</b></p>
+            <ul>
+              <li>Faster software delivery.</li>
+              <li>Improved collaboration between development and operations teams.</li>
+              <li>Continuous integration and deployment.</li>
+              <li>Reduced deployment failures.</li>
+              <li>Faster recovery from incidents.</li>
+              <li>Better software quality.</li>
+              <li>Increased automation and efficiency.</li>
+            </ul>
+            <p><b>Challenges</b></p>
+            <ul>
+              <li>Cultural and organizational changes.</li>
+              <li>Initial setup complexity.</li>
+              <li>Tool integration challenges.</li>
+              <li>Security and compliance management.</li>
+              <li>Continuous monitoring and maintenance requirements.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Traditional IT vs DevOps</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Aspect</th><th>Traditional IT</th><th>DevOps</th></tr></thead>
+                <tbody>
+                  <tr><td>Teams</td><td>Separate Development and Operations teams</td><td>Collaborative Dev and Ops teams</td></tr>
+                  <tr><td>Deployments</td><td>Manual deployments</td><td>Automated deployments</td></tr>
+                  <tr><td>Releases</td><td>Infrequent software releases</td><td>Frequent and continuous releases</td></tr>
+                  <tr><td>Feedback</td><td>Slow feedback</td><td>Continuous feedback</td></tr>
+                  <tr><td>Testing</td><td>Manual testing</td><td>Automated testing</td></tr>
+                  <tr><td>Release cycles</td><td>Longer release cycles</td><td>Faster release cycles</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: DevOps = Dev + Ops + CI/CD + Automation + Continuous feedback.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ MASTER SUMMARY (wide) ============ -->
+    <details class="branch summary wide" open>
+      <summary><span class="num">★</span> Master Summary — Unit V at a Glance</summary>
+      <div class="branch-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Concept</th><th>Type</th><th>Key idea</th></tr></thead>
+            <tbody>
+              <tr><td>SLA</td><td>Contract</td><td>Defines expected service level, performance, responsibilities and remedies</td></tr>
+              <tr><td>Customer-Based SLA</td><td>SLA Type</td><td>Tailored to one customer; covers all services used by them</td></tr>
+              <tr><td>Service-Based SLA</td><td>SLA Type</td><td>Same terms for all customers of one service</td></tr>
+              <tr><td>Multi-Level SLA</td><td>SLA Type</td><td>Different service levels for corporate, customer and service tiers</td></tr>
+              <tr><td>Billing</td><td>Process</td><td>Calculate charges based on resource consumption</td></tr>
+              <tr><td>Accounting</td><td>Process</td><td>Record, track and report usage for audit, budget and cost analysis</td></tr>
+              <tr><td>PAYG / Subscription / Reserved / Spot / Tiered</td><td>Billing Models</td><td>Pricing approaches from on-demand to discounted long-term commitments</td></tr>
+              <tr><td>Google Cloud Billing</td><td>Billing System</td><td>Central billing account across projects with budgets, alerts and BigQuery export</td></tr>
+              <tr><td>PAYG / CUDs / SUDs / Free Tier</td><td>GCP Billing Models</td><td>Usage-based, committed discounts, sustained discounts and free allowances</td></tr>
+              <tr><td>Cloud Security</td><td>Discipline</td><td>Technologies, policies and controls protecting apps, infra and data</td></tr>
+              <tr><td>Shared Responsibility Model</td><td>Security Model</td><td>Google secures the cloud; customer secures what is in the cloud</td></tr>
+              <tr><td>Encryption at REST</td><td>Encryption</td><td>Automatic encryption of stored data before writing</td></tr>
+              <tr><td>Encryption in TRANSIT</td><td>Encryption</td><td>TLS protects data moving between users and services</td></tr>
+              <tr><td>CMEK / CSEK</td><td>Key Management</td><td>Customer-managed keys in Cloud KMS vs customer-supplied keys Google doesn't store</td></tr>
+              <tr><td>Authentication</td><td>IAM</td><td>Verifies identity — "Who are you?"</td></tr>
+              <tr><td>Authorization</td><td>IAM</td><td>Determines allowed actions — "What are you allowed to do?"</td></tr>
+              <tr><td>IAM Best Practices</td><td>Governance</td><td>Least privilege, groups, service accounts, granular roles, audit logs</td></tr>
+              <tr><td>Ansible</td><td>Config Management</td><td>Agentless automation with YAML playbooks and modules over SSH / WinRM</td></tr>
+              <tr><td>DevOps</td><td>Methodology</td><td>Unifies Dev and Ops for automated, continuous and reliable delivery</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============ MEMORY HOOKS (wide) ============ -->
+    <details class="branch hooks wide" open>
+      <summary><span class="num">🎯</span> Key Memory Hooks</summary>
+      <div class="branch-body">
+        <div class="hook-grid">
+          <div class="hook">SLA = QoS + Availability + Performance + Responsibilities + Penalties</div>
+          <div class="hook">SLA types: Customer-based (one) · Service-based (all) · Multi-level (layered)</div>
+          <div class="hook">Billing = calculate charges · Accounting = record, track, report</div>
+          <div class="hook">Billing models: PAYG · Subscription · Reserved · Spot · Tiered</div>
+          <div class="hook">GCP billing: PAYG + CUDs + SUDs + Free Tier + BigQuery export</div>
+          <div class="hook">Cloud security = CIA triad + access control + compliance</div>
+          <div class="hook">Shared model: Google secures the cloud · you secure what's IN the cloud</div>
+          <div class="hook">Encryption: REST = auto · TRANSIT = TLS · CMEK = KMS · CSEK = you supply</div>
+          <div class="hook">IAM: Authentication = Who are you? · Authorization = What can you do?</div>
+          <div class="hook">IAM best practice: Least privilege + Groups + Service accounts + Granular roles + Audit</div>
+          <div class="hook">Ansible: agentless + YAML + IaC + SSH + modules → playbook → inventory → status</div>
+          <div class="hook">DevOps: Plan → Code → Build → Test → Release → Deploy → Monitor → Feedback</div>
+          <div class="hook">Traditional IT vs DevOps: manual/infrequent → automated/continuous</div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <p class="no-results" id="noResults">No matching topics. Try another search term.</p>
+  <div class="foot">Single-file offline mindmap · Expand/collapse each branch · Search highlights matching topics · Print to PDF for a study copy</div>
+</main>
+
+<script>
+const allDetails = [...document.querySelectorAll('details')];
+
+function expandAll(open){ allDetails.forEach(d => d.open = open); }
+
+function resetView(){
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.hidden').forEach(e => e.classList.remove('hidden'));
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+  expandAll(true);
+  document.getElementById('noResults').style.display = 'none';
+}
+
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const q = search.value.trim().toLowerCase();
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+
+  if (!q){
+    document.querySelectorAll('.branch,.sub').forEach(e => e.classList.remove('hidden'));
+    document.getElementById('noResults').style.display = 'none';
+    return;
+  }
+
+  let count = 0;
+
+  document.querySelectorAll('.branch').forEach(branch => {
+    const branchMatch = branch.innerText.toLowerCase().includes(q);
+    const subMatches = [...branch.querySelectorAll('.sub')]
+      .filter(s => s.innerText.toLowerCase().includes(q));
+
+    if (branchMatch || subMatches.length){
+      branch.classList.remove('hidden');
+      branch.open = true;
+
+      subMatches.forEach(s => {
+        s.classList.remove('hidden');
+        s.open = true;
+        s.classList.add('hit');
+        count++;
+      });
+
+      branch.querySelectorAll('.sub').forEach(s => {
+        if (!subMatches.includes(s)) s.classList.add('hidden');
+      });
+
+      if (!subMatches.length){
+        branch.classList.add('hit');
+        count++;
+      }
+    } else {
+      branch.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('noResults').style.display = count ? 'none' : 'block';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cloud Computing — Unit III Cloud Services Mindmap</title>
+<style>
+:root{
+  --bg:#f5f7fb;--ink:#172033;--muted:#586579;--line:#d8dfeb;
+  --soa:#1d4ed8;--soa-t:#dbeafe;
+  --web:#0e7490;--web-t:#cffafe;
+  --platform:#7c3aed;--platform-t:#ede9fe;
+  --appengine:#15803d;--appengine-t:#dcfce7;
+  --functions:#b45309;--functions-t:#fef3c7;
+  --gke:#0369a1;--gke-t:#e0f2fe;
+  --saas:#be185d;--saas-t:#fce7f3;
+  --gcp:#0f766e;--gcp-t:#ccfbf1;
+  --summary:#475569;--summary-t:#e2e8f0;
+  --hooks:#b91c1c;--hooks-t:#fee2e2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+
+.top{position:sticky;top:0;z-index:10;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:850;letter-spacing:.02em;margin-right:auto}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+button{border:1px solid #cbd5e1;background:white;color:#263247;border-radius:9px;padding:8px 11px;font:inherit;font-size:13px;cursor:pointer}
+button:hover{background:#eef4ff;border-color:#93b4f5}
+input{border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px;min-width:min(280px,75vw);font:inherit}
+input:focus{outline:2px solid #93b4f5;outline-offset:1px}
+
+.hero{max-width:1500px;margin:26px auto 18px;padding:0 20px;text-align:center}
+.hero h1{margin:0 auto 7px;font-size:clamp(25px,4vw,42px);line-height:1.15;letter-spacing:-.035em}
+.hero p{margin:0;color:var(--muted)}
+.legend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:15px 0}
+.legend span{font-size:12px;padding:5px 9px;border-radius:20px;background:white;border:1px solid var(--line)}
+
+.map{max-width:1600px;margin:auto;padding:0 18px 60px}
+.root{margin:20px auto 24px;max-width:760px;text-align:center;background:#173e78;color:white;padding:20px;border-radius:16px;box-shadow:0 8px 24px #173e7822}
+.root h2{margin:0;font-size:24px}
+.root small{opacity:.85}
+
+.branch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.branch{--accent:var(--summary);--tint:var(--summary-t);min-width:0;background:white;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #1e293b0a}
+.branch.soa{--accent:var(--soa);--tint:var(--soa-t)}
+.branch.web{--accent:var(--web);--tint:var(--web-t)}
+.branch.platform{--accent:var(--platform);--tint:var(--platform-t)}
+.branch.appengine{--accent:var(--appengine);--tint:var(--appengine-t)}
+.branch.functions{--accent:var(--functions);--tint:var(--functions-t)}
+.branch.gke{--accent:var(--gke);--tint:var(--gke-t)}
+.branch.saas{--accent:var(--saas);--tint:var(--saas-t)}
+.branch.gcp{--accent:var(--gcp);--tint:var(--gcp-t)}
+.branch.summary{--accent:var(--summary);--tint:var(--summary-t)}
+.branch.hooks{--accent:var(--hooks);--tint:var(--hooks-t)}
+.branch>summary{list-style:none;cursor:pointer;background:var(--tint);padding:14px 15px;font-weight:850;font-size:16px;display:flex;gap:10px;align-items:center;line-height:1.3}
+.branch>summary::-webkit-details-marker{display:none}
+.num{flex:none;border-radius:8px;background:var(--accent);color:white;width:30px;height:30px;display:grid;place-items:center;font-size:14px;font-variant-numeric:tabular-nums}
+.branch-body{padding:12px}
+
+.sub{border:1px solid var(--line);border-radius:10px;margin:9px 0;background:#fff;overflow:hidden}
+.sub>summary{cursor:pointer;list-style:none;padding:10px 12px;font-weight:750;background:#f8fafc;border-bottom:1px solid transparent;font-size:14px}
+.sub>summary::-webkit-details-marker{display:none}
+.sub[open]>summary{border-bottom-color:var(--line)}
+.sub-body{padding:10px 14px 13px;font-size:14px}
+.sub-body p{margin:6px 0}
+.sub-body ul,.sub-body ol{margin:5px 0 8px;padding-left:21px}
+.sub-body li{margin:3px 0}
+.sub-body ul ul{margin-top:3px}
+.sub-body b{color:#111827}
+
+.hook{padding:10px 12px;border-left:4px solid var(--accent);background:var(--tint);border-radius:7px;margin:10px 0;font-weight:650}
+.diagram{border:1px dashed #94a3b8;border-radius:9px;padding:10px;margin:9px 0;text-align:center;background:#fafcff;font-weight:700;font-size:13px;line-height:1.8;overflow-x:auto}
+.stack{display:grid;gap:5px;max-width:400px;margin:10px auto}
+.stack div{padding:9px;border-radius:7px;text-align:center;color:#142033;font-weight:800;font-size:13px}
+.stack div:nth-child(1){background:#bfdbfe}
+.stack div:nth-child(2){background:#bbf7d0}
+.stack div:nth-child(3){background:#fed7aa}
+.stack div:nth-child(4){background:#fbcfe8}
+.stack div:nth-child(5){background:#fecaca}
+.stack div:nth-child(6){background:#fde68a}
+.stack div:nth-child(7){background:#ddd6fe}
+.stack div:nth-child(8){background:#c7d2fe}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:10px 0}
+.flow span{background:var(--tint);color:var(--accent);border:1px solid var(--line);border-radius:7px;padding:5px 9px;font-size:12px;font-weight:800}
+.flow i{color:#94a3b8;font-style:normal;font-weight:800}
+.table-wrap{overflow-x:auto;margin:9px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:12px;letter-spacing:.03em;text-transform:uppercase}
+tbody tr:hover td{background:#f8fbff}
+code{background:#eef2ff;padding:1px 4px;border-radius:4px;font-size:12.5px}
+
+.wide{grid-column:1 / -1;margin-top:16px}
+.hook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.hook-grid .hook{margin:0}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+.hidden{display:none!important}
+.hit{outline:3px solid #f59e0b;outline-offset:2px;background:#fffbeb!important}
+.no-results{display:none;text-align:center;padding:20px;color:#64748b}
+
+@media(max-width:1100px){.branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+  .branch-grid{grid-template-columns:1fr}
+  .top{position:static}
+  .brand{width:100%}
+  .hero{margin-top:18px}
+  .map{padding:0 10px 35px}
+  .root{padding:16px}
+  .branch>summary{font-size:15px}
+}
+
+@media print{
+  .top{display:none}
+  .hero{margin:0 auto 12px}
+  .map{max-width:none;padding:0}
+  .branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .branch,.sub{break-inside:avoid;box-shadow:none}
+  details:not([open])>.branch-body,details:not([open])>.sub-body{display:block}
+  .branch>summary,.sub>summary,.root{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  body{background:white;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">☁ CLOUD COMPUTING • UNIT III MINDMAP</div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search any concept… (e.g. ESB, GKE, Docker, Cloud Shell)">
+    <button onclick="expandAll(true)">Expand all</button>
+    <button onclick="expandAll(false)">Collapse all</button>
+    <button onclick="resetView()">Reset</button>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Cloud Services — Unit III</h1>
+  <p>MM0301A Cloud Computing · complete study mindmap with expandable branches</p>
+  <div class="legend">
+    <span style="background:var(--soa-t)">1 SOA &amp; Web Services</span>
+    <span style="background:var(--web-t)">2 Web 2.0 &amp; Web OS</span>
+    <span style="background:var(--platform-t)">3 Cloud Platform &amp; Mgmt</span>
+    <span style="background:var(--appengine-t)">4 App Engine</span>
+    <span style="background:var(--functions-t)">5 Cloud Functions</span>
+    <span style="background:var(--gke-t)">6 Containers &amp; GKE</span>
+    <span style="background:var(--saas-t)">7 SaaS · Docker · Linking</span>
+    <span style="background:var(--gcp-t)">8 GCP Tooling</span>
+    <span style="background:var(--summary-t)">★ Summary</span>
+    <span style="background:var(--hooks-t)">🎯 Hooks</span>
+  </div>
+</section>
+
+<main class="map">
+  <div class="root">
+    <h2>☁ CLOUD SERVICES — UNIT III</h2>
+    <small>Eight connected knowledge branches · select a heading to expand its details</small>
+  </div>
+
+  <div class="branch-grid">
+
+    <!-- ============ 1. SOA & WEB SERVICES ============ -->
+    <details class="branch soa" open>
+      <summary><span class="num">1</span> SOA &amp; Web Services</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Service-Oriented Architecture — definition</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Software design approach in which applications are built by combining <b>independent, reusable and interoperable services</b>.</li>
+              <li>Each service performs a specific business function and communicates with other services through standardized protocols such as <b>HTTP, SOAP or REST APIs</b>.</li>
+              <li>In cloud computing, SOA enables different cloud services to work together efficiently — making applications <b>scalable, flexible and easy to maintain</b>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Real-world example — online shopping</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Login Service</b> — user authentication</li>
+              <li><b>Product Service</b> — product catalog</li>
+              <li><b>Payment Service</b> — online payments</li>
+              <li><b>Order Service</b> — order processing</li>
+              <li><b>Shipping Service</b> — delivery management</li>
+              <li><b>Notification Service</b> — email / SMS alerts</li>
+            </ul>
+            <div class="hook">Memory hook: SOA = Independent services + ESB + Registry + Contract.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Components of SOA</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Service Provider</b> — creates and hosts services; makes them available over the network.</li>
+              <li><b>Service Consumer</b> — uses the services provided by the provider; can be a web app, mobile app or another service.</li>
+              <li><b>Service Registry</b> — stores information about available services; helps consumers discover required services.</li>
+              <li><b>Enterprise Service Bus (ESB)</b> — connects different services; performs routing, message transformation, security and communication.</li>
+              <li><b>Service Contract</b> — defines service interface, inputs, outputs and communication rules.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Web Services — definition &amp; stack</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Software component that enables <b>communication and data exchange</b> between different applications over the Internet using standard web protocols.</li>
+              <li>Allows applications developed in different languages and running on different platforms to <b>interact seamlessly</b>.</li>
+            </ul>
+            <div class="diagram">HTTP / SOAP / REST &nbsp;→&nbsp; XML / JSON Response</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Web Services — components &amp; features</summary>
+          <div class="sub-body">
+            <p><b>Components</b></p>
+            <ul>
+              <li>Service Provider — hosts and provides the web service.</li>
+              <li>Service Consumer (Client) — requests and uses the service.</li>
+              <li>Service Registry — stores service information for discovery.</li>
+              <li>WSDL — describes the service interface.</li>
+              <li>SOAP / REST APIs — communication protocols.</li>
+            </ul>
+            <p><b>Features</b></p>
+            <ul>
+              <li>Platform independent</li>
+              <li>Language independent</li>
+              <li>Reusable</li>
+              <li>Interoperable</li>
+              <li>Loosely coupled</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Advantages &amp; examples</summary>
+          <div class="sub-body">
+            <p><b>Advantages</b></p>
+            <ul>
+              <li>Easy integration</li>
+              <li>Supports distributed applications</li>
+              <li>Reusable services</li>
+              <li>Faster application development</li>
+              <li>Cost-effective</li>
+            </ul>
+            <p><b>Examples</b></p>
+            <ul>
+              <li>Payment Gateway APIs</li>
+              <li>Google Maps API</li>
+              <li>Weather API</li>
+              <li>SMS Gateway</li>
+              <li>Banking APIs</li>
+            </ul>
+            <div class="hook">Memory hook: Provider → Registry → Consumer | WSDL + SOAP/REST | XML/JSON.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 2. WEB 2.0 & WEB OS ============ -->
+    <details class="branch web" open>
+      <summary><span class="num">2</span> Web 2.0 &amp; Web OS</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Web 2.0 — definition &amp; characteristics</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Second generation of the World Wide Web focusing on <b>user interaction, collaboration and content sharing</b>.</li>
+              <li>Unlike Web 1.0 (static pages), Web 2.0 enables users to <b>create, edit and share</b> content.</li>
+            </ul>
+            <p><b>Characteristics</b></p>
+            <ul>
+              <li>User-generated content</li>
+              <li>Collaboration</li>
+              <li>Rich user interface</li>
+              <li>Social networking</li>
+              <li>Dynamic web pages</li>
+              <li>Interactive websites</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Web 2.0 — examples, pros &amp; cons</summary>
+          <div class="sub-body">
+            <p><b>Examples:</b> Facebook, YouTube, Wikipedia, Instagram, X (formerly Twitter), Blogger.</p>
+            <p><b>Advantages</b></p>
+            <ul>
+              <li>Easy collaboration</li>
+              <li>Real-time communication</li>
+              <li>Content sharing</li>
+              <li>Better user experience</li>
+              <li>Community building</li>
+            </ul>
+            <p><b>Disadvantages</b></p>
+            <ul>
+              <li>Privacy issues</li>
+              <li>Security risks</li>
+              <li>Fake information</li>
+              <li>Data misuse</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Web OS — definition &amp; features</summary>
+          <div class="sub-body">
+            <ul>
+              <li>An operating system that runs primarily through a <b>web browser</b>.</li>
+              <li>Provides access to applications, storage and files over the Internet instead of relying on local installation.</li>
+            </ul>
+            <p><b>Features</b></p>
+            <ul>
+              <li>Browser-based</li>
+              <li>Cloud storage</li>
+              <li>Online applications</li>
+              <li>Multi-user support</li>
+              <li>Platform independent</li>
+              <li>Accessible from anywhere</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Web OS — pros, cons &amp; examples</summary>
+          <div class="sub-body">
+            <p><b>Advantages</b></p>
+            <ul>
+              <li>No installation required</li>
+              <li>Automatic updates</li>
+              <li>Access from any device</li>
+              <li>Lower hardware requirements</li>
+              <li>Easy backup and recovery</li>
+            </ul>
+            <p><b>Disadvantages</b></p>
+            <ul>
+              <li>Internet dependency</li>
+              <li>Security concerns</li>
+              <li>Limited offline functionality</li>
+              <li>Performance depends on network speed</li>
+            </ul>
+            <p><b>Examples:</b> Google Chrome OS, EyeOS, Ghost OS, Glide OS (legacy), Microsoft Windows 365 (Cloud PC concept).</p>
+            <div class="hook">Memory hook: Web 2.0 = user-generated + social · Web OS = browser-based OS + cloud storage.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 3. CLOUD PLATFORM & MANAGEMENT ============ -->
+    <details class="branch platform" open>
+      <summary><span class="num">3</span> Cloud Platform &amp; Management</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Components of a cloud platform</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Compute Services</b> — Virtual Machines (VMs), containers, CPUs and memory allocation.</li>
+              <li><b>Storage Services</b> — object storage, block storage, file storage, database services.</li>
+              <li><b>Networking Services</b> — virtual networks, load balancers, firewalls, VPNs.</li>
+              <li><b>Security Services</b> — authentication, Identity and Access Management (IAM), data encryption, firewall protection.</li>
+              <li><b>Monitoring Services</b> — performance monitoring, resource utilization, error detection, alerts and notifications.</li>
+              <li><b>Billing and Cost Management</b> — usage monitoring, pay-as-you-go billing, cost optimization, budget management.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Cloud management functions</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Provisioning</b> — allocating cloud resources automatically.</li>
+              <li><b>Monitoring</b> — tracking system performance, uptime and resource usage.</li>
+              <li><b>Scaling</b> — increasing or decreasing resources based on demand.</li>
+              <li><b>Automation</b> — automatic deployment, backup, updates and recovery.</li>
+              <li><b>Security Management</b> — user authentication, access control, encryption, compliance.</li>
+              <li><b>Backup and Disaster Recovery</b> — data backup, replication, recovery after failures.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Features of a cloud platform</summary>
+          <div class="sub-body">
+            <ul>
+              <li>On-demand resource provisioning</li>
+              <li>Self-service management</li>
+              <li>Auto-scaling</li>
+              <li>High availability</li>
+              <li>Resource monitoring</li>
+              <li>Cost optimization</li>
+              <li>Security and compliance</li>
+              <li>Multi-cloud support</li>
+            </ul>
+            <div class="hook">Memory hook: Compute + Storage + Network + Security + Monitoring + Billing = cloud platform.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Service models reminder — IaaS / PaaS / SaaS</summary>
+          <div class="sub-body">
+            <div class="stack">
+              <div>SaaS — Software</div>
+              <div>PaaS — Platform</div>
+              <div>IaaS — Infrastructure</div>
+            </div>
+            <div class="hook">Memory hook: IaaS = Infrastructure · PaaS = Platform · SaaS = Software.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 4. PaaS WITH APP ENGINE ============ -->
+    <details class="branch appengine" open>
+      <summary><span class="num">4</span> Exploring PaaS with App Engine</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is Google App Engine?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Platform as a Service (PaaS) provided by Google Cloud.</li>
+              <li>Enables developers to <b>build, deploy and manage applications</b> without worrying about underlying infrastructure.</li>
+            </ul>
+            <p><b>Platform automatically handles</b></p>
+            <ul>
+              <li>Server provisioning</li>
+              <li>Load balancing</li>
+              <li>Auto scaling</li>
+              <li>Security patches</li>
+              <li>Monitoring</li>
+            </ul>
+            <p>Developers only focus on <b>writing application code</b>.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Architecture — 8 layers</summary>
+          <div class="sub-body">
+            <div class="stack">
+              <div>1. Client / User</div>
+              <div>2. Load Balancer</div>
+              <div>3. App Engine Front End</div>
+              <div>4. Memcache</div>
+              <div>5. Cloud Storage (static)</div>
+              <div>6. Datastore / Cloud SQL</div>
+              <div>7. Task Queues</div>
+              <div>8. Backend / Batch Application</div>
+            </div>
+            <ol>
+              <li><b>Client / User</b> — access via laptop / desktop / mobile; requests sent to the load balancer.</li>
+              <li><b>Load Balancer</b> — distributes incoming requests; handles many users, improves availability, prevents overloading, supports scalability.</li>
+              <li><b>App Engine Front End</b> — receives requests from the load balancer, processes web / mobile requests, interacts with databases and storage, can use cache for faster response.</li>
+              <li><b>Memcache</b> — stores frequently accessed data temporarily in memory; faster access, fewer DB queries, better performance (e.g. product details, user session data).</li>
+              <li><b>Cloud Storage (static)</b> — images, videos, documents, backup files, CSS / JavaScript files.</li>
+              <li><b>Datastore / Cloud SQL (dynamic)</b> — Datastore = NoSQL, scalable, flexible; Cloud SQL = relational, SQL + structured tables. Stores user info, orders, transactions, app records.</li>
+              <li><b>Task Queues</b> — background / asynchronous tasks processed later instead of making the user wait (emails, image processing, report generation, data processing).</li>
+              <li><b>Backend / Batch Application</b> — processes background and batch jobs from the task queue (large datasets, reports, notifications, scheduled operations).</li>
+            </ol>
+            <div class="hook">Memory hook: Client → LB → Front End → Memcache → Storage/DB → Queue → Backend.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Applications</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Web applications</li>
+              <li>Mobile backends</li>
+              <li>APIs</li>
+              <li>E-commerce websites</li>
+              <li>Educational portals</li>
+            </ul>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 5. CLOUD FUNCTIONS ============ -->
+    <details class="branch functions" open>
+      <summary><span class="num">5</span> Event-Driven Programs with Cloud Functions</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Definition</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Google Cloud Functions is a <b>Function as a Service (FaaS)</b> platform that executes code automatically in response to events.</li>
+              <li>Developers write only the function, while Google manages the infrastructure.</li>
+              <li><b>Event-Driven Computing:</b> an application responds whenever an event occurs.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Common events</summary>
+          <div class="sub-body">
+            <ul>
+              <li>File uploaded to Cloud Storage</li>
+              <li>HTTP request</li>
+              <li>Database update</li>
+              <li>Firebase event</li>
+              <li>Cloud Scheduler event</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Characteristics &amp; advantages</summary>
+          <div class="sub-body">
+            <p><b>Characteristics</b></p>
+            <ul>
+              <li>Serverless</li>
+              <li>Automatic scaling</li>
+              <li>Pay only when executed</li>
+              <li>Supports multiple languages</li>
+              <li>Fast deployment</li>
+            </ul>
+            <p><b>Advantages</b></p>
+            <ul>
+              <li>No infrastructure management</li>
+              <li>Cost-effective</li>
+              <li>Highly scalable</li>
+              <li>Suitable for event processing</li>
+              <li>Easy integration with Google Cloud services</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Applications &amp; limitations</summary>
+          <div class="sub-body">
+            <p><b>Applications</b></p>
+            <ul>
+              <li>Image processing</li>
+              <li>Email notifications</li>
+              <li>IoT applications</li>
+              <li>Data validation</li>
+              <li>Log processing</li>
+              <li>API backends</li>
+            </ul>
+            <p><b>Limitations</b></p>
+            <ul>
+              <li>Limited execution time</li>
+              <li>Stateless execution</li>
+              <li>Cold start latency</li>
+              <li>Less suitable for long-running tasks</li>
+            </ul>
+            <div class="hook">Memory hook: Event → Function → Auto-scale → Pay-per-run (Serverless).</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 6. CONTAINERS & GKE ============ -->
+    <details class="branch gke" open>
+      <summary><span class="num">6</span> Containers &amp; GKE</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is containerization?</summary>
+          <div class="sub-body">
+            <p>Packages an application together with its:</p>
+            <ul>
+              <li>Application code</li>
+              <li>Required libraries</li>
+              <li>Dependencies</li>
+              <li>Runtime environment</li>
+            </ul>
+            <p>→ into a lightweight unit called a <b>container</b>.</p>
+            <ul>
+              <li>Most popular container platform: <b>Docker</b>.</li>
+            </ul>
+            <p><b>Benefits</b></p>
+            <ul>
+              <li>Portability</li>
+              <li>Fast startup</li>
+              <li>Consistent environments</li>
+              <li>Efficient resource utilization</li>
+              <li>Easy deployment</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Features of GKE</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Managed Kubernetes</li>
+              <li>Automatic upgrades</li>
+              <li>Auto repair</li>
+              <li>Auto scaling</li>
+              <li>Load balancing</li>
+              <li>Monitoring</li>
+              <li>Logging</li>
+              <li>Rolling updates</li>
+              <li>Self-healing</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Key concepts</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Container</b> — a packaged application with its dependencies.</li>
+              <li><b>Pod</b> — the smallest deployable unit in Kubernetes; can contain one or more containers.</li>
+              <li><b>Node</b> — a virtual machine or worker machine that runs pods.</li>
+              <li><b>Cluster</b> — a collection of nodes managed by Kubernetes.</li>
+              <li><b>SRE</b> — Site Reliability Engineering.</li>
+              <li><b>SRE monitoring</b> — continuously monitoring the health, performance, availability and reliability of Kubernetes clusters, nodes, pods, containers, applications, and network and storage resources.</li>
+            </ul>
+            <div class="hook">Memory hook: Container → Pod → Node → Cluster (Managed Kubernetes).</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Summary of the three Google services</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Google App Engine (PaaS)</b> — simplifies application deployment by abstracting infrastructure management; ideal for web apps and APIs.</li>
+              <li><b>Google Cloud Functions (FaaS)</b> — executes code in response to events; well-suited for serverless, event-driven workloads.</li>
+              <li><b>Google Kubernetes Engine (GKE)</b> — managed Kubernetes environment for deploying, scaling and orchestrating containerized applications with high flexibility and control.</li>
+            </ul>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 7. SaaS · DOCKER · LINKING ============ -->
+    <details class="branch saas" open>
+      <summary><span class="num">7</span> SaaS · Docker · Linking</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. SaaS architecture — 4 layers</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Users</b> — multiple customers accessing SaaS applications through the Internet.</li>
+              <li><b>Client UI</b> — interface through which users interact with the SaaS application: web browser, mobile application, desktop application. The user does not manage underlying servers or infrastructure.</li>
+              <li><b>SaaS Orchestration</b> — coordination and management layer: manages user requests, coordinates SaaS services, integrates multiple applications, controls workflows, delivers the required service to users.</li>
+              <li><b>Cloud Servers</b> — provide the actual computing infrastructure: processing power, storage, networking and application execution. The SaaS services run on these cloud resources.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Docker flow</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Docker is a platform used to package an application and all its required dependencies into a lightweight unit called a container.</li>
+              <li>Helps developers <b>build an application once and run it consistently</b> on different cloud environments.</li>
+            </ul>
+            <div class="flow">
+              <span>Build</span><i>→</i>
+              <span>Package</span><i>→</i>
+              <span>Store</span><i>→</i>
+              <span>Deploy</span><i>→</i>
+              <span>Run</span><i>→</i>
+              <span>Scale</span>
+            </div>
+            <ol>
+              <li>Build the application.</li>
+              <li>Package it into a Docker image.</li>
+              <li>Store the image in a container registry.</li>
+              <li>Deploy it to the cloud or Kubernetes.</li>
+              <li>Run it as one or more containers.</li>
+              <li>Scale containers based on user demand.</li>
+            </ol>
+            <div class="hook">Memory hook: Build → Package → Store → Deploy → Run → Scale.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Docker orchestration</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Automated management of multiple Docker containers across one or more servers.</li>
+            </ul>
+            <p><b>Features / advantages</b></p>
+            <ul>
+              <li>Automatic deployment</li>
+              <li>Automatic scaling</li>
+              <li>Auto restart</li>
+              <li>Load balancing</li>
+              <li>Auto scaling</li>
+              <li>Fault tolerance</li>
+              <li>High availability</li>
+              <li>Self-healing containers</li>
+              <li>Easy cluster management</li>
+              <li>Easy updates</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Legacy linking of containers</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Older Docker mechanism used to allow one container to communicate with another.</li>
+              <li>Has been <b>deprecated</b> and replaced by Docker networking.</li>
+            </ul>
+            <p><b>Limitations</b></p>
+            <ul>
+              <li>Deprecated feature</li>
+              <li>Difficult to scale</li>
+              <li>Manual linking</li>
+              <li>Static configuration</li>
+              <li>Not suitable for microservices</li>
+              <li>Limited flexibility</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Dynamic linking + comparison</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Containers communicate dynamically using <b>Docker networking and service discovery</b> rather than fixed IP addresses.</li>
+            </ul>
+            <p><b>Containers locate services using</b></p>
+            <ul>
+              <li>Container names</li>
+              <li>Docker DNS</li>
+              <li>Docker Compose service names</li>
+              <li>Kubernetes Services</li>
+            </ul>
+            <p><b>Advantages</b></p>
+            <ul>
+              <li>Automatic service discovery</li>
+              <li>Easy scaling</li>
+              <li>Flexible networking</li>
+              <li>Containers can restart without breaking communication</li>
+              <li>Simplifies microservices deployment</li>
+            </ul>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Aspect</th><th>Legacy Linking</th><th>Dynamic Linking</th></tr></thead>
+                <tbody>
+                  <tr><td>Status</td><td>Deprecated</td><td>Current standard</td></tr>
+                  <tr><td>Discovery</td><td>Manual</td><td>Automatic (DNS)</td></tr>
+                  <tr><td>Config</td><td>Static</td><td>Dynamic</td></tr>
+                  <tr><td>Scaling</td><td>Difficult</td><td>Easy</td></tr>
+                  <tr><td>Microservices</td><td>Not suitable</td><td>Ideal</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Legacy = manual/static · Dynamic = DNS/service discovery.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 8. GCP TOOLING ============ -->
+    <details class="branch gcp" open>
+      <summary><span class="num">8</span> GCP Tooling</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Understanding GCP projects</summary>
+          <div class="sub-body">
+            <p><b>Project lifecycle</b></p>
+            <ol>
+              <li>Create Project</li>
+              <li>Enable APIs</li>
+              <li>Add Resources</li>
+              <li>Assign IAM Roles</li>
+              <li>Monitor Usage</li>
+              <li>Delete Project (if no longer needed)</li>
+            </ol>
+            <p><b>Benefits</b></p>
+            <ul>
+              <li>Resource isolation</li>
+              <li>Separate billing</li>
+              <li>Better security</li>
+              <li>Easier collaboration</li>
+              <li>Access control using IAM</li>
+            </ul>
+            <div class="hook">Memory hook: Create → Enable APIs → Add Resources → IAM → Monitor → Delete.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. The GCP Console</summary>
+          <div class="sub-body">
+            <ul>
+              <li>User-friendly web interface for managing GCP.</li>
+            </ul>
+            <p><b>Features</b></p>
+            <ul>
+              <li>Create and manage Virtual Machines (VMs)</li>
+              <li>Deploy applications</li>
+              <li>Configure networking and security</li>
+              <li>Monitor resource usage</li>
+              <li>Manage storage and databases</li>
+              <li>View billing reports</li>
+              <li>Access IAM (Identity and Access Management)</li>
+              <li>Monitor logs using Cloud Logging</li>
+            </ul>
+            <p><b>Advantages</b></p>
+            <ul>
+              <li>Easy to use</li>
+              <li>No command-line knowledge required</li>
+              <li>Centralized management</li>
+              <li>Real-time monitoring</li>
+              <li>Secure access with Google accounts</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Billing in GCP</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Process of tracking and paying for the cloud resources and services used within projects.</li>
+              <li><b>Billing Account</b> — linked to one or more GCP projects and contains the payment information.</li>
+            </ul>
+            <div class="diagram">Billing workflow: Track usage → Map to resources → Apply pricing → Generate invoice → Charge payment account</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Cloud SDK</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Collection of <b>command-line tools</b> that allow users to manage GCP resources from a terminal or command prompt.</li>
+              <li>Primary tool is <code>gcloud</code>, used to create, manage and monitor GCP resources.</li>
+            </ul>
+            <p><b>Components</b></p>
+            <ul>
+              <li><code>gcloud</code> — main command-line interface for managing GCP services.</li>
+              <li><code>gsutil</code> — manages Cloud Storage buckets and objects.</li>
+              <li><code>bq</code> — manages BigQuery datasets and queries.</li>
+              <li>Local Emulator tools — for testing applications locally.</li>
+            </ul>
+            <p><b>System requirements</b></p>
+            <ul>
+              <li>Windows 10/11, Linux or macOS</li>
+              <li>Python (included with recent SDK versions or installed separately)</li>
+              <li>Internet connection</li>
+              <li>Google Cloud account</li>
+            </ul>
+            <p><b>Installation steps</b></p>
+            <ol>
+              <li><b>Download Cloud SDK</b> — visit the Google Cloud SDK download page and download the installer for your OS.</li>
+              <li><b>Install</b> — run the installer, follow the installation wizard, select the required components.</li>
+              <li><b>Initialize the SDK</b> — open Terminal (Linux / macOS) or Command Prompt (Windows) and run <code>gcloud init</code>.</li>
+            </ol>
+            <p><b>Advantages</b></p>
+            <ul>
+              <li>Fast resource management</li>
+              <li>Automation through scripts</li>
+              <li>Supports all GCP services</li>
+              <li>Easy deployment and administration</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Cloud Shell</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Browser-based command-line environment provided by Google Cloud.</li>
+              <li>Comes pre-installed with the Cloud SDK and other development tools — no local installation required.</li>
+            </ul>
+            <p><b>Features / advantages</b></p>
+            <ul>
+              <li>Browser-based terminal</li>
+              <li>Pre-installed Cloud SDK</li>
+              <li>Persistent home directory (5 GB storage)</li>
+              <li>Built-in code editor</li>
+              <li>Secure authentication</li>
+              <li>Access from anywhere</li>
+            </ul>
+            <p><b>Limitations</b></p>
+            <ul>
+              <li>Requires internet connectivity</li>
+              <li>Session timeout after inactivity</li>
+              <li>Limited persistent storage</li>
+            </ul>
+            <p><b>Steps to use</b></p>
+            <ol>
+              <li>Log in to Google Cloud Console.</li>
+              <li>Click the Cloud Shell icon (terminal icon).</li>
+              <li>Wait for the environment to start.</li>
+              <li>Execute GCP commands.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Google Cloud Platform APIs</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Application programming interfaces that allow applications, scripts and users to interact <b>programmatically</b> with Google Cloud services.</li>
+              <li>Each Google Cloud service (Compute Engine, Cloud Storage, BigQuery, Cloud SQL) provides its own API.</li>
+            </ul>
+            <p><b>Why use APIs?</b></p>
+            <ul>
+              <li>Automate cloud operations</li>
+              <li>Manage resources programmatically</li>
+              <li>Integrate applications with GCP</li>
+              <li>Build cloud-native applications</li>
+            </ul>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>API</th><th>Purpose</th></tr></thead>
+                <tbody>
+                  <tr><td>Compute Engine API</td><td>Manage virtual machines</td></tr>
+                  <tr><td>Cloud Storage API</td><td>Manage storage buckets and files</td></tr>
+                  <tr><td>Cloud SQL Admin API</td><td>Manage SQL databases</td></tr>
+                  <tr><td>BigQuery API</td><td>Execute data analytics queries</td></tr>
+                  <tr><td>Kubernetes Engine API</td><td>Manage Kubernetes clusters</td></tr>
+                  <tr><td>Cloud Functions API</td><td>Deploy and manage serverless functions</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Advantages of GCP APIs</b></p>
+            <ul>
+              <li>Easy automation</li>
+              <li>High scalability</li>
+              <li>Secure authentication</li>
+              <li>Supports REST and client libraries</li>
+              <li>Integration with third-party applications</li>
+            </ul>
+            <div class="hook">Memory hook: Console (UI) → SDK (CLI) → Shell (Browser) → APIs (Programmatic).</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ MASTER SUMMARY (wide) ============ -->
+    <details class="branch summary wide" open>
+      <summary><span class="num">★</span> Master Summary — Unit III at a Glance</summary>
+      <div class="branch-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Service / Tech</th><th>Type</th><th>Primary purpose</th></tr></thead>
+            <tbody>
+              <tr><td>SOA</td><td>Design Approach</td><td>Build apps from independent, reusable, interoperable services</td></tr>
+              <tr><td>Web Services</td><td>Communication Component</td><td>App-to-app data exchange over the Internet (HTTP / SOAP / REST)</td></tr>
+              <tr><td>Web 2.0</td><td>Web Generation</td><td>User interaction, collaboration and content sharing</td></tr>
+              <tr><td>Web OS</td><td>Browser-Based OS</td><td>Apps, storage and files delivered over the Internet</td></tr>
+              <tr><td>Cloud Platform</td><td>Infrastructure Layer</td><td>Compute + storage + network + security + monitoring + billing</td></tr>
+              <tr><td>Google App Engine</td><td>PaaS</td><td>Deploy web apps / APIs with infrastructure fully managed</td></tr>
+              <tr><td>Cloud Functions</td><td>FaaS (Serverless)</td><td>Run code in response to events</td></tr>
+              <tr><td>Google Kubernetes Engine</td><td>Managed Kubernetes</td><td>Deploy, scale and orchestrate containerized apps</td></tr>
+              <tr><td>SaaS Architecture</td><td>Delivery Model</td><td>Users → Client UI → SaaS Orchestration → Cloud Servers</td></tr>
+              <tr><td>Docker</td><td>Container Platform</td><td>Package app + dependencies into a portable container</td></tr>
+              <tr><td>Docker Orchestration</td><td>Container Management</td><td>Automate deployment, scaling and healing of containers</td></tr>
+              <tr><td>Legacy Linking</td><td>Deprecated Mechanism</td><td>Manual, static container-to-container communication</td></tr>
+              <tr><td>Dynamic Linking</td><td>Current Mechanism</td><td>Automatic service discovery via DNS / Kubernetes services</td></tr>
+              <tr><td>GCP Projects</td><td>Resource Container</td><td>Isolation, billing, IAM and collaboration boundary</td></tr>
+              <tr><td>GCP Console</td><td>Web UI</td><td>Manage all GCP resources visually</td></tr>
+              <tr><td>Cloud SDK</td><td>CLI Tools</td><td>Manage GCP from terminal (gcloud, gsutil, bq)</td></tr>
+              <tr><td>Cloud Shell</td><td>Browser Terminal</td><td>SDK pre-installed; no local setup needed</td></tr>
+              <tr><td>GCP APIs</td><td>Programmatic Interface</td><td>Automate and integrate with GCP services</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============ MEMORY HOOKS (wide) ============ -->
+    <details class="branch hooks wide" open>
+      <summary><span class="num">🎯</span> Key Memory Hooks</summary>
+      <div class="branch-body">
+        <div class="hook-grid">
+          <div class="hook">SOA: Independent services + ESB + Registry + Contract</div>
+          <div class="hook">Web Service: Provider → Registry → Consumer | WSDL + SOAP/REST | XML/JSON</div>
+          <div class="hook">Web 2.0: User-generated + Collaboration + Social + Dynamic</div>
+          <div class="hook">Web OS: Browser-based OS + Cloud storage + Anywhere access</div>
+          <div class="hook">Platform: Compute + Storage + Network + Security + Monitoring + Billing</div>
+          <div class="hook">Models: IaaS = Infrastructure | PaaS = Platform | SaaS = Software</div>
+          <div class="hook">App Engine: Client → LB → Front End → Memcache → Storage/DB → Queue → Backend</div>
+          <div class="hook">Functions: Event → Function → Auto-scale → Pay-per-run (Serverless)</div>
+          <div class="hook">GKE: Container → Pod → Node → Cluster (Managed Kubernetes)</div>
+          <div class="hook">SaaS: Users → Client UI → Orchestration → Cloud Servers</div>
+          <div class="hook">Docker Flow: Build → Package → Store → Deploy → Run → Scale</div>
+          <div class="hook">Linking: Legacy = Manual/Static/Deprecated · Dynamic = DNS/Service Discovery/Current</div>
+          <div class="hook">GCP Tools: Console (UI) → SDK (CLI) → Shell (Browser) → APIs (Programmatic)</div>
+          <div class="hook">Projects: Create → Enable APIs → Add Resources → IAM → Monitor → Delete</div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <p class="no-results" id="noResults">No matching topics. Try another search term.</p>
+  <div class="foot">Single-file offline mindmap · Expand/collapse each branch · Search highlights matching topics · Print to PDF for a study copy</div>
+</main>
+
+<script>
+const allDetails = [...document.querySelectorAll('details')];
+
+function expandAll(open){ allDetails.forEach(d => d.open = open); }
+
+function resetView(){
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.hidden').forEach(e => e.classList.remove('hidden'));
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+  expandAll(true);
+  document.getElementById('noResults').style.display = 'none';
+}
+
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const q = search.value.trim().toLowerCase();
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+
+  if (!q){
+    document.querySelectorAll('.branch,.sub').forEach(e => e.classList.remove('hidden'));
+    document.getElementById('noResults').style.display = 'none';
+    return;
+  }
+
+  let count = 0;
+
+  document.querySelectorAll('.branch').forEach(branch => {
+    const branchMatch = branch.innerText.toLowerCase().includes(q);
+    const subMatches = [...branch.querySelectorAll('.sub')]
+      .filter(s => s.innerText.toLowerCase().includes(q));
+
+    if (branchMatch || subMatches.length){
+      branch.classList.remove('hidden');
+      branch.open = true;
+
+      subMatches.forEach(s => {
+        s.classList.remove('hidden');
+        s.open = true;
+        s.classList.add('hit');
+        count++;
+      });
+
+      branch.querySelectorAll('.sub').forEach(s => {
+        if (!subMatches.includes(s)) s.classList.add('hidden');
+      });
+
+      if (!subMatches.length){
+        branch.classList.add('hit');
+        count++;
+      }
+    } else {
+      branch.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('noResults').style.display = count ? 'none' : 'block';
+});
+</script>
+</body>
+</html>
