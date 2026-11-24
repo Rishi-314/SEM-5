@@ -1,0 +1,1199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DAA Unit 1 — Fundamentals of Algorithm Analysis Mindmap</title>
+<style>
+:root{
+  --bg:#f5f7fb;--ink:#172033;--muted:#586579;--line:#d8dfeb;
+  --b1:#1d4ed8;--b1t:#dbeafe;
+  --b2:#0e7490;--b2t:#cffafe;
+  --b3:#7c3aed;--b3t:#ede9fe;
+  --b4:#15803d;--b4t:#dcfce7;
+  --b5:#b45309;--b5t:#fef3c7;
+  --b6:#0369a1;--b6t:#e0f2fe;
+  --b7:#be185d;--b7t:#fce7f3;
+  --b8:#0f766e;--b8t:#ccfbf1;
+  --b9:#9333ea;--b9t:#f3e8ff;
+  --b10:#c2410c;--b10t:#ffedd5;
+  --b11:#4d7c0f;--b11t:#ecfccb;
+  --summary:#475569;--summary-t:#e2e8f0;
+  --hooks:#b91c1c;--hooks-t:#fee2e2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+
+.top{position:sticky;top:0;z-index:10;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:850;letter-spacing:.02em;margin-right:auto}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+button{border:1px solid #cbd5e1;background:white;color:#263247;border-radius:9px;padding:8px 11px;font:inherit;font-size:13px;cursor:pointer}
+button:hover{background:#eef4ff;border-color:#93b4f5}
+input{border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px;min-width:min(280px,75vw);font:inherit}
+input:focus{outline:2px solid #93b4f5;outline-offset:1px}
+
+.hero{max-width:1500px;margin:26px auto 18px;padding:0 20px;text-align:center}
+.hero h1{margin:0 auto 7px;font-size:clamp(25px,4vw,42px);line-height:1.15;letter-spacing:-.035em}
+.hero p{margin:0;color:var(--muted)}
+.legend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:15px 0}
+.legend span{font-size:12px;padding:5px 9px;border-radius:20px;background:white;border:1px solid var(--line)}
+
+.map{max-width:1600px;margin:auto;padding:0 18px 60px}
+.root{margin:20px auto 24px;max-width:800px;text-align:center;background:#173e78;color:white;padding:20px;border-radius:16px;box-shadow:0 8px 24px #173e7822}
+.root h2{margin:0;font-size:23px}
+.root small{opacity:.85}
+
+.branch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.branch{--accent:var(--summary);--tint:var(--summary-t);min-width:0;background:white;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #1e293b0a}
+.branch.b1{--accent:var(--b1);--tint:var(--b1t)}
+.branch.b2{--accent:var(--b2);--tint:var(--b2t)}
+.branch.b3{--accent:var(--b3);--tint:var(--b3t)}
+.branch.b4{--accent:var(--b4);--tint:var(--b4t)}
+.branch.b5{--accent:var(--b5);--tint:var(--b5t)}
+.branch.b6{--accent:var(--b6);--tint:var(--b6t)}
+.branch.b7{--accent:var(--b7);--tint:var(--b7t)}
+.branch.b8{--accent:var(--b8);--tint:var(--b8t)}
+.branch.b9{--accent:var(--b9);--tint:var(--b9t)}
+.branch.b10{--accent:var(--b10);--tint:var(--b10t)}
+.branch.b11{--accent:var(--b11);--tint:var(--b11t)}
+.branch.summary{--accent:var(--summary);--tint:var(--summary-t)}
+.branch.hooks{--accent:var(--hooks);--tint:var(--hooks-t)}
+.branch>summary{list-style:none;cursor:pointer;background:var(--tint);padding:14px 15px;font-weight:850;font-size:15.5px;display:flex;gap:10px;align-items:center;line-height:1.3}
+.branch>summary::-webkit-details-marker{display:none}
+.num{flex:none;border-radius:8px;background:var(--accent);color:white;width:30px;height:30px;display:grid;place-items:center;font-size:13.5px;font-variant-numeric:tabular-nums}
+.branch-body{padding:12px}
+
+.sub{border:1px solid var(--line);border-radius:10px;margin:9px 0;background:#fff;overflow:hidden}
+.sub>summary{cursor:pointer;list-style:none;padding:10px 12px;font-weight:750;background:#f8fafc;border-bottom:1px solid transparent;font-size:13.5px}
+.sub>summary::-webkit-details-marker{display:none}
+.sub[open]>summary{border-bottom-color:var(--line)}
+.sub-body{padding:10px 14px 13px;font-size:13.5px}
+.sub-body p{margin:6px 0}
+.sub-body ul,.sub-body ol{margin:5px 0 8px;padding-left:21px}
+.sub-body li{margin:3px 0}
+.sub-body ul ul{margin-top:3px}
+.sub-body b{color:#111827}
+
+.hook{padding:10px 12px;border-left:4px solid var(--accent);background:var(--tint);border-radius:7px;margin:10px 0;font-weight:650;font-size:13.5px}
+.diagram{border:1px dashed #94a3b8;border-radius:9px;padding:10px;margin:9px 0;text-align:center;background:#fafcff;font-weight:700;font-size:12.5px;line-height:1.8;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.code{white-space:pre;overflow-x:auto;background:#0f172a;color:#e2e8f0;border-radius:9px;padding:12px 14px;margin:9px 0;font:12.5px/1.75 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;border:1px solid #1e293b}
+.code .c{color:#7dd3fc}
+.code .k{color:#c084fc}
+.code .s{color:#86efac}
+.fix{border:1px solid #fcd34d;background:#fffbeb;border-radius:9px;padding:10px 12px;margin:10px 0;font-size:13px}
+.fix .tag{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:#f59e0b;color:#fff;border-radius:5px;padding:1px 6px;margin-right:6px;font-weight:800;vertical-align:1px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:9px 0}
+.split div{border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:12.8px}
+.split div b{display:block;margin-bottom:3px;color:var(--accent)}
+.table-wrap{overflow-x:auto;margin:9px 0}
+table{border-collapse:collapse;width:100%;font-size:12.6px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:11.5px;letter-spacing:.03em;text-transform:uppercase}
+tbody tr:hover td{background:#f8fbff}
+code{background:#eef2ff;padding:1px 4px;border-radius:4px;font-size:12px}
+
+.wide{grid-column:1 / -1;margin-top:16px}
+.hook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.hook-grid .hook{margin:0}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+.hidden{display:none!important}
+.hit{outline:3px solid #f59e0b;outline-offset:2px;background:#fffbeb!important}
+.no-results{display:none;text-align:center;padding:20px;color:#64748b}
+
+@media(max-width:1100px){.branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+  .branch-grid{grid-template-columns:1fr}
+  .top{position:static}
+  .brand{width:100%}
+  .hero{margin-top:18px}
+  .map{padding:0 10px 35px}
+  .root{padding:16px}
+  .branch>summary{font-size:14.5px}
+  .split{grid-template-columns:1fr}
+}
+
+@media print{
+  .top{display:none}
+  .hero{margin:0 auto 12px}
+  .map{max-width:none;padding:0}
+  .branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .branch,.sub{break-inside:avoid;box-shadow:none}
+  details:not([open])>.branch-body,details:not([open])>.sub-body{display:block}
+  .branch>summary,.sub>summary,.root{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  body{background:white;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">🧮 DAA • UNIT 1 • FUNDAMENTALS</div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search any concept… (e.g. Big-O, master theorem, insertion sort)">
+    <button onclick="expandAll(true)">Expand all</button>
+    <button onclick="expandAll(false)">Collapse all</button>
+    <button onclick="resetView()">Reset</button>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Fundamentals of Algorithm Analysis — Unit 1</h1>
+  <p>Design &amp; Analysis of Algorithms · complete study mindmap with expandable branches</p>
+  <div class="legend">
+    <span style="background:var(--b1t)">1 Algorithm Fundamentals</span>
+    <span style="background:var(--b2t)">2 Analysis of Algorithms</span>
+    <span style="background:var(--b3t)">3 Orders of Growth</span>
+    <span style="background:var(--b4t)">4 Asymptotic Notations</span>
+    <span style="background:var(--b5t)">5 Case Analysis</span>
+    <span style="background:var(--b6t)">6 Time &amp; Space Complexity</span>
+    <span style="background:var(--b7t)">7 Insertion Sort</span>
+    <span style="background:var(--b8t)">8 Bubble Sort</span>
+    <span style="background:var(--b9t)">9 Recurrence Relations</span>
+    <span style="background:var(--b10t)">10 Master Theorem</span>
+    <span style="background:var(--b11t)">11 Proof of Correctness</span>
+    <span style="background:var(--summary-t)">★ Summary</span>
+    <span style="background:var(--hooks-t)">🎯 Hooks</span>
+  </div>
+</section>
+
+<main class="map">
+  <div class="root">
+    <h2>🧮 FUNDAMENTALS OF ALGORITHM ANALYSIS — UNIT 1</h2>
+    <small>Eleven connected knowledge branches · select a heading to expand its details</small>
+  </div>
+
+  <div class="branch-grid">
+
+    <!-- ============ 1. ALGORITHM FUNDAMENTALS ============ -->
+    <details class="branch b1" open>
+      <summary><span class="num">1</span> Algorithm Fundamentals</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Definition of an algorithm</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Any <b>well-defined computational procedure</b> that takes some value(s) as input and produces some value(s) as output.</li>
+              <li>A <b>sequence of computational steps</b> that transform the input into the output.</li>
+            </ul>
+            <div class="hook">Memory hook: Algorithm = input → sequence of well-defined steps → output.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Five ways of writing an algorithm</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Natural Language (Plain English)</b> — simple, human-readable steps; good for explaining logic informally.
+                <div class="fix"><span class="tag">Example</span> Find the maximum of three numbers — written as plain steps.</div>
+              </li>
+              <li><b>Pseudocode</b> — structured like programming code but language-independent; preferred in DAA for clarity and analysis.</li>
+              <li><b>Flowchart</b> — visual representation using ovals, diamonds and rectangles; useful for understanding flow and logic; best for beginners or simple processes.</li>
+              <li><b>Programming Language</b> — actual implementation in C, Python, Java, etc.; useful for running and testing.</li>
+              <li><b>Mathematical / Recursive Notation</b> — used for recursive algorithms and mathematical problems (e.g. Factorial).</li>
+            </ol>
+            <div class="hook">Memory hook: Natural · Pseudocode · Flowchart · Code · Math/Recursive.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Course context</summary>
+          <div class="sub-body">
+            <p><b>Prerequisites:</b> basic programming skills, data structures, discrete structures.</p>
+            <p><b>Course objectives</b></p>
+            <ol>
+              <li>Understand asymptotic notations; apply mathematical techniques to find time and space complexity.</li>
+              <li>Build foundations for solving computational problems using different design strategies.</li>
+              <li>Select the appropriate algorithm design strategy for real-world problems.</li>
+              <li>Understand NP-hardness and NP-completeness and their relationship with intractability of decision problems.</li>
+              <li>Understand randomized and approximation algorithms for given computational problems.</li>
+            </ol>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 2. ANALYSIS OF ALGORITHMS ============ -->
+    <details class="branch b2" open>
+      <summary><span class="num">2</span> Analysis of Algorithms</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is analysis of algorithms?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>The process of evaluating an algorithm's efficiency in terms of:
+                <ul>
+                  <li><b>Time</b> — how fast it runs.</li>
+                  <li><b>Space</b> — how much memory it uses.</li>
+                </ul>
+              </li>
+              <li>Helps decide which algorithm is best suited for a given problem, especially when there are multiple alternatives.</li>
+              <li>Ensures the program works well with large amounts of data or complex problems.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Real-time example — the road trip</summary>
+          <div class="sub-body">
+            <p>You are planning a road trip with two routes:</p>
+            <div class="split">
+              <div>
+                <b>Route A — highway, minimal traffic, but longer</b>
+                Slower but uses <b>less memory</b>.<br>
+                <i>Example:</i> recursive Fibonacci with no array — slower because it recalculates values, but uses little memory.
+              </div>
+              <div>
+                <b>Route B — shorter, but heavy traffic</b>
+                Faster but uses <b>more memory</b> (frequent braking, acceleration, idling, more fuel).<br>
+                <i>Example:</i> Fibonacci with memoization or a DP table — faster due to reuse of computed values, but uses extra memory to store results.
+              </div>
+            </div>
+            <div class="hook">Memory hook: Recursion = slow + low memory · DP = fast + more memory.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Why do we need complexity analysis?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Determines the amount of <b>time and space resources</b> required to execute an algorithm.</li>
+              <li>Used to <b>compare different algorithms</b> on different input sizes.</li>
+              <li>Helps determine the <b>difficulty of a problem</b>.</li>
+              <li>Measured by how much time and space (memory) it takes to solve a particular problem.</li>
+            </ul>
+            <div class="hook">Memory hook: Complexity analysis = time + space + comparison + problem difficulty.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 3. ORDERS OF GROWTH ============ -->
+    <details class="branch b3" open>
+      <summary><span class="num">3</span> Orders of Growth</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What "order of growth" means</summary>
+          <div class="sub-body">
+            <ul>
+              <li>The <b>efficiency</b> of an algorithm — how the time (or memory) taken increases when the input size <code>n</code> becomes bigger.</li>
+              <li>When input gets larger, does your algorithm take a little more time, a lot more time, or a crazy long time?</li>
+            </ul>
+            <div class="hook">Growth rate = "How fast" the time increases as input grows.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Standard growth classes</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Order</th><th>Class</th><th>Example</th><th>Why</th></tr></thead>
+                <tbody>
+                  <tr><td><b>O(1)</b></td><td>Constant</td><td>Indexing a list item</td><td>Time does not depend on input size</td></tr>
+                  <tr><td><b>O(log n)</b></td><td>Logarithmic</td><td>Repeatedly halving a number</td><td>Grows with logarithm of input size</td></tr>
+                  <tr><td><b>O(n)</b></td><td>Linear</td><td>Summing a list</td><td>Proportional to input size</td></tr>
+                  <tr><td><b>O(n²)</b></td><td>Quadratic</td><td>Summing each pair of numbers</td><td>Grows quadratically with input size</td></tr>
+                  <tr><td><b>O(n³)</b></td><td>Cubic</td><td>Matrix multiplication</td><td>Triple nested loops</td></tr>
+                  <tr><td><b>O(2ⁿ)</b></td><td>Exponential</td><td>Visiting each node in a binary tree</td><td>Time doubles with each additional input</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Growth rate sequence — slowest to fastest</summary>
+          <div class="sub-body">
+            <div class="diagram">1  &lt;  log n  &lt;  √n  &lt;  n  &lt;  n log n  &lt;  n²  &lt;  n³  &lt;  2ⁿ  &lt;  nⁿ
+
+Constant → Logarithmic → Square Root → Linear → Linearithmic → Polynomial → Exponential → Super-Exponential</div>
+            <ul>
+              <li><b>Constant (1)</b> — operations independent of n; always the slowest growth (e.g. f(n)=2, f(n)=6000).</li>
+              <li><b>Logarithmic (log n)</b> — grows very slowly even for large n (e.g. log₁₀ 10 = 1, log₁₀ 100 = 2; binary search).</li>
+              <li><b>Square root (√n)</b> — faster than logarithmic, slower than linear (for n = 100, √n = 10).</li>
+              <li><b>Linear (n)</b> — grows directly proportionally to n (n = 100 → ~100 steps).</li>
+              <li><b>Linearithmic (n log n)</b> — combines linear and logarithmic; common in efficient sorting like merge sort.</li>
+              <li><b>Polynomial (n², n³)</b> — n² grows faster than n log n; n³ grows faster than n² (bubble sort, triple loops).</li>
+              <li><b>Exponential (2ⁿ)</b> — grows much faster than any polynomial; for n = 10, 2ⁿ = 1024 (e.g. TSP, all subsets).</li>
+              <li><b>Super-exponential (nⁿ)</b> — the fastest growth; for n = 5, nⁿ = 3125.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Real-life examples for each growth class</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Growth</th><th>Real-life example</th></tr></thead>
+                <tbody>
+                  <tr><td><b>O(1)</b></td><td>Picking the first book from a shelf — always one action, no matter how many books.</td></tr>
+                  <tr><td><b>O(log n)</b></td><td>Guessing a number 1–100 by asking "greater than 50?", then 75, then 88 — each guess halves the possibilities.</td></tr>
+                  <tr><td><b>O(√n)</b></td><td>Looking for a friend in a 10×10 crowd — checking one row and one column takes about √100 = 10 checks.</td></tr>
+                  <tr><td><b>O(n)</b></td><td>Counting students in a classroom one by one.</td></tr>
+                  <tr><td><b>O(n log n)</b></td><td>Organizing answer sheets by roll number with an efficient sort.</td></tr>
+                  <tr><td><b>O(n²)</b></td><td>Every student introducing themselves to every other student.</td></tr>
+                  <tr><td><b>O(n³)</b></td><td>Forming and checking every possible group of 3 students.</td></tr>
+                  <tr><td><b>O(2ⁿ)</b></td><td>Deciding ON/OFF for n lights — every new light doubles the combinations.</td></tr>
+                  <tr><td><b>O(nⁿ)</b></td><td>Each of n students independently picking any of n project topics.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: 1 · log · √ · n · n log n · n² · n³ · 2ⁿ · nⁿ.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Simplifying examples</summary>
+          <div class="sub-body">
+            <div class="code">f(n) = 2n + 3         →  O(n)     <span class="c">// drop constants &amp; lower-order terms</span>
+f(n) = 500n + 700     →  O(n)
+f(n) = n/200 + 6      →  O(n)
+f(n) = 2              →  O(1)
+f(n) = 3n² + 5n + 2   →  O(n²)    <span class="c">// n² dominates</span></div>
+            <p>Big-O ignores constants and lower-order terms to focus on the <b>dominant factor</b> that affects growth.</p>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 4. ASYMPTOTIC NOTATIONS ============ -->
+    <details class="branch b4" open>
+      <summary><span class="num">4</span> Asymptotic Notations</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What asymptotic notation is</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A way to describe the <b>efficiency</b> of an algorithm (time or space) with respect to input size.</li>
+              <li>Mathematical tools used to describe how fast an algorithm works when <code>n → ∞</code>.</li>
+              <li>Used to evaluate the performance of an algorithm in its best and worst case scenarios.</li>
+              <li>A method of defining the <b>mathematical boundaries</b> of run-time performance.</li>
+            </ul>
+            <p><b>Algorithm A is asymptotically faster than B means:</b></p>
+            <ul>
+              <li>For small inputs, B might be faster.</li>
+              <li>But for large inputs, A will eventually be better or more efficient.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. f(n) and g(n)</summary>
+          <div class="sub-body">
+            <div class="split">
+              <div>
+                <b>f(n)</b>
+                The <b>actual</b> number of steps (or time or memory) your algorithm takes when the input size is n.<br>
+                <i>Example:</i> f(n) = 3n² + 5n + 2.
+              </div>
+              <div>
+                <b>g(n)</b>
+                A <b>reference</b> function used to compare with the actual work — a known growth pattern like 1, log n, n, n², 2ⁿ.<br>
+                <i>Example:</i> g(n) = n².
+              </div>
+            </div>
+            <p>Instead of saying "my algorithm takes 3n² + 5n + 7 steps", we say "it grows like n² → that is g(n)".</p>
+            <div class="hook">Memory hook: f(n) = what your algorithm does · g(n) = the reference growth pattern.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Big-O — upper bound (worst case)</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Describes the <b>upper bound</b> or worst-case scenario.</li>
+              <li>"The algorithm will not take more time than this, even in the worst case."</li>
+              <li>Like <b>≤</b>.</li>
+            </ul>
+            <div class="code">Mathematically:   0 ≤ f(n) ≤ c·g(n)   for all n ≥ n₀</div>
+            <p><b>Example:</b> if an algorithm runs in at most 5n + 3 steps, we say it is O(n).</p>
+            <div class="code">3n + 5 ≤ 4n    for all n ≥ 5     →  f(n) = O(n)
+3n + 5 ≤ 4n²   for all n ≥ 5     →  f(n) = O(n²)  also true</div>
+            <p><b>Grocery checkout analogy:</b> with n people in line and 1 minute per person, you wait up to n minutes → waiting time = O(n).</p>
+            <div class="hook">Big-O answers: "How bad can it get?"</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Big-Ω — lower bound (best case)</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Gives a <b>lower bound</b> on the time or space.</li>
+              <li>"At least this much time will be needed."</li>
+              <li>Shows the <b>best case</b>.</li>
+              <li>Like <b>≥</b>.</li>
+            </ul>
+            <div class="code">Mathematically:   0 ≤ c·g(n) ≤ f(n)   for all n ≥ n₀</div>
+            <p><b>Laundry analogy:</b> each shirt takes at least 1 minute; with n shirts, at least n minutes → time = Ω(n). Even if you multitask, you cannot do it in less than n minutes.</p>
+            <p><b>Unsorted list search:</b></p>
+            <ul>
+              <li>Best case — item at first position → Ω(1)</li>
+              <li>Worst case — item at end → O(n)</li>
+              <li>So overall: Ω(1) and O(n)</li>
+            </ul>
+            <div class="hook">Big-Ω answers: "What is the minimum time needed?"</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Big-Θ — tight bound (exact)</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Gives a <b>tight bound</b> on the time or space.</li>
+              <li>The algorithm takes at least <b>and</b> at most that much time — it grows exactly at that rate.</li>
+              <li>Like <b>==</b>.</li>
+            </ul>
+            <div class="code">Mathematically:   0 ≤ c₁·g(n) ≤ f(n) ≤ c₂·g(n)   for all n ≥ n₀</div>
+            <p><b>Example:</b> a for-loop that runs exactly n times in all cases → Time complexity = Θ(n).</p>
+            <div class="hook">Big-Θ answers: "Exactly how does it grow?"</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Little-o and little-ω — strict bounds</summary>
+          <div class="sub-body">
+            <p><b>Little-o (o)</b> — strict upper bound</p>
+            <ul>
+              <li>An upper bound that <b>cannot be tight</b> — a loose upper bound.</li>
+              <li><code>f(n)</code> grows <b>strictly slower</b> than <code>g(n)</code> as n → ∞.</li>
+              <li>f(n) will never catch up to g(n), no matter how big n gets.</li>
+            </ul>
+            <p><b>Slow walker vs fast runner:</b> as the race gets longer, the walker's time grows much more slowly — it never catches up with the runner.</p>
+            <p><b>Little-ω (ω)</b> — strict lower bound</p>
+            <ul>
+              <li><code>f(n)</code> grows <b>strictly faster</b> than <code>g(n)</code> as n → ∞.</li>
+              <li>g(n) is a loose lower bound of f(n) — but not tight.</li>
+            </ul>
+            <p><b>Car vs cycle:</b> as time goes on, the car always becomes faster than the cycle and keeps increasing the gap → car speed = ω(cycle speed).</p>
+            <div class="hook">Memory hook: o = strictly smaller · ω = strictly bigger · O/Ω allow equality, o/ω do not.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>G. Comparison table — all five notations</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th></th><th>Big-O</th><th>Big-Ω</th><th>Big-Θ</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Analogy</b></td><td>≤</td><td>≥</td><td>==</td></tr>
+                  <tr><td><b>Bound</b></td><td>Upper</td><td>Lower</td><td>Tight</td></tr>
+                  <tr><td><b>Case</b></td><td>Worst case</td><td>Best case</td><td>Exact</td></tr>
+                  <tr><td><b>Formula</b></td><td>0 ≤ f(n) ≤ c·g(n)</td><td>0 ≤ c·g(n) ≤ f(n)</td><td>0 ≤ c₁g(n) ≤ f(n) ≤ c₂g(n)</td></tr>
+                  <tr><td><b>Question</b></td><td>How bad can it get?</td><td>What's the minimum?</td><td>Exactly how does it grow?</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Strict versions:</b> little-o = strictly less than (loose upper bound) · little-ω = strictly greater than (loose lower bound).</p>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 5. CASE ANALYSIS ============ -->
+    <details class="branch b5" open>
+      <summary><span class="num">5</span> Case Analysis — Best / Average / Worst</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Worst case</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Shows the <b>maximum time</b> an algorithm might take.</li>
+              <li>Assumes the <b>most difficult input</b> for the algorithm.</li>
+              <li>Gives the <b>upper bound</b> (maximum limit) of time.</li>
+              <li>Linear search worst case = target at the last location → <b>O(n)</b>.</li>
+            </ul>
+            <p><b>Where used — critical systems:</b></p>
+            <ul>
+              <li><b>Banking transactions</b> — must process without delay even under heavy traffic.</li>
+              <li><b>Emergency services</b> — must work quickly even with high call volume.</li>
+              <li><b>Flight control systems</b> — must always respond quickly, even in turbulence or overload.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Best case</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Shows the <b>minimum time</b> an algorithm can take.</li>
+              <li>Happens when the input is <b>most favorable</b>.</li>
+              <li>Gives the <b>lower bound</b> (smallest limit) of time.</li>
+              <li>Linear search best case = target at the first location → <b>Ω(1)</b>.</li>
+            </ul>
+            <p><b>Where it helps:</b></p>
+            <ul>
+              <li><b>Sorting small lists</b> — an already-sorted 5-name list shows the fastest performance.</li>
+              <li><b>Search engine cache</b> — popular queries already cached return results almost instantly.</li>
+              <li><b>Autofill suggestions</b> — exact matches with stored data make autofill as fast as possible.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Average case</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Gives the <b>expected time</b> an algorithm takes for typical (random) input.</li>
+              <li>Lies between the best and worst case.</li>
+              <li>Assumes all inputs are <b>equally likely</b>.</li>
+            </ul>
+            <p><b>Why average case is hard to use</b></p>
+            <ul>
+              <li><b>We don't know the inputs</b> — like a shop owner who can't predict how busy each day will be (festivals vs rainy days).</li>
+              <li><b>Complicated math</b> — must consider every possible input and its probability.</li>
+            </ul>
+            <p><b>Where average case applies:</b></p>
+            <ul>
+              <li><b>Web search engines</b> — most queries are typical; data is organized for fast retrieval.</li>
+              <li><b>Social media feeds</b> — user activity follows general patterns (likes, comments).</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Why we need all three</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Decision making</b> — developers choose the best algorithm based on time, memory and input size.</li>
+              <li><b>Scalability</b> — helps know if the algorithm still works well for large inputs (worst-case matters most here).</li>
+              <li><b>Reliability</b> — worst-case shows behaviour in the toughest situations.</li>
+              <li><b>Optimization</b> — knowing how fast or slow an algorithm is lets developers find and eliminate inefficiencies.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Worked example — linear search on unsorted array</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Case</th><th>Where is the target?</th><th>Time</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Best</b></td><td>First element</td><td>O(1)</td></tr>
+                  <tr><td><b>Average</b></td><td>Somewhere in the middle</td><td>O(n/2) → O(n)</td></tr>
+                  <tr><td><b>Worst</b></td><td>Last element or not present</td><td>O(n)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Best = first · Worst = last or absent · Average = middle → O(n).</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 6. TIME & SPACE COMPLEXITY ============ -->
+    <details class="branch b6" open>
+      <summary><span class="num">6</span> Time &amp; Space Complexity</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Definitions</summary>
+          <div class="sub-body">
+            <div class="split">
+              <div>
+                <b>Time complexity</b>
+                How long the algorithm takes to run, based on the length of the input.
+              </div>
+              <div>
+                <b>Space complexity</b>
+                How much memory the algorithm uses.
+              </div>
+            </div>
+            <p><b>How time complexity is computed:</b> consider the cost of each fundamental instruction and the number of times it is executed.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Standard loop patterns</summary>
+          <div class="sub-body">
+            <p><b>Loop running n times → O(n)</b></p>
+            <div class="code"><span class="k">for</span> (i = 0; i &lt; n; i++) print(i);
+<span class="c">// runs n times → f(n) = n → O(n)</span></div>
+            <p><b>Loop doubling each time → O(log n)</b></p>
+            <div class="code"><span class="k">for</span> (i = 1; i &lt; n; i = i * 2);
+<span class="c">// i = 1, 2, 4, 8, 16, … ; after k iterations i = 2ᵏ</span>
+<span class="c">// stops when 2ᵏ ≥ n  →  k = log₂ n  →  O(log n)</span></div>
+            <p><b>Nested loops → O(n²)</b></p>
+            <div class="code"><span class="k">for</span> (i = 0; i &lt; n; i++)
+    <span class="k">for</span> (j = 0; j &lt; n; j++)
+        print(i, j);
+<span class="c">// runs n × n = n² times → f(n) = n²</span></div>
+            <p><b>Sum of consecutive integers → O(√n)</b></p>
+            <div class="code">p = 0
+<span class="k">for</span> (i = 1; p &lt; n; i++) p = p + i;
+
+<span class="c">// after k iterations: p = 1 + 2 + … + k = k(k+1)/2</span>
+<span class="c">// stops when k(k+1)/2 &gt; n  →  k ≈ √(2n)  →  O(√n)</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Conditional statements</summary>
+          <div class="sub-body">
+            <ul>
+              <li>The condition decides how many times the loop body executes.</li>
+              <li>If a condition is true → it executes one statement, which takes <b>O(1)</b>.</li>
+              <li>If a condition is false → the enclosing loop may still run <b>O(n)</b> times.</li>
+            </ul>
+            <div class="hook">Memory hook: sequential loops add → O(n) · nested loops multiply → O(n²).</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Space complexity examples</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Algorithm</th><th>Space</th><th>Why</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Matrix multiplication</b></td><td>O(n²)</td><td>Result matrix needs n² cells</td></tr>
+                  <tr><td><b>Bubble sort</b></td><td>O(1)</td><td>Only a temp variable for swapping</td></tr>
+                  <tr><td><b>Factorial (recursive)</b></td><td>O(n)</td><td>Call stack depth is n</td></tr>
+                  <tr><td><b>Factorial (iterative)</b></td><td>O(1)</td><td>Only a running product variable</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Recursive factorial = O(n) stack · Iterative = O(1).</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 7. INSERTION SORT ============ -->
+    <details class="branch b7" open>
+      <summary><span class="num">7</span> Insertion Sort</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. How it works</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Simple sorting algorithm that works like sorting playing cards in your hands.</li>
+              <li>Key operations: <b>comparisons</b> (find the correct position) and <b>shifts</b> (make room for the current element).</li>
+              <li>The array is virtually split into a <b>sorted part</b> and an <b>unsorted part</b>. Values from the unsorted part are picked and placed into the correct position in the sorted part.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Algorithm &amp; steps</summary>
+          <div class="sub-body">
+            <div class="code"><span class="k">InsertionSort</span>(arr):
+    <span class="k">for</span> i = 1 <span class="k">to</span> length(arr) − 1:
+        key = arr[i]
+        j = i − 1
+        <span class="k">while</span> j ≥ 0 <span class="k">and</span> arr[j] &gt; key:
+            arr[j + 1] = arr[j]      <span class="c">// shift element right</span>
+            j = j − 1
+        arr[j + 1] = key             <span class="c">// insert key into correct position</span></div>
+            <ol>
+              <li>Start with the second element (the first is already "sorted").</li>
+              <li>Take the current element as the <b>key</b>.</li>
+              <li>Compare the key with its predecessor; if smaller, shift the larger element right.</li>
+              <li>Continue comparing and shifting until the correct position is found.</li>
+              <li>Place the key in its correct position.</li>
+              <li>Repeat for all elements.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Worked trace — [5, 4, 10, 1, 6, 2]</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Step</th><th>i</th><th>Key</th><th>Action</th><th>Array after</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>1</td><td>4</td><td>4 &lt; 5 → shift 5; j = −1; insert at 0</td><td>4, 5, 10, 1, 6, 2</td></tr>
+                  <tr><td>2</td><td>2</td><td>10</td><td>10 &gt; 5 → no shift; insert at j+1=2</td><td>4, 5, 10, 1, 6, 2</td></tr>
+                  <tr><td>3</td><td>3</td><td>1</td><td>1 &lt; 10, 5, 4 → shift all three; insert at 0</td><td>1, 4, 5, 10, 6, 2</td></tr>
+                  <tr><td>4</td><td>4</td><td>6</td><td>6 &lt; 10 → shift 10; 6 &gt; 5 → stop; insert at 3</td><td>1, 4, 5, 6, 10, 2</td></tr>
+                  <tr><td>5</td><td>5</td><td>2</td><td>2 &lt; 10, 6, 5, 4 → shift four; 2 &gt; 1 → stop; insert at 1</td><td>1, 2, 4, 5, 6, 10</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Output:</b> 1, 2, 4, 5, 6, 10</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Time complexity — all cases</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Case</th><th>Input</th><th>Inner loop</th><th>Complexity</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Best</b></td><td>Already sorted (e.g. 1,2,3,4,5)</td><td>0 times per i → n−1 comparisons total</td><td><b>O(n)</b></td></tr>
+                  <tr><td><b>Worst</b></td><td>Reverse sorted (e.g. 6,5,4,3,2,1)</td><td>1+2+…+(n−1) = n(n−1)/2</td><td><b>O(n²)</b></td></tr>
+                  <tr><td><b>Average</b></td><td>Random order</td><td>On average the key is inserted in the middle → i/2 per element</td><td><b>O(n²)</b></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Space complexity:</b> O(1) — constant extra space.</p>
+            <div class="hook">Memory hook: Insertion sort best O(n) (sorted) · worst O(n²) (reverse) · space O(1).</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 8. BUBBLE SORT ============ -->
+    <details class="branch b8" open>
+      <summary><span class="num">8</span> Bubble Sort</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. How it works</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Simple comparison-based sorting algorithm.</li>
+              <li>Repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.</li>
+              <li>This process continues until the list is sorted.</li>
+              <li>A <b>swapped flag</b> enables early termination when no swaps occur in a pass.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Algorithm</summary>
+          <div class="sub-body">
+            <div class="code"><span class="k">BUBBLE_SORT</span>(array, n)
+    <span class="k">for</span> i = 0 <span class="k">to</span> n − 2 <span class="k">do</span>          <span class="c">// outer loop = passes</span>
+        swapped = FALSE
+        <span class="k">for</span> j = 0 <span class="k">to</span> n − i − 2 <span class="k">do</span>      <span class="c">// inner loop = comparisons</span>
+            <span class="k">if</span> array[j] &gt; array[j + 1] <span class="k">then</span>
+                swap(array[j], array[j + 1])
+                swapped = TRUE
+        <span class="k">if</span> swapped = FALSE <span class="k">then</span>
+            <span class="k">break</span>                    <span class="c">// array is sorted → early exit</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Dry run — [4, 3, 2, 1]</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Pass</th><th>Comparisons &amp; swaps</th><th>Result</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>4↔3, 4↔2, 4↔1</td><td>3, 2, 1, 4</td></tr>
+                  <tr><td>2</td><td>3↔2, 3↔1</td><td>2, 1, 3, 4</td></tr>
+                  <tr><td>3</td><td>2↔1</td><td>1, 2, 3, 4</td></tr>
+                  <tr><td>4</td><td>No swaps → break</td><td>1, 2, 3, 4</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Time complexity — all cases</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Case</th><th>Input</th><th>Comparisons</th><th>Complexity</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Best</b></td><td>Already sorted (1,2,3,4,5)</td><td>n−1 in one pass, no swaps → early exit</td><td><b>O(n)</b></td></tr>
+                  <tr><td><b>Average</b></td><td>Random order</td><td>≈ n(n−1)/2</td><td><b>O(n²)</b></td></tr>
+                  <tr><td><b>Worst</b></td><td>Reverse order (5,4,3,2,1)</td><td>n(n−1)/2 (maximum swaps)</td><td><b>O(n²)</b></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Space complexity:</b> O(1).</p>
+            <div class="hook">Memory hook: Bubble sort best O(n) with early exit · worst O(n²) · space O(1).</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 9. RECURRENCE RELATIONS ============ -->
+    <details class="branch b9" open>
+      <summary><span class="num">9</span> Recurrence Relations</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is a recurrence relation?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A mathematical equation that defines a sequence or function using its <b>own previous values</b>.</li>
+              <li>Shows how the solution to a big problem depends on the solutions to smaller versions of the same problem.</li>
+              <li>Used to analyze the <b>time complexity of recursive algorithms</b>.</li>
+            </ul>
+            <div class="hook">Memory hook: Recurrence = how T(n) depends on T(smaller).</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Three methods to solve</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Substitution method</b> — guess the solution and prove it by mathematical induction.</li>
+              <li><b>Recursion tree method</b> — represent the recurrence as a tree to analyze the work at each level.</li>
+              <li><b>Master theorem</b> — a shortcut for recurrences of the standard form <code>T(n) = aT(n/b) + f(n)</code>.</li>
+            </ol>
+            <div class="hook">Memory hook: Substitution (guess+prove) · Tree (visualize levels) · Master (formula).</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Simple recurrence examples</summary>
+          <div class="sub-body">
+            <div class="code"><span class="c">// Example 1 — countdown</span>
+T(n) = 1                 if n = 0
+     = T(n − 1)          if n &gt; 0
+     → T(n) = O(n)
+
+<span class="c">// Example 2 — linear work per level</span>
+T(n) = 1                 if n = 0
+     = T(n − 1) + n      if n &gt; 0
+     → T(n) = O(n²)
+
+<span class="c">// Example 3 — Fibonacci</span>
+T(n) = 0                 if n &lt; 0
+     = 1                 if n = 1
+     = T(n − 1) + T(n − 2)   if n &gt; 1
+     → exponential ~ Θ(φⁿ)</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Back substitution / iterative method</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Also called <b>recursion tree expansion</b> or <b>iterative method</b>.</li>
+              <li>Repeatedly substitute the recurrence into itself until the base case is reached.</li>
+            </ul>
+            <p><b>Example: T(n) = T(n−1) + 1</b></p>
+            <div class="code">T(n) = T(n−1) + 1
+     = T(n−2) + 1 + 1
+     = T(n−3) + 1 + 1 + 1
+     …
+     = T(n−k) + k
+
+<span class="c">// stop when n−k = 0 → k = n</span>
+T(n) = T(0) + n = n + 1 = O(n)</div>
+            <p><b>Example: T(n) = T(n−1) + n</b></p>
+            <div class="code">T(n) = T(n−1) + n
+     = T(n−2) + (n−1) + n
+     …
+     = T(0) + 1 + 2 + … + n
+     = n(n+1)/2 = O(n²)</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Dividing functions &amp; GP</summary>
+          <div class="sub-body">
+            <ul>
+              <li>If an algorithm takes input n, it can:
+                <ul>
+                  <li><b>decrease</b> it as <code>n − 1</code></li>
+                  <li><b>divide</b> it as <code>n/2</code></li>
+                  <li>take a <b>root</b> function as <code>√n</code></li>
+                </ul>
+              </li>
+            </ul>
+            <p><b>Geometric Progression (GP)</b></p>
+            <ul>
+              <li>A sequence where each term after the first is found by multiplying the previous term by a fixed, non-zero number <code>r</code> (the common ratio).</li>
+              <li>Useful when solving divide-and-conquer recurrences with the recursion tree method.</li>
+            </ul>
+            <div class="hook">Memory hook: Decrease → n−1 · Divide → n/2 · Root → √n.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 10. MASTER THEOREM ============ -->
+    <details class="branch b10" open>
+      <summary><span class="num">10</span> Master Theorem</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. For decreasing functions</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Can only be applied to <b>decreasing</b> and <b>dividing</b> recurring functions. If the relation is neither, the master theorem <b>must not</b> be applied.</li>
+            </ul>
+            <p><b>General form</b></p>
+            <div class="code">T(n) = a·T(n − b) + f(n)
+
+where  a &gt; 0,  b &gt; 0,  f(n) = O(nᵏ),  k ≥ 0,  f(n) asymptotically positive</div>
+            <ul>
+              <li><code>n</code> — size of the problem</li>
+              <li><code>a</code> — number of sub-problems in the recursion</li>
+              <li><code>n − b</code> — size of the sub-problems (assumed equal)</li>
+              <li><code>f(n)</code> — cost of work done outside the recursion = Θ(nᵏ)</li>
+            </ul>
+            <p><b>Three cases</b></p>
+            <div class="code">if a = 1   →  T(n) = O(n^(k+1))   = O(n · f(n))
+if a &gt; 1   →  T(n) = O(a^(n/b) · nᵏ)  = O(a^(n/b) · f(n))
+if a &lt; 1   →  T(n) = O(nᵏ)        = O(f(n))</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. For dividing functions</summary>
+          <div class="sub-body">
+            <p><b>General form</b></p>
+            <div class="code">T(n) = a·T(n/b) + f(n)
+
+where  a ≥ 1,  b &gt; 1,  f(n) = Θ(nᵏ logᵖ n)</div>
+            <p><b>Two values to compute</b></p>
+            <ol>
+              <li><code>log_b a</code></li>
+              <li><code>k</code></li>
+            </ol>
+            <p><b>Three cases — compare log_b a with k</b></p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Case</th><th>Condition</th><th>Result</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Case 1</b></td><td>log_b a &gt; k</td><td>Θ(n^(log_b a))</td></tr>
+                  <tr><td><b>Case 2</b></td><td>log_b a = k</td><td>Θ(n^k · log^(p+1) n)</td></tr>
+                  <tr><td><b>Case 3</b></td><td>log_b a &lt; k</td><td>Θ(n^k · log^p n)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Worked example</summary>
+          <div class="sub-body">
+            <p><b>Example: T(n) = 8T(n/2) + n²</b></p>
+            <div class="code">a = 8,  b = 2,  f(n) = n²  →  k = 2
+
+log_b a = log₂ 8 = 3
+
+Compare:  log₂ 8 = 3  &gt;  k = 2   →  Case 1
+
+T(n) = Θ(n^(log_b a)) = Θ(n³)</div>
+            <div class="hook">Memory hook: Compute log_b a and k · bigger → n^(log_b a) · equal → add log · smaller → n^k.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Master theorem quick-check list</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Is the recurrence in the form <code>a·T(n−b) + f(n)</code> or <code>a·T(n/b) + f(n)</code>? If not → master theorem does <b>not</b> apply.</li>
+              <li>For decreasing: compare <code>a</code> with <code>1</code>.</li>
+              <li>For dividing: compare <code>log_b a</code> with <code>k</code>.</li>
+              <li>If <code>a &lt; 1</code> in the decreasing form, the recursion shrinks — result is just <code>O(f(n))</code>.</li>
+            </ul>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 11. PROOF OF CORRECTNESS ============ -->
+    <details class="branch b11" open>
+      <summary><span class="num">11</span> Proof of Correctness</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Why prove correctness?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Complexity analysis tells you how <b>fast</b> an algorithm runs; correctness proof tells you whether it <b>produces the right answer</b>.</li>
+              <li>An algorithm that is fast but wrong is useless.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Loop invariants — three steps</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Initialization</b> — the invariant is true before the first iteration.</li>
+              <li><b>Maintenance</b> — if the invariant is true before an iteration, it remains true before the next one.</li>
+              <li><b>Termination</b> — when the loop terminates, the invariant gives a useful property that proves correctness.</li>
+            </ol>
+            <div class="hook">Memory hook: Init true · Maintain true · Terminate with the answer.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Mathematical induction</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Base case</b> — prove the statement for the smallest input.</li>
+              <li><b>Inductive step</b> — assume it holds for smaller inputs and prove it holds for the next size.</li>
+              <li>Used for recursive algorithms and for proving guessed solutions in the substitution method.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Example — insertion sort correctness</summary>
+          <div class="sub-body">
+            <p><b>Loop invariant:</b> at the start of each iteration of the outer <code>for</code> loop, the subarray <code>arr[0..i−1]</code> consists of the elements originally in <code>arr[0..i−1]</code> but in <b>sorted order</b>.</p>
+            <ul>
+              <li><b>Initialization</b> — for <code>i = 1</code>, the subarray <code>arr[0..0]</code> is trivially sorted.</li>
+              <li><b>Maintenance</b> — the inner loop shifts larger elements right and inserts the key in its correct position, so after the iteration <code>arr[0..i]</code> is sorted.</li>
+              <li><b>Termination</b> — when <code>i = n</code>, the entire array <code>arr[0..n−1]</code> is sorted → algorithm is correct.</li>
+            </ul>
+            <div class="hook">Memory hook: Insertion sort invariant = sorted prefix grows by one each iteration.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ MASTER SUMMARY ============ -->
+    <details class="branch summary wide" open>
+      <summary><span class="num">★</span> Master Summary — Unit 1 at a Glance</summary>
+      <div class="branch-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Concept</th><th>Type</th><th>Key fact</th></tr></thead>
+            <tbody>
+              <tr><td>Algorithm</td><td>Definition</td><td>Well-defined computational procedure: input → steps → output</td></tr>
+              <tr><td>Ways to write</td><td>Forms</td><td>Natural · Pseudocode · Flowchart · Programming language · Math/recursive</td></tr>
+              <tr><td>Analysis of algorithms</td><td>Process</td><td>Evaluate efficiency in time and space</td></tr>
+              <tr><td>Need for complexity analysis</td><td>Purpose</td><td>Compare algorithms · measure resources · determine problem difficulty</td></tr>
+              <tr><td>Growth order</td><td>Sequence</td><td>1 · log n · √n · n · n log n · n² · n³ · 2ⁿ · nⁿ</td></tr>
+              <tr><td>Big-O</td><td>Asymptotic</td><td>Upper bound · ≤ · worst case · 0 ≤ f(n) ≤ c·g(n)</td></tr>
+              <tr><td>Big-Ω</td><td>Asymptotic</td><td>Lower bound · ≥ · best case · 0 ≤ c·g(n) ≤ f(n)</td></tr>
+              <tr><td>Big-Θ</td><td>Asymptotic</td><td>Tight bound · == · exact · c₁g(n) ≤ f(n) ≤ c₂g(n)</td></tr>
+              <tr><td>Little-o</td><td>Asymptotic</td><td>Strict upper bound · f grows strictly slower than g</td></tr>
+              <tr><td>Little-ω</td><td>Asymptotic</td><td>Strict lower bound · f grows strictly faster than g</td></tr>
+              <tr><td>Worst case</td><td>Case analysis</td><td>Max time · O() · used in banking, emergency, flight control</td></tr>
+              <tr><td>Best case</td><td>Case analysis</td><td>Min time · Ω() · cached queries, autofill, sorted lists</td></tr>
+              <tr><td>Average case</td><td>Case analysis</td><td>Expected time · between best and worst · assumes equal input likelihood</td></tr>
+              <tr><td>Time complexity</td><td>Measure</td><td>How long it takes, based on input length</td></tr>
+              <tr><td>Space complexity</td><td>Measure</td><td>How much memory it uses</td></tr>
+              <tr><td>Loop patterns</td><td>Analysis</td><td>i++ → O(n) · i*=2 → O(log n) · nested → O(n²) · sum 1..k → O(√n)</td></tr>
+              <tr><td>Insertion sort</td><td>Algorithm</td><td>Best O(n) · worst/avg O(n²) · space O(1)</td></tr>
+              <tr><td>Bubble sort</td><td>Algorithm</td><td>Best O(n) with early exit · worst/avg O(n²) · space O(1)</td></tr>
+              <tr><td>Recurrence relation</td><td>Tool</td><td>Defines T(n) in terms of T(smaller) · used for recursive algorithms</td></tr>
+              <tr><td>Substitution / tree / master</td><td>Methods</td><td>Guess + induction · visualize levels · formula shortcut</td></tr>
+              <tr><td>Master theorem — decreasing</td><td>Formula</td><td>T(n)=aT(n−b)+f(n): a=1→O(n^(k+1)); a&gt;1→O(a^(n/b)·n^k); a&lt;1→O(n^k)</td></tr>
+              <tr><td>Master theorem — dividing</td><td>Formula</td><td>T(n)=aT(n/b)+f(n): compare log_b a with k</td></tr>
+              <tr><td>Proof of correctness</td><td>Verification</td><td>Loop invariant: initialization → maintenance → termination</td></tr>
+              <tr><td>Mathematical induction</td><td>Proof method</td><td>Base case + inductive step</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============ MEMORY HOOKS ============ -->
+    <details class="branch hooks wide" open>
+      <summary><span class="num">🎯</span> Key Memory Hooks</summary>
+      <div class="branch-body">
+        <div class="hook-grid">
+          <div class="hook">Algorithm = input → well-defined steps → output</div>
+          <div class="hook">5 ways: Natural · Pseudocode · Flowchart · Code · Math/recursive</div>
+          <div class="hook">Analysis = time (how fast) + space (how much memory)</div>
+          <div class="hook">Recursion = slow + low memory · DP = fast + more memory</div>
+          <div class="hook">Growth order: 1 · log · √ · n · n log n · n² · n³ · 2ⁿ · nⁿ</div>
+          <div class="hook">Drop constants and lower-order terms → keep the dominant term</div>
+          <div class="hook">Big-O = upper (≤, worst) · Big-Ω = lower (≥, best) · Big-Θ = tight (==)</div>
+          <div class="hook">Little-o = strict upper · Little-ω = strict lower</div>
+          <div class="hook">f(n) = your algorithm · g(n) = reference growth pattern</div>
+          <div class="hook">Worst case: banking, emergency, flight control</div>
+          <div class="hook">Best case: cache, autofill, already-sorted lists</div>
+          <div class="hook">Linear search: best O(1) · average O(n) · worst O(n)</div>
+          <div class="hook">Loop i++ → O(n) · i*=2 → O(log n) · nested → O(n²)</div>
+          <div class="hook">Sum 1+2+…+k = k(k+1)/2 → loop to p &gt; n is O(√n)</div>
+          <div class="hook">Factorial: recursive O(n) stack · iterative O(1)</div>
+          <div class="hook">Insertion sort: best O(n) · worst/avg O(n²) · space O(1)</div>
+          <div class="hook">Bubble sort: best O(n) with early exit · worst O(n²)</div>
+          <div class="hook">Recurrence methods: substitution · recursion tree · master theorem</div>
+          <div class="hook">Back substitution: T(n) = T(n−1) + 1 → O(n)</div>
+          <div class="hook">T(n) = T(n−1) + n → O(n²)</div>
+          <div class="hook">Decreasing master: a=1 → n^(k+1) · a&gt;1 → a^(n/b)·n^k · a&lt;1 → n^k</div>
+          <div class="hook">Dividing master: compare log_b a with k</div>
+          <div class="hook">Example: T(n)=8T(n/2)+n² → log₂8=3 &gt; 2 → Θ(n³)</div>
+          <div class="hook">Loop invariant: initialization → maintenance → termination</div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <p class="no-results" id="noResults">No matching topics. Try another search term.</p>
+  <div class="foot">Single-file offline mindmap · Expand/collapse each branch · Search highlights matching topics · Print to PDF for a study copy</div>
+</main>
+
+<script>
+const allDetails = [...document.querySelectorAll('details')];
+
+function expandAll(open){ allDetails.forEach(d => d.open = open); }
+
+function resetView(){
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.hidden').forEach(e => e.classList.remove('hidden'));
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+  expandAll(true);
+  document.getElementById('noResults').style.display = 'none';
+}
+
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const q = search.value.trim().toLowerCase();
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+
+  if (!q){
+    document.querySelectorAll('.branch,.sub').forEach(e => e.classList.remove('hidden'));
+    document.getElementById('noResults').style.display = 'none';
+    return;
+  }
+
+  let count = 0;
+
+  document.querySelectorAll('.branch').forEach(branch => {
+    const branchMatch = branch.innerText.toLowerCase().includes(q);
+    const subMatches = [...branch.querySelectorAll('.sub')]
+      .filter(s => s.innerText.toLowerCase().includes(q));
+
+    if (branchMatch || subMatches.length){
+      branch.classList.remove('hidden');
+      branch.open = true;
+
+      subMatches.forEach(s => {
+        s.classList.remove('hidden');
+        s.open = true;
+        s.classList.add('hit');
+        count++;
+      });
+
+      branch.querySelectorAll('.sub').forEach(s => {
+        if (!subMatches.includes(s)) s.classList.add('hidden');
+      });
+
+      if (!subMatches.length){
+        branch.classList.add('hit');
+        count++;
+      }
+    } else {
+      branch.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('noResults').style.display = count ? 'none' : 'block';
+});
+</script>
+</body>
+</html>

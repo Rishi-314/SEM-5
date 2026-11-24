@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DAA Unit 6 — Exam Mindmap (10 Questions)</title>
+<style>
+:root{
+  --bg:#f5f7fb;--ink:#172033;--muted:#586579;--line:#d8dfeb;
+  --b1:#1d4ed8;--b1t:#dbeafe;
+  --b2:#0e7490;--b2t:#cffafe;
+  --b3:#7c3aed;--b3t:#ede9fe;
+  --b4:#15803d;--b4t:#dcfce7;
+  --b5:#b45309;--b5t:#fef3c7;
+  --b6:#0369a1;--b6t:#e0f2fe;
+  --b7:#be185d;--b7t:#fce7f3;
+  --b8:#0f766e;--b8t:#ccfbf1;
+  --b9:#9333ea;--b9t:#f3e8ff;
+  --b10:#c2410c;--b10t:#ffedd5;
+  --summary:#475569;--summary-t:#e2e8f0;
+  --hooks:#b91c1c;--hooks-t:#fee2e2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+
+.top{position:sticky;top:0;z-index:10;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:850;letter-spacing:.02em;margin-right:auto}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+button{border:1px solid #cbd5e1;background:white;color:#263247;border-radius:9px;padding:8px 11px;font:inherit;font-size:13px;cursor:pointer}
+button:hover{background:#eef4ff;border-color:#93b4f5}
+input{border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px;min-width:min(280px,75vw);font:inherit}
+input:focus{outline:2px solid #93b4f5;outline-offset:1px}
+
+.hero{max-width:1500px;margin:26px auto 8px;padding:0 20px;text-align:center}
+.hero h1{margin:0 auto 7px;font-size:clamp(24px,4vw,38px);line-height:1.15;letter-spacing:-.035em}
+.hero p{margin:0;color:var(--muted)}
+
+.map{max-width:1600px;margin:auto;padding:0 18px 60px}
+
+/* ---- question index ---- */
+.qindex{max-width:1600px;margin:18px auto 26px;padding:0 18px}
+.qbox{background:white;border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 3px 12px #1e293b0a}
+.qbox h2{margin:0 0 10px;font-size:15px;letter-spacing:.02em;color:#263247}
+.qgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.qgrid a{display:flex;gap:9px;text-decoration:none;color:#334155;padding:7px 9px;border-radius:8px;border:1px solid transparent;font-size:13px;line-height:1.45;transition:.15s}
+.qgrid a:hover{background:#eef4ff;border-color:#c7d8fa;color:#0f172a}
+.qnum{flex:none;font-weight:850;font-size:11px;background:#173e78;color:white;border-radius:5px;padding:1px 6px;height:19px;display:grid;place-items:center;letter-spacing:.02em}
+.qgrid a em{font-style:normal;color:#64748b;font-size:12px}
+
+/* ---- branch grid ---- */
+.branch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.branch{--accent:var(--summary);--tint:var(--summary-t);min-width:0;background:white;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #1e293b0a;scroll-margin-top:5.5rem}
+.branch.b1{--accent:var(--b1);--tint:var(--b1t)}
+.branch.b2{--accent:var(--b2);--tint:var(--b2t)}
+.branch.b3{--accent:var(--b3);--tint:var(--b3t)}
+.branch.b4{--accent:var(--b4);--tint:var(--b4t)}
+.branch.b5{--accent:var(--b5);--tint:var(--b5t)}
+.branch.b6{--accent:var(--b6);--tint:var(--b6t)}
+.branch.b7{--accent:var(--b7);--tint:var(--b7t)}
+.branch.b8{--accent:var(--b8);--tint:var(--b8t)}
+.branch.b9{--accent:var(--b9);--tint:var(--b9t)}
+.branch.b10{--accent:var(--b10);--tint:var(--b10t)}
+.branch.summary{--accent:var(--summary);--tint:var(--summary-t)}
+.branch.hooks{--accent:var(--hooks);--tint:var(--hooks-t)}
+.branch>summary{list-style:none;cursor:pointer;background:var(--tint);padding:13px 14px;font-weight:800;font-size:15px;display:flex;gap:9px;align-items:center;line-height:1.3;flex-wrap:wrap}
+.branch>summary::-webkit-details-marker{display:none}
+.num{flex:none;border-radius:8px;background:var(--accent);color:white;width:28px;height:28px;display:grid;place-items:center;font-size:13px;font-weight:800;font-variant-numeric:tabular-nums}
+.qtag{flex:none;font-size:9.5px;font-weight:800;letter-spacing:.05em;background:white;color:var(--accent);border:1px solid var(--accent);border-radius:5px;padding:1px 6px;margin-left:auto;white-space:nowrap}
+.branch-body{padding:12px}
+
+.sub{border:1px solid var(--line);border-radius:10px;margin:9px 0;background:#fff;overflow:hidden}
+.sub>summary{cursor:pointer;list-style:none;padding:10px 12px;font-weight:750;background:#f8fafc;border-bottom:1px solid transparent;font-size:14px}
+.sub>summary::-webkit-details-marker{display:none}
+.sub[open]>summary{border-bottom-color:var(--line)}
+.sub-body{padding:10px 14px 13px;font-size:13.5px}
+.sub-body p{margin:6px 0}
+.sub-body ul,.sub-body ol{margin:5px 0 8px;padding-left:21px}
+.sub-body li{margin:3px 0}
+.sub-body b{color:#111827}
+
+/* exam answer callout */
+.answer{border-left:4px solid var(--accent);background:#f8fafc;border-radius:0 9px 9px 0;padding:11px 14px;margin:0 0 12px;font-size:13.5px;line-height:1.65}
+.answer .lbl{display:block;font-size:10px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+
+.hook{padding:10px 12px;border-left:4px solid var(--accent);background:var(--tint);border-radius:7px;margin:10px 0;font-weight:650;font-size:13.5px}
+.math{white-space:pre;overflow-x:auto;background:#0f172a;color:#e2e8f0;border-radius:9px;padding:11px 13px;margin:9px 0;font:12px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;border:1px solid #1e293b}
+.math .c{color:#7dd3fc}
+.table-wrap{overflow-x:auto;margin:9px 0}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{border:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#334155}
+tbody tr:hover td{background:#f8fbff}
+code{background:#eef2ff;padding:1px 4px;border-radius:4px;font-size:12px}
+
+.wide{grid-column:1 / -1;margin-top:16px}
+.hook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:10px}
+.hook-grid .hook{margin:0}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+.hidden{display:none!important}
+.hit{outline:3px solid #f59e0b;outline-offset:2px;background:#fffbeb!important}
+.no-results{display:none;text-align:center;padding:20px;color:#64748b}
+
+@media(max-width:1100px){.branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+  .branch-grid{grid-template-columns:1fr}
+  .qgrid{grid-template-columns:1fr}
+  .top{position:static}
+  .brand{width:100%}
+  .map{padding:0 10px 35px}
+  .branch>summary{font-size:14px}
+}
+
+@media print{
+  .top{display:none}
+  .qindex{padding:0}
+  .map{max-width:none;padding:0}
+  .branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .branch,.sub{break-inside:avoid;box-shadow:none}
+  details:not([open])>.branch-body,details:not([open])>.sub-body{display:block}
+  .branch>summary,.sub>summary{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  body{background:white;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">🧮 DAA UNIT 6 • EXAM MINDMAP</div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search… (e.g. TSP, Las Vegas, P=NP, polynomial)">
+    <button onclick="expandAll(true)">Expand all</button>
+    <button onclick="expandAll(false)">Collapse all</button>
+    <button onclick="resetView()">Reset</button>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Complexity Classes &amp; Randomized Algorithms</h1>
+  <p>DAA Unit 6 — mapped exactly to the 10 exam questions · irrelevant material removed</p>
+</section>
+
+<!-- ================= QUESTION INDEX ================= -->
+<section class="qindex">
+  <div class="qbox">
+    <h2>📝 The 10 Exam Questions — Click to Jump</h2>
+    <div class="qgrid">
+      <a href="#b4"><span class="qnum">Q1</span><span>Relationship between NP, NP-Complete, NP-Hard + classify sorting, search, TSP and justify <em>→ B4, B5</em></span></a>
+      <a href="#b6"><span class="qnum">Q2</span><span>How randomized algorithms use random choices; compare with deterministic using an example <em>→ B6</em></span></a>
+      <a href="#b3"><span class="qnum">Q3</span><span>Elaborate P and NP classes and their relationship <em>→ B1, B2, B3</em></span></a>
+      <a href="#b9"><span class="qnum">Q4</span><span>Key difference between Monte Carlo and Las Vegas <em>→ B9</em></span></a>
+      <a href="#b9"><span class="qnum">Q5</span><span>Las Vegas &amp; Monte Carlo with examples; compare correctness, running time, error probability <em>→ B7, B8, B9</em></span></a>
+      <a href="#b1"><span class="qnum">Q6</span><span>P and NP problems in complexity theory with examples <em>→ B1, B2</em></span></a>
+      <a href="#b10"><span class="qnum">Q7</span><span>Randomized algorithm and approximation algorithm briefly with examples <em>→ B10</em></span></a>
+      <a href="#b1"><span class="qnum">Q8</span><span>What is a polynomial time algorithm? Examples of polynomial and non-polynomial <em>→ B1</em></span></a>
+      <a href="#b3"><span class="qnum">Q9</span><span>Can all NP problems be converted into P? Meaning of P = NP <em>→ B3</em></span></a>
+      <a href="#b5"><span class="qnum">Q10</span><span>Classify problems (sort, search, TSP) as P / NP / NPC / NP-Hard and justify <em>→ B5</em></span></a>
+    </div>
+  </div>
+</section>
+
+<main class="map">
+  <div class="branch-grid">
+
+    <!-- ========== B1: POLYNOMIAL TIME & P CLASS (Q3, Q6, Q8) ========== -->
+    <details class="branch b1" open id="b1">
+      <summary><span class="num">1</span> Polynomial Time &amp; P Class <span class="qtag">Q3 · Q6 · Q8</span></summary>
+      <div class="branch-body">
+
+        <div class="answer">
+          <span class="lbl">Exam Answer — Q8</span>
+          A <b>polynomial time algorithm</b> runs in <code>O(n^k)</code> for some constant <b>k</b>. Examples: binary search <code>O(log n)</code>, merge sort <code>O(n log n)</code>, Dijkstra <code>O((V+E)log V)</code>. Non-polynomial examples: brute-force TSP <code>O(n!)</code>, subset sum <code>O(2ⁿ)</code>, 3-SAT <code>O(2ⁿ)</code>.
+        </div>
+
+        <details class="sub" open>
+          <summary>A. Polynomial time algorithm — definition (Q8)</summary>
+          <div class="sub-body">
+            <ul>
+              <li>An algorithm whose running time is bounded by <code>c·n^k</code> for constants <code>c &gt; 0</code> and <code>k ≥ 0</code>, where <code>n</code> is the input size.</li>
+              <li>Written as <code>O(n^k)</code> — polynomial in input size.</li>
+              <li>Considered <b>efficient / tractable</b>: doubling the input roughly multiplies time by a constant factor, not exponentially.</li>
+            </ul>
+            <div class="math">poly examples:  O(log n)  O(n)  O(n log n)  O(n²)  O(n³)
+NOT poly:       O(2ⁿ)    O(n!)  O(nⁿ)</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Examples — polynomial vs non-polynomial (Q8)</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Algorithm</th><th>Time</th><th>Type</th></tr></thead>
+                <tbody>
+                  <tr><td>Binary search</td><td>O(log n)</td><td>Polynomial</td></tr>
+                  <tr><td>Linear search</td><td>O(n)</td><td>Polynomial</td></tr>
+                  <tr><td>Merge sort / Heap sort</td><td>O(n log n)</td><td>Polynomial</td></tr>
+                  <tr><td>Dijkstra's shortest path</td><td>O((V+E) log V)</td><td>Polynomial</td></tr>
+                  <tr><td>GCD (Euclid)</td><td>O(log min(a,b))</td><td>Polynomial</td></tr>
+                  <tr><td>Matrix multiplication (Strassen)</td><td>O(n<sup>2.81</sup>)</td><td>Polynomial</td></tr>
+                  <tr><td>Primality (AKS)</td><td>O(log⁶ n)</td><td>Polynomial</td></tr>
+                  <tr><td>Brute-force TSP</td><td>O(n!)</td><td><b>Non-polynomial</b></td></tr>
+                  <tr><td>Brute-force Subset Sum</td><td>O(2ⁿ)</td><td><b>Non-polynomial</b></td></tr>
+                  <tr><td>Brute-force 3-SAT</td><td>O(2ⁿ)</td><td><b>Non-polynomial</b></td></tr>
+                  <tr><td>Naive Fibonacci recursion</td><td>O(2ⁿ)</td><td><b>Non-polynomial</b></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. P class — definition (Q3, Q6)</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>P</b> = the class of <b>decision problems</b> (yes/no answers) that can be <b>solved</b> by a <b>deterministic</b> machine (a normal computer) in <b>polynomial time</b>.</li>
+              <li>These are the <b>tractable</b> problems — solvable in theory <i>and</i> in practice.</li>
+            </ul>
+            <div class="math">P = ∪<sub>k≥0</sub> DTIME(n<sup>k</sup>)</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. P class — examples with justification (Q6)</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Sorting</b> — Merge sort runs in <code>O(n log n)</code> on a DTM → P.</li>
+              <li><b>Searching</b> — Binary search runs in <code>O(log n)</code> → P.</li>
+              <li><b>Shortest path</b> — Dijkstra runs in <code>O((V+E)log V)</code> → P.</li>
+              <li><b>Primality test</b> — AKS runs in polynomial time → P.</li>
+              <li><b>GCD</b> — Euclid's algorithm runs in <code>O(log n)</code> → P.</li>
+              <li><b>Maximum matching</b> — Hopcroft–Karp runs in <code>O(E√V)</code> → P.</li>
+            </ul>
+            <p><b>Real life:</b> Google Maps shortest route, spell-checker dictionary lookup, contact-list sorting.</p>
+            <div class="hook">Memory hook: P = <b>P</b>olynomial · easy to <b>solve</b> AND easy to <b>check</b>.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ========== B2: NP CLASS (Q3, Q6, Q9) ========== -->
+    <details class="branch b2" open id="b2">
+      <summary><span class="num">2</span> NP Class <span class="qtag">Q3 · Q6</span></summary>
+      <div class="branch-body">
+
+        <div class="answer">
+          <span class="lbl">Exam Answer — Q3 / Q6</span>
+          <b>NP</b> (Non-deterministic Polynomial) = problems whose proposed solution (a <b>certificate</b>) can be <b>verified in polynomial time</b> by a deterministic machine. Equivalently, problems solvable in polynomial time on a Non-Deterministic Turing Machine. Slogan: <b>hard to find, easy to verify</b>.
+        </div>
+
+        <details class="sub" open>
+          <summary>A. NP — verifier definition</summary>
+          <div class="sub-body">
+            <div class="math">L ∈ NP  ⟺  ∃ poly-time verifier V and poly bound p such that
+          x ∈ L  ⟺  ∃ y with |y| ≤ p(|x|)  and  V(x, y) = 1
+<span class="c">y is the certificate / witness</span>
+
+<span class="c">equivalent machine definition:</span>
+NP = ∪<sub>k≥0</sub> NTIME(n<sup>k</sup>)</div>
+            <ul>
+              <li>The verifier <code>V</code> must be deterministic and run in polynomial time.</li>
+              <li>The certificate can be any string of polynomial length.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Hard to find, easy to verify</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Finding</b> a solution may take exponential time (search through possibilities).</li>
+              <li><b>Checking</b> a given solution takes polynomial time (just verify it).</li>
+            </ul>
+            <div class="hook">Memory hook: NP = <b>N</b>on-deterministic <b>P</b>olynomial — NOT "not polynomial".</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. NP examples with certificates (Q6)</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Problem</th><th>Certificate</th><th>Verification cost</th></tr></thead>
+                <tbody>
+                  <tr><td>Sudoku</td><td>A filled grid</td><td>O(n²) — check rows, cols, boxes</td></tr>
+                  <tr><td>Password cracking</td><td>A guessed password</td><td>O(1) — compare with stored hash</td></tr>
+                  <tr><td>Subset Sum</td><td>A subset of numbers</td><td>O(n) — add elements and compare with S</td></tr>
+                  <tr><td>Hamiltonian Cycle</td><td>A cycle</td><td>O(n) — check each vertex visited once</td></tr>
+                  <tr><td>TSP (decision)</td><td>A tour</td><td>O(n) — sum distances and compare with k</td></tr>
+                  <tr><td>SAT / 3-SAT</td><td>A truth assignment</td><td>O(n) — evaluate all clauses</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Worked example — Sudoku:</b> solving from scratch is very hard; but a filled 9×9 grid can be verified row-wise, column-wise and box-wise in <code>O(n²)</code>.</p>
+            <p><b>Worked example — Subset Sum:</b> <code>{3,7,1,8,5}</code>, target <code>12</code> → certificate <code>{7,5}</code>; verification is <code>7+5=12</code>, O(n).</p>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ========== B3: P vs NP (Q3, Q9) ========== -->
+    <details class="branch b3" open id="b3">
+      <summary><span class="num">3</span> P vs NP Relationship <span class="qtag">Q3 · Q9</span></summary>
+      <div class="branch-body">
+
+        <div class="answer">
+          <span class="lbl">Exam Answer — Q9</span>
+          <b>No one knows.</b> "Can all NP problems be converted into P?" is exactly the <b>P = NP</b> question, which is <b>open</b>. What is proven is <b>P ⊆ NP</b> (every easy-to-solve problem is easy to check). Most researchers believe <b>P ≠ NP</b>. If <b>P = NP</b> were true, every NP problem would become polynomial-time solvable — modern cryptography (RSA) would break instantly, and optimisation, scheduling, and drug discovery would become tractable.
+        </div>
+
+        <details class="sub" open>
+          <summary>A. The proven relation — P ⊆ NP (Q3)</summary>
+          <div class="sub-body">
+            <ul>
+              <li>If a problem is in P, you can <b>solve</b> it quickly.</li>
+              <li>Naturally, you can also <b>verify</b> a solution quickly — just solve it and compare.</li>
+              <li>Therefore <b>every problem in P is automatically in NP</b>.</li>
+            </ul>
+            <div class="math">P ⊆ NP        <span class="c">← proven</span>
+P = NP ?      <span class="c">← open, widely believed false</span></div>
+            <p><b>One-line summary</b></p>
+            <ul>
+              <li><b>P</b> = "easy to solve and easy to check."</li>
+              <li><b>NP</b> = "maybe hard to solve, but easy to check."</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. What P = NP would mean (Q9)</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Cryptography collapses</b> — RSA relies on factoring being hard (easy to verify, believed hard to solve). If P = NP, factoring becomes easy and online banking, private messages, digital signatures all break.</li>
+              <li><b>Optimisation becomes tractable</b> — TSP, scheduling, protein folding, VLSI layout all solvable exactly in polynomial time.</li>
+              <li><b>AI and theorem proving</b> — automated discovery of proofs and plans becomes efficient.</li>
+              <li><b>Randomisation loses purpose</b> — why guess when you can compute exactly?</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Evidence that P ≠ NP</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Decades of research have not produced a polynomial-time algorithm for <b>any</b> NP-Complete problem.</li>
+              <li>If <b>any single</b> NP-Complete problem were solved in polynomial time, then <b>all</b> NP problems would be (because every NP problem reduces to it).</li>
+              <li>This "all-or-nothing" structure is strong evidence that the classes differ.</li>
+            </ul>
+            <div class="hook">Memory hook: Solve <b>one</b> NP-Complete problem in polynomial time → <b>P = NP</b>.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Direct answer to Q9 (model exam answer)</summary>
+          <div class="sub-body">
+            <p><b>Q: Can all NP problems be converted into P?</b></p>
+            <p><b>A:</b> This is unknown — it is the famous open question <b>P vs NP</b>. If <b>P = NP</b>, then yes: every problem whose solution can be checked quickly can also be solved quickly. If <b>P ≠ NP</b> (the widely held belief), then no: some NP problems are <b>inherently harder to solve than to verify</b>, and NP-Complete problems are the candidates.</p>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ========== B4: NP-HARD & NP-COMPLETE (Q1) ========== -->
+    <details class="branch b4" open id="b4">
+      <summary><span class="num">4</span> NP-Hard &amp; NP-Complete <span class="qtag">Q1</span></summary>
+      <div class="branch-body">
+
+        <div class="answer">
+          <span class="lbl">Exam Answer — Q1 (relationship)</span>
+          <b>NP-Hard</b> = at least as hard as <i>every</i> problem in NP (<code>∀L'∈NP, L'≤ₚL</code>); need not be in NP. <b>NP-Complete</b> = NP-Hard <b>AND</b> in NP. So <b>NPC = NP ∩ NP-Hard</b>. Every NP-Complete problem is NP-Hard, but not every NP-Hard problem is NP-Complete. Every problem in NP reduces to any NP-Complete problem.
+        </div>
+
+        <details class="sub" open>
+          <summary>A. Polynomial-time reduction (the tool behind everything)</summary>
+          <div class="sub-body">
+            <div class="math">L₁ ≤<sub>p</sub> L₂   <span class="c">← "L₁ reduces to L₂ in polynomial time"</span>
+
+means: there is a poly-time computable f such that
+        x ∈ L₁  ⟺  f(x) ∈ L₂
+
+<span class="c">consequence: if L₂ is easy → L₁ is easy</span>
+<span class="c">            if L₁ is hard → L₂ is at least as hard as L₁</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. NP-Hard — formal definition</summary>
+          <div class="sub-body">
+            <div class="math">L is NP-Hard  ⟺  ∀ L' ∈ NP,  L' ≤<sub>p</sub> L</div>
+            <ul>
+              <li>An NP-Hard problem need <b>not</b> be in NP.</li>
+              <li>It need <b>not</b> be decidable (the Halting Problem is NP-Hard).</li>
+              <li>It need <b>not</b> be a decision problem (TSP optimisation is NP-Hard).</li>
+              <li>Verification may be easy or impossible — the definition only constrains <b>relative difficulty</b>.</li>
+            </ul>
+            <div class="hook">Intuition: "NP-Hard means SO hard that even checking a proposed answer may itself be hard."</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. NP-Complete — definition</summary>
+          <div class="sub-body">
+            <div class="math">NPC = NP ∩ NP-Hard</div>
+            <ol>
+              <li><b>L ∈ NP</b> — given a solution, verify it in polynomial time.</li>
+              <li><b>L is NP-Hard</b> — every problem in NP reduces to L in polynomial time.</li>
+            </ol>
+            <p><b>Key facts</b></p>
+            <ul>
+              <li>All NP-Complete problems are NP-Hard; the converse is false.</li>
+              <li>NPC refers to the <b>decision version</b> (yes/no); the optimisation version may be NP-Hard but not in NP.</li>
+              <li>Solving <b>any one</b> NPC problem in polynomial time → all NP problems become solvable in polynomial time.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Relationship — how the four classes fit</summary>
+          <div class="sub-body">
+            <div class="math">        ┌──────────────── NP-HARD ────────────────┐
+        │                                         │
+        │              ┌───── NPC ─────┐           │
+        │  ┌───────────┴────── NP ────┴───────┐   │
+        │  │                                │   │
+        │  │          ┌──── P ────┐         │   │
+        │  │          │          │         │   │
+        │  │          └──────────┘         │   │
+        │  └────────────────────────────────┘   │
+        └─────────────────────────────────────────┘</div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Aspect</th><th>NP-Hard</th><th>NP-Complete</th></tr></thead>
+                <tbody>
+                  <tr><td>Poly-time verification</td><td>Not required</td><td>Required (since it is in NP)</td></tr>
+                  <tr><td>Decision problem?</td><td>Need not be</td><td>Always yes</td></tr>
+                  <tr><td>In NP?</td><td>Not necessarily</td><td>Yes by definition</td></tr>
+                  <tr><td>Example</td><td>Halting problem, TSP optimisation</td><td>SAT, HC, Subset Sum</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. NPC examples + how to prove NP-Complete</summary>
+          <div class="sub-body">
+            <p><b>Standard NP-Complete problems</b></p>
+            <ul>
+              <li><b>SAT</b> — first NP-Complete problem (Cook–Levin theorem).</li>
+              <li><b>3-SAT</b>, <b>Clique</b>, <b>Vertex Cover</b>, <b>Graph 3-Coloring</b>.</li>
+              <li><b>Hamiltonian Cycle</b>, <b>Subset Sum</b>, <b>TSP (decision)</b>, <b>Knapsack (decision)</b>.</li>
+            </ul>
+            <p><b>How to prove a problem is NP-Complete</b></p>
+            <ol>
+              <li>Show <b>L ∈ NP</b> — give a polynomial-time verifier.</li>
+              <li>Show <b>L is NP-Hard</b> — reduce a known NPC problem to L: <code>SAT ≤ₚ L</code>.</li>
+            </ol>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ========== B5: CLASSIFICATION (Q1, Q10) ========== -->
+    <details class="branch b5" open id="b5">
+      <summary><span class="num">5</span> Classification: Sort · Search · TSP <span class="qtag">Q1 · Q10</span></summary>
+      <div class="branch-body">
+
+        <div class="answer">
+          <span class="lbl">Exam Answer — Q1 / Q10</span>
+          <b>Sorting, searching, shortest path → P</b> (polynomial-time on DTM). <b>Sudoku, Subset Sum, Hamiltonian Cycle, TSP decision → NP-Complete</b> (in NP + every NP problem reduces to them). <b>TSP optimisation → NP-Hard</b> but not in NP (no poly-time verifier for "is this optimal?"). <b>Halting problem → NP-Hard</b> (undecidable).
+        </div>
+
+        <details class="sub" open>
+          <summary>A. Problems in P — with justification</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Problem</th><th>Algorithm</th><th>Why P</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Sorting</b></td><td>Merge sort / Heap sort</td><td>Runs in O(n log n) — polynomial in n on a deterministic machine</td></tr>
+                  <tr><td><b>Searching (sorted)</b></td><td>Binary search</td><td>O(log n) — halving the search space each step</td></tr>
+                  <tr><td><b>Searching (unsorted)</b></td><td>Linear search</td><td>O(n) — single pass</td></tr>
+                  <tr><td><b>Shortest path</b></td><td>Dijkstra</td><td>O((V+E)log V) — polynomial</td></tr>
+                  <tr><td><b>Primality</b></td><td>AKS</td><td>O(log⁶ n) — polynomial</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Justification logic:</b> if a deterministic polynomial-time algorithm exists, the problem is in P. Each row above gives one.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Problems in NP / NP-Complete — with justification</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Problem</th><th>Class</th><th>Why</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Sudoku</b></td><td>NP / NPC</td><td>Given a filled grid, verify rows/cols/boxes in O(n²) → in NP; every NP problem reduces to Sudoku (via SAT) → NPC</td></tr>
+                  <tr><td><b>Subset Sum</b></td><td>NP-Complete</td><td>Given a subset, add elements in O(n) → in NP; reduces from 3-SAT → NP-Hard</td></tr>
+                  <tr><td><b>Hamiltonian Cycle</b></td><td>NP-Complete</td><td>Given a cycle, check every vertex visited once in O(n) → in NP; reduces from 3-SAT → NP-Hard</td></tr>
+                  <tr><td><b>TSP (decision)</b></td><td>NP-Complete</td><td>Given a tour, sum distances in O(n) and compare with k → in NP; reduces from HC</td></tr>
+                  <tr><td><b>SAT / 3-SAT</b></td><td>NP-Complete</td><td>Given an assignment, evaluate clauses in O(n) → in NP; SAT is the first NPC (Cook–Levin)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Problems in NP-Hard but not NP — with justification</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Problem</th><th>Class</th><th>Why</th></tr></thead>
+                <tbody>
+                  <tr><td><b>TSP (optimisation)</b></td><td>NP-Hard</td><td>Asks for the <i>shortest</i> tour. At least as hard as TSP-decision, but <b>no polynomial-time verifier</b> exists for "is this tour optimal?" — you would have to rule out exponentially many alternatives. So it is NP-Hard but <b>not in NP</b>.</td></tr>
+                  <tr><td><b>Halting Problem</b></td><td>NP-Hard</td><td>Undecidable — no algorithm solves it at all. Therefore trivially at least as hard as any NP problem. NP-Hard but not in NP.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Master classification table (Q1 / Q10)</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Problem</th><th>Class</th><th>Justification</th></tr></thead>
+                <tbody>
+                  <tr><td>Sorting (merge / heap)</td><td><b>P</b></td><td>O(n log n) deterministic</td></tr>
+                  <tr><td>Binary search</td><td><b>P</b></td><td>O(log n) deterministic</td></tr>
+                  <tr><td>Linear search</td><td><b>P</b></td><td>O(n) deterministic</td></tr>
+                  <tr><td>Shortest path (Dijkstra)</td><td><b>P</b></td><td>O((V+E) log V) deterministic</td></tr>
+                  <tr><td>Primality (AKS)</td><td><b>P</b></td><td>O(log⁶ n) deterministic</td></tr>
+                  <tr><td>Sudoku (decision)</td><td><b>NP-Complete</b></td><td>Poly verify + NP-hard (via SAT)</td></tr>
+                  <tr><td>Subset Sum (decision)</td><td><b>NP-Complete</b></td><td>Poly verify + NP-hard (from 3-SAT)</td></tr>
+                  <tr><td>Hamiltonian Cycle</td><td><b>NP-Complete</b></td><td>Poly verify + NP-hard</td></tr>
+                  <tr><td>TSP (decision, ≤ k)</td><td><b>NP-Complete</b></td><td>Poly verify + NP-hard (from HC)</td></tr>
+                  <tr><td>SAT / 3-SAT</td><td><b>NP-Complete</b></td><td>First NPC (Cook–Levin)</td></tr>
+                  <tr><td>TSP (optimisation)</td><td><b>NP-Hard</b></td><td>No poly-time verifier for optimality → not in NP</td></tr>
+                  <tr><td>Halting problem</td><td><b>NP-Hard</b></td><td>Undecidable → not in NP</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Poly algorithm exists → <b>P</b> · Poly verifier exists → <b>NP</b> · Reduces from a known hard problem → <b>NP-Hard</b> · In NP AND NP-Hard → <b>NPC</b>.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ========== B6: DETERMINISTIC vs RANDOMIZED (Q2) ========== -->
+    <details class="branch b6" open id="b6">
+      <summary><span class="num">6</span> Deterministic vs Randomized <span class="qtag">Q2</span></summary>
+      <div class="branch-body">
+
+        <div class="answer">
+          <span class="lbl">Exam Answer — Q2</span>
+          A <b>randomized algorithm</b> takes <b>random numbers as an extra input</b> and uses them to guide its choices during execution. Unlike a deterministic algorithm, the same input may produce a different output or take different time on different runs. <b>Example:</b> quicksort — deterministic pivot = first element gives O(n²) on sorted input; a random pivot gives <b>O(n log n) expected</b> regardless of input order.
+        </div>
+
+        <details class="sub" open>
+          <summary>A. How randomized algorithms use random choices</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Extra input</b> — besides the normal input (array, graph), the algorithm reads a stream of random bits <code>r</code>.</li>
+              <li><b>Random decision</b> — at certain steps, the algorithm uses <code>r</code> to pick among several equally good options (which pivot, which vertex, which hash function).</li>
+              <li><b>Behaviour varies</b> — even with the same input, two runs may execute different sequences of steps.</li>
+              <li><b>Random variable</b> — output and running time are random variables over the distribution of <code>r</code>.</li>
+            </ol>
+            <div class="math">Pr[M(x) = f(x)]           <span class="c">← correctness probability</span>
+E[T(x)] = Σ t · Pr[T(x) = t]   <span class="c">← expected running time</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Deterministic definition + examples</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Same input → same output, every time.</b> Steps are fixed; there is only one execution path.</li>
+              <li><b>Correctness guaranteed</b> — no randomness, no error probability.</li>
+            </ul>
+            <p><b>Examples</b></p>
+            <ul>
+              <li><b>Binary search</b> — O(log n), always finds the element if present.</li>
+              <li><b>Merge sort</b> — O(n log n) always.</li>
+              <li><b>Dijkstra's algorithm</b> — deterministic shortest path.</li>
+              <li><b>Deterministic quicksort</b> (pivot = first element) — but worst case O(n²) on sorted input.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Comparison table (Q2)</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Aspect</th><th>Deterministic</th><th>Randomized</th></tr></thead>
+                <tbody>
+                  <tr><td>Random bits</td><td>None</td><td>Used as extra input</td></tr>
+                  <tr><td>Same input, repeated</td><td>Same output, same time</td><td>Output and/or time may differ</td></tr>
+                  <tr><td>Correctness</td><td>Guaranteed</td><td>Guaranteed (LV) or high probability (MC)</td></tr>
+                  <tr><td>Worst case</td><td>Can be forced by adversarial input</td><td>Adversary cannot predict the coins</td></tr>
+                  <tr><td>Average-case speed</td><td>Input-dependent</td><td>Good on every input</td></tr>
+                  <tr><td>Typical gain</td><td>—</td><td>Simplicity, speed on average, symmetry breaking</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Worked example — quicksort (Q2)</summary>
+          <div class="sub-body">
+            <p><b>Deterministic quicksort (pivot = first element)</b></p>
+            <ul>
+              <li>If input is already sorted, every partition is maximally unbalanced.</li>
+              <li>Recurrence: <code>T(n) = T(n−1) + Θ(n)</code> → <code>T(n) = O(n²)</code>.</li>
+              <li>The adversary knows your rule and can always supply a worst-case input.</li>
+            </ul>
+            <p><b>Randomized quicksort (random pivot)</b></p>
+            <ul>
+              <li>At each call, pick an index uniformly at random between <code>low</code> and <code>high</code>, swap it with the last element, then partition.</li>
+              <li>Pivot rank is uniform over <code>0…n−1</code>, so on average the split is balanced.</li>
+              <li>Recurrence: <code>E[T(n)] = (1/n) Σ (E[T(i)] + E[T(n−1−i)]) + Θ(n) = O(n log n)</code>.</li>
+              <li>The adversary no longer controls the pivot choice, so no input can force the worst case with high probability.</li>
+            </ul>
+            <div class="hook">Memory hook: Deterministic = predictable but attackable · Randomized = unpredictable but robust on every input.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ========== B7: LAS VEGAS (Q4, Q5) ========== -->
+    <details class="branch b7" open id="b7">
+      <summary><span class="num">7</span> Las Vegas Algorithms <span class="qtag">Q4 · Q5</span></summary>
+      <div class="branch-body">
+
+        <div class="answer">
+          <span class="lbl">Exam Answer — Q5</span>
+          A <b>Las Vegas</b> algorithm <b>always returns a correct answer</b>, but its <b>running time is random</b>. Error probability = <b>0</b>. Expected running time is polynomial. <b>Example:</b> randomized quicksort — always sorts correctly, but expected <code>O(n log n)</code> time (occasionally slower).
+        </div>
+
+        <details class="sub" open>
+          <summary>A. Definition</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A randomized algorithm that <b>always outputs a correct answer</b> (or reports failure), but the <b>time it takes is random</b>.</li>
+              <li>Random choices speed up or simplify processing — sometimes it finishes quickly, sometimes slower — but it <b>never returns a wrong result</b>.</li>
+            </ul>
+            <div class="math">Pr[M(x) = f(x)] = 1         <span class="c">← zero error, always</span>
+E[T(n)] ≤ poly(n)           <span class="c">← expected time is polynomial</span>
+<span class="c">class: ZPP (Zero-error Probabilistic Polynomial)</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Properties</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Property</th><th>Las Vegas</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Correctness</b></td><td>Always correct (zero error)</td></tr>
+                  <tr><td><b>Running time</b></td><td>Random; <b>expected</b> polynomial</td></tr>
+                  <tr><td><b>Error probability</b></td><td>0</td></tr>
+                  <tr><td><b>How to fix slowness</b></td><td>Rerun — correctness is preserved</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Example — randomized quicksort (pseudo-code)</summary>
+          <div class="sub-body">
+            <div class="math">RandomizedQuickSort(A, low, high):
+    if low &lt; high:
+        p = random.randint(low, high)        <span class="c"># random pivot</span>
+        swap A[p] with A[high]               <span class="c"># move pivot to end</span>
+        pivotIndex = Partition(A, low, high) <span class="c"># Lomuto</span>
+        RandomizedQuickSort(A, low, pivotIndex - 1)
+        RandomizedQuickSort(A, pivotIndex + 1, high)
+
+<span class="c"># Always returns a sorted array — Las Vegas.</span></div>
+            <p><b>Expected-time recurrence</b></p>
+            <div class="math">E[T(n)] = (1/n) Σ<sub>i=0</sub><sup>n−1</sup> ( E[T(i)] + E[T(n−1−i)] ) + Θ(n)
+        = O(n log n)
+
+expected comparisons ≈ 2n ln n ≈ 1.39 n log₂ n</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Other examples</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Randomized quickselect</b> — k-th smallest element, expected <code>O(n)</code>.</li>
+              <li><b>Randomized 8-queens</b> — place queens randomly; restart on conflict; always correct when it halts.</li>
+              <li><b>Universal hashing</b> — expected <code>O(1)</code> per operation.</li>
+              <li><b>Karger's min-cut (Las Vegas variant)</b> — repeat until the cut is verified optimal.</li>
+            </ul>
+            <div class="hook">Memory hook: Las Vegas = always right, sometimes slow → rerun until fast enough.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ========== B8: MONTE CARLO (Q4, Q5) ========== -->
+    <details class="branch b8" open id="b8">
+      <summary><span class="num">8</span> Monte Carlo Algorithms <span class="qtag">Q4 · Q5</span></summary>
+      <div class="branch-body">
+
+        <div class="answer">
+          <span class="lbl">Exam Answer — Q5</span>
+          A <b>Monte Carlo</b> algorithm runs in <b>bounded (usually polynomial) time</b>, but its answer <b>may be wrong with probability ε</b>. Error is reduced by repetition. <b>Example:</b> Miller–Rabin primality test — fast, but says "probably prime" with bounded error <code>≤ 1/4</code> per round.
+        </div>
+
+        <details class="sub" open>
+          <summary>A. Definition</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A randomized algorithm that provides a result <b>quickly</b>, but the result <b>may not always be correct</b>.</li>
+              <li>Fast and simple — the answer is <b>probably correct, not guaranteed</b>.</li>
+              <li>Accuracy can be increased by increasing the number of independent trials.</li>
+            </ul>
+            <div class="math">Pr[M(x) = f(x)] ≥ 1 − ε        <span class="c">← error probability ε per run</span>
+T(x) ≤ T(n)                    <span class="c">← running time is bounded</span>
+
+<span class="c">one-sided error (class RP)  : "yes" always correct, "no" may be wrong</span>
+<span class="c">two-sided error (class BPP) : both may be wrong, each prob ≤ 1/3</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Properties</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Property</th><th>Monte Carlo</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Correctness</b></td><td>May be wrong with probability ε</td></tr>
+                  <tr><td><b>Running time</b></td><td>Bounded / fixed (usually polynomial)</td></tr>
+                  <tr><td><b>Error probability</b></td><td>ε (reducible)</td></tr>
+                  <tr><td><b>How to fix error</b></td><td>Repeat and take majority (two-sided) or repeat until "no" (one-sided)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Error amplification (repetition)</summary>
+          <div class="sub-body">
+            <div class="math"><span class="c"># one-sided error, independent repetition</span>
+Pr[error after k trials] ≤ ε<sup>k</sup>
+
+<span class="c"># trials needed to reach target error δ</span>
+k ≥ log(1/δ) / log(1/ε)
+
+<span class="c"># two-sided error, majority vote</span>
+Pr[error after k trials] ≤ exp(−2kδ²)      <span class="c">(Hoeffding)</span></div>
+            <p>This is the <b>amplification lemma</b>: any constant error below 1/2 can be driven to negligible probability by repetition.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Examples</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Miller–Rabin primality test</b> — one-sided error ≤ 1/4 per round.</li>
+              <li><b>Karger's min-cut</b> — success ≥ 2/(n(n−1)) per run; repeat to amplify.</li>
+              <li><b>Monte Carlo integration (estimate π)</b> — random points; error ≈ 1/√N.</li>
+              <li><b>Polynomial identity testing (Schwartz–Zippel)</b> — error ≤ d/|S|.</li>
+            </ul>
+            <div class="math"><span class="c"># Miller–Rabin after k rounds</span>
+k = 10  →  4<sup>−10</sup> ≈ 9.5 × 10<sup>−7</sup>
+k = 20  →  4<sup>−20</sup> ≈ 9.1 × 10<sup>−13</sup></div>
+            <div class="hook">Memory hook: use Monte Carlo when <b>speed matters more than accuracy</b>.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ========== B9: LV vs MC COMPARISON (Q4, Q5) ========== -->
+    <details class="branch b9" open id="b9">
+      <summary><span class="num">9</span> Las Vegas vs Monte Carlo <span class="qtag">Q4 · Q5</span></summary>
+      <div class="branch-body">
+
+        <div class="answer">
+          <span class="lbl">Exam Answer — Q4 (key difference)</span>
+          <b>Las Vegas</b>: always correct, running time is random, error probability = <b>0</b>. <b>Monte Carlo</b>: running time bounded, but may be wrong with probability <b>ε</b>. In one line: <b>Las Vegas trades time for certainty; Monte Carlo trades certainty for time.</b>
+        </div>
+
+        <details class="sub" open>
+          <summary>A. Full comparison — correctness, running time, error probability (Q5)</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Criterion</th><th>Las Vegas</th><th>Monte Carlo</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Correctness</b></td><td>Always correct (zero error)</td><td>May be wrong with probability ε</td></tr>
+                  <tr><td><b>Running time</b></td><td>Random; expected polynomial</td><td>Bounded / fixed (usually polynomial)</td></tr>
+                  <tr><td><b>Error probability</b></td><td>0</td><td>ε (reducible by repetition)</td></tr>
+                  <tr><td><b>How to fix</b></td><td>Rerun if too slow</td><td>Repeat and take majority or combine trials</td></tr>
+                  <tr><td><b>Complexity class</b></td><td>ZPP</td><td>RP (one-sided) / BPP (two-sided)</td></tr>
+                  <tr><td><b>Example</b></td><td>Randomized quicksort, quickselect, 8-queens</td><td>Miller–Rabin, Karger min-cut, Monte Carlo integration</td></tr>
+                  <tr><td><b>Analogy</b></td><td>Searching for lost keys by random spots — always find them eventually</td><td>Opinion polls — usually right, small chance wrong</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Side-by-side with formulas</summary>
+          <div class="sub-body">
+            <div class="math"><b>Las Vegas</b>
+Pr[correct] = 1
+E[T(n)]    = polynomial
+→ exact answer, random time
+
+<b>Monte Carlo</b>
+Pr[correct] ≥ 1 − ε
+T(n)        = bounded polynomial
+→ approximate answer, bounded time</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Which one to use when</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Use Las Vegas</b> when you need an <b>exact</b> answer and can tolerate occasional slowness — sorting, selection, hashing.</li>
+              <li><b>Use Monte Carlo</b> when you need <b>speed</b> and can tolerate a tiny, controllable error — primality testing, large-scale min-cut, simulations, approximate counting.</li>
+              <li><b>Repetition converts Monte Carlo towards Las Vegas</b>: enough trials make the error probability smaller than the chance of hardware failure.</li>
+            </ul>
+            <div class="hook">Memory hook: LV = <b>L</b>ways correct · MC = <b>M</b>ight be correct.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ========== B10: RANDOMIZED + APPROXIMATION (Q7) ========== -->
+    <details class="branch b10" open id="b10">
+      <summary><span class="num">10</span> Randomized + Approximation <span class="qtag">Q7</span></summary>
+      <div class="branch-body">
+
+        <div class="answer">
+          <span class="lbl">Exam Answer — Q7</span>
+          <b>Randomized algorithm</b> — uses random numbers to guide choices, often faster on average. <b>Example:</b> randomized quicksort — expected <code>O(n log n)</code>. <b>Approximation algorithm</b> — returns a solution within a guaranteed factor of optimal, in polynomial time. <b>Example:</b> 2-approximation for TSP via MST — returns a tour at most twice the optimal length.
+        </div>
+
+        <details class="sub" open>
+          <summary>A. Randomized algorithm — brief recap</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Uses <b>random bits as extra input</b> to make choices during execution.</li>
+              <li>Same input may give different output or time — output/time are random variables.</li>
+              <li>Types: <b>Las Vegas</b> (always correct) and <b>Monte Carlo</b> (may be wrong with small probability).</li>
+              <li><b>Example:</b> randomized quicksort — always sorts correctly, expected <code>O(n log n)</code>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Approximation algorithm — definition</summary>
+          <div class="sub-body">
+            <ul>
+              <li>For NP-Hard problems where exact solutions are too expensive, an approximation algorithm returns a solution that is <b>provably close to optimal</b> in polynomial time.</li>
+              <li>Defined by its <b>approximation ratio ρ(n)</b>:</li>
+            </ul>
+            <div class="math">For a minimisation problem:
+   cost(C) / cost(C*)  ≤  ρ(n)   for every input
+
+For a maximisation problem:
+   cost(C*) / cost(C)  ≤  ρ(n)
+
+<span class="c">where C = solution returned, C* = optimal solution</span>
+<span class="c">ρ(n) = 2 means "never more than twice the optimal"</span></div>
+            <ul>
+              <li>An algorithm with ratio ρ is called a <b>ρ-approximation algorithm</b>.</li>
+              <li>Goal: polynomial time + guaranteed quality.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Example 1 — 2-approximation for TSP (metric)</summary>
+          <div class="sub-body">
+            <ol>
+              <li>Build an <b>MST</b> of the cities (Prim or Kruskal, polynomial).</li>
+              <li>Do a <b>pre-order traversal</b> of the MST — this visits every vertex.</li>
+              <li>Shortcut repeated vertices — output the resulting tour.</li>
+            </ol>
+            <div class="math">cost(MST) ≤ cost(optimal tour)
+traversal cost = 2 · cost(MST) ≤ 2 · cost(optimal)
+
+→ factor ≤ 2 (2-approximation)</div>
+            <ul>
+              <li>Runs in polynomial time (MST is <code>O(E log V)</code>).</li>
+              <li>Guarantees the returned tour is <b>at most twice</b> the optimal length.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Example 2 — 2-approximation for Vertex Cover</summary>
+          <div class="sub-body">
+            <ol>
+              <li>While edges remain: pick any uncovered edge <code>(u, v)</code>.</li>
+              <li>Add <b>both</b> endpoints <code>u</code> and <code>v</code> to the cover.</li>
+              <li>Remove all edges covered by <code>u</code> or <code>v</code>.</li>
+            </ol>
+            <div class="math">each chosen edge is disjoint (a matching) → optimal ≥ matching size
+algorithm picks 2 vertices per matched edge → |C| = 2 · matching
+
+→ |C| / |C*| ≤ 2</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Why approximation matters</summary>
+          <div class="sub-body">
+            <ul>
+              <li>TSP optimisation, vertex cover, set cover, scheduling are all NP-Hard — no known polynomial-time exact algorithm.</li>
+              <li>Approximation algorithms deliver a <b>provable quality guarantee</b> in polynomial time.</li>
+              <li>Together with randomization, they form the practical toolkit for intractable problems.</li>
+            </ul>
+            <div class="hook">Memory hook: Approximation = <b>fast + provably close</b> · Randomized = <b>fast + probably right</b>.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ========== MASTER SUMMARY ========== -->
+    <details class="branch summary wide" open>
+      <summary><span class="num">★</span> Master Summary Table</summary>
+      <div class="branch-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Concept</th><th>Definition / Key Fact</th><th>Question</th></tr></thead>
+            <tbody>
+              <tr><td>Polynomial time algorithm</td><td>Runs in <code>O(n^k)</code>, constant k. Examples: binary search, merge sort, Dijkstra. Non-poly: O(n!), O(2ⁿ)</td><td>Q8</td></tr>
+              <tr><td>P class</td><td>Decision problems solvable in polynomial time on a DTM. <code>P = ∪ DTIME(n^k)</code></td><td>Q3, Q6</td></tr>
+              <tr><td>NP class</td><td>Decision problems whose certificate verifies in polynomial time. <code>NP = ∪ NTIME(n^k)</code></td><td>Q3, Q6</td></tr>
+              <tr><td>P vs NP</td><td><code>P ⊆ NP</code> proven. <code>P = NP?</code> open, widely believed false</td><td>Q3, Q9</td></tr>
+              <tr><td>NP-Hard</td><td><code>∀L'∈NP, L'≤ₚL</code>. Need not be in NP. Example: Halting, TSP optimisation</td><td>Q1</td></tr>
+              <tr><td>NP-Complete</td><td><code>NPC = NP ∩ NP-Hard</code>. Decision only. Example: SAT, HC, Subset Sum</td><td>Q1</td></tr>
+              <tr><td>Sorting, searching</td><td><b>P</b> — deterministic O(n log n) / O(log n) algorithms exist</td><td>Q1, Q10</td></tr>
+              <tr><td>TSP decision</td><td><b>NP-Complete</b> — poly verify + reduces from HC</td><td>Q1, Q10</td></tr>
+              <tr><td>TSP optimisation</td><td><b>NP-Hard</b> — no poly verifier for optimality</td><td>Q1, Q10</td></tr>
+              <tr><td>Deterministic vs randomized</td><td>Deterministic: fixed steps, same output. Randomized: extra random bits, output/time are random variables</td><td>Q2</td></tr>
+              <tr><td>Las Vegas</td><td>Always correct, random time, <b>error = 0</b>. Class ZPP. Example: randomized quicksort</td><td>Q4, Q5</td></tr>
+              <tr><td>Monte Carlo</td><td>Bounded time, may be wrong with probability ε. Class RP/BPP. Example: Miller–Rabin</td><td>Q4, Q5</td></tr>
+              <tr><td>Key difference LV vs MC</td><td>LV trades time for certainty; MC trades certainty for time</td><td>Q4</td></tr>
+              <tr><td>Approximation algorithm</td><td>Poly time + solution within factor ρ of optimal. Example: 2-approx TSP via MST</td><td>Q7</td></tr>
+              <tr><td>Randomized + approximation</td><td>Both handle intractable problems: randomized for speed, approximation for quality guarantees</td><td>Q7</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MEMORY HOOKS ========== -->
+    <details class="branch hooks wide" open>
+      <summary><span class="num">🎯</span> Quick Memory Hooks</summary>
+      <div class="branch-body">
+        <div class="hook-grid">
+          <div class="hook">Poly time = <code>O(n^k)</code> · Non-poly = <code>O(2ⁿ)</code>, <code>O(n!)</code></div>
+          <div class="hook">P = easy to solve AND easy to check</div>
+          <div class="hook">NP = hard to find, easy to check (certificate)</div>
+          <div class="hook">P ⊆ NP proven · P = NP open · believed false</div>
+          <div class="hook">P = NP ⟹ cryptography breaks (RSA factored in poly time)</div>
+          <div class="hook">NP-Hard: <code>∀L'∈NP, L'≤ₚL</code> — need not be in NP</div>
+          <div class="hook">NPC = NP ∩ NP-Hard · decision only · SAT first (Cook–Levin)</div>
+          <div class="hook">Solve ONE NPC in poly time → all NP becomes P</div>
+          <div class="hook">Sort, search, shortest path → <b>P</b></div>
+          <div class="hook">Sudoku, Subset Sum, HC, TSP-decision → <b>NP-Complete</b></div>
+          <div class="hook">TSP optimisation, Halting → <b>NP-Hard</b> but not in NP</div>
+          <div class="hook">Deterministic = predictable · Randomized = uses random bits</div>
+          <div class="hook">Las Vegas = always right, sometimes slow → error 0 → <b>ZPP</b></div>
+          <div class="hook">Monte Carlo = always fast, maybe wrong → error ε → <b>RP / BPP</b></div>
+          <div class="hook">LV trades time for certainty · MC trades certainty for time</div>
+          <div class="hook">Approximation: poly time + within factor ρ of optimal</div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <p class="no-results" id="noResults">No matching topics. Try another search term.</p>
+  <div class="foot">DAA Unit 6 · Exam Mindmap · Expand/collapse branches · Search · Print to PDF</div>
+</main>
+
+<script>
+const allDetails = [...document.querySelectorAll('details')];
+
+function expandAll(open){ allDetails.forEach(d => d.open = open); }
+
+function resetView(){
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.hidden').forEach(e => e.classList.remove('hidden'));
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+  expandAll(true);
+  document.getElementById('noResults').style.display = 'none';
+}
+
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const q = search.value.trim().toLowerCase();
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+
+  if (!q){
+    document.querySelectorAll('.branch,.sub').forEach(e => e.classList.remove('hidden'));
+    document.getElementById('noResults').style.display = 'none';
+    return;
+  }
+
+  let count = 0;
+
+  document.querySelectorAll('.branch').forEach(branch => {
+    const branchMatch = branch.innerText.toLowerCase().includes(q);
+    const subMatches = [...branch.querySelectorAll('.sub')]
+      .filter(s => s.innerText.toLowerCase().includes(q));
+
+    if (branchMatch || subMatches.length){
+      branch.classList.remove('hidden');
+      branch.open = true;
+
+      subMatches.forEach(s => {
+        s.classList.remove('hidden');
+        s.open = true;
+        s.classList.add('hit');
+        count++;
+      });
+
+      branch.querySelectorAll('.sub').forEach(s => {
+        if (!subMatches.includes(s)) s.classList.add('hidden');
+      });
+
+      if (!subMatches.length){
+        branch.classList.add('hit');
+        count++;
+      }
+    } else {
+      branch.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('noResults').style.display = count ? 'none' : 'block';
+});
+</script>
+</body>
+</html>

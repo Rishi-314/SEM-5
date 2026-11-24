@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DAA Unit 5 — Backtracking Mindmap</title>
+<style>
+:root{
+  --bg:#f5f7fb;--ink:#172033;--muted:#586579;--line:#d8dfeb;
+  --b1:#1d4ed8;--b1t:#dbeafe;
+  --b2:#0e7490;--b2t:#cffafe;
+  --b3:#7c3aed;--b3t:#ede9fe;
+  --b4:#15803d;--b4t:#dcfce7;
+  --b5:#b45309;--b5t:#fef3c7;
+  --b6:#0369a1;--b6t:#e0f2fe;
+  --b7:#be185d;--b7t:#fce7f3;
+  --b8:#0f766e;--b8t:#ccfbf1;
+  --summary:#475569;--summary-t:#e2e8f0;
+  --hooks:#b91c1c;--hooks-t:#fee2e2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+
+.top{position:sticky;top:0;z-index:10;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:850;letter-spacing:.02em;margin-right:auto}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+button{border:1px solid #cbd5e1;background:white;color:#263247;border-radius:9px;padding:8px 11px;font:inherit;font-size:13px;cursor:pointer}
+button:hover{background:#eef4ff;border-color:#93b4f5}
+input{border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px;min-width:min(280px,75vw);font:inherit}
+input:focus{outline:2px solid #93b4f5;outline-offset:1px}
+
+.hero{max-width:1500px;margin:26px auto 18px;padding:0 20px;text-align:center}
+.hero h1{margin:0 auto 7px;font-size:clamp(25px,4vw,42px);line-height:1.15;letter-spacing:-.035em}
+.hero p{margin:0;color:var(--muted)}
+.legend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:15px 0}
+.legend span{font-size:12px;padding:5px 9px;border-radius:20px;background:white;border:1px solid var(--line)}
+
+.map{max-width:1600px;margin:auto;padding:0 18px 60px}
+.root{margin:20px auto 24px;max-width:760px;text-align:center;background:#173e78;color:white;padding:20px;border-radius:16px;box-shadow:0 8px 24px #173e7822}
+.root h2{margin:0;font-size:24px}
+.root small{opacity:.85}
+
+.branch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.branch{--accent:var(--summary);--tint:var(--summary-t);min-width:0;background:white;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #1e293b0a}
+.branch.b1{--accent:var(--b1);--tint:var(--b1t)}
+.branch.b2{--accent:var(--b2);--tint:var(--b2t)}
+.branch.b3{--accent:var(--b3);--tint:var(--b3t)}
+.branch.b4{--accent:var(--b4);--tint:var(--b4t)}
+.branch.b5{--accent:var(--b5);--tint:var(--b5t)}
+.branch.b6{--accent:var(--b6);--tint:var(--b6t)}
+.branch.b7{--accent:var(--b7);--tint:var(--b7t)}
+.branch.b8{--accent:var(--b8);--tint:var(--b8t)}
+.branch.summary{--accent:var(--summary);--tint:var(--summary-t)}
+.branch.hooks{--accent:var(--hooks);--tint:var(--hooks-t)}
+.branch>summary{list-style:none;cursor:pointer;background:var(--tint);padding:14px 15px;font-weight:850;font-size:16px;display:flex;gap:10px;align-items:center;line-height:1.3}
+.branch>summary::-webkit-details-marker{display:none}
+.num{flex:none;border-radius:8px;background:var(--accent);color:white;width:30px;height:30px;display:grid;place-items:center;font-size:14px;font-variant-numeric:tabular-nums}
+.branch-body{padding:12px}
+
+.sub{border:1px solid var(--line);border-radius:10px;margin:9px 0;background:#fff;overflow:hidden}
+.sub>summary{cursor:pointer;list-style:none;padding:10px 12px;font-weight:750;background:#f8fafc;border-bottom:1px solid transparent;font-size:14px}
+.sub>summary::-webkit-details-marker{display:none}
+.sub[open]>summary{border-bottom-color:var(--line)}
+.sub-body{padding:10px 14px 13px;font-size:14px}
+.sub-body p{margin:6px 0}
+.sub-body ul,.sub-body ol{margin:5px 0 8px;padding-left:21px}
+.sub-body li{margin:3px 0}
+.sub-body ul ul{margin-top:3px}
+.sub-body b{color:#111827}
+
+.hook{padding:10px 12px;border-left:4px solid var(--accent);background:var(--tint);border-radius:7px;margin:10px 0;font-weight:650}
+.diagram{border:1px dashed #94a3b8;border-radius:9px;padding:10px;margin:9px 0;text-align:center;background:#fafcff;font-weight:700;font-size:13px;line-height:1.8;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.code{white-space:pre;overflow-x:auto;background:#0f172a;color:#e2e8f0;border-radius:9px;padding:12px 14px;margin:9px 0;font:12.5px/1.75 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;border:1px solid #1e293b}
+.code .c{color:#7dd3fc}
+.code .k{color:#c084fc}
+.code .s{color:#86efac}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:9px 0}
+.split div{border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:13px}
+.split div b{display:block;margin-bottom:3px;color:var(--accent)}
+.table-wrap{overflow-x:auto;margin:9px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:12px;letter-spacing:.03em;text-transform:uppercase}
+tbody tr:hover td{background:#f8fbff}
+code{background:#eef2ff;padding:1px 4px;border-radius:4px;font-size:12.5px}
+
+.wide{grid-column:1 / -1;margin-top:16px}
+.hook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.hook-grid .hook{margin:0}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+.hidden{display:none!important}
+.hit{outline:3px solid #f59e0b;outline-offset:2px;background:#fffbeb!important}
+.no-results{display:none;text-align:center;padding:20px;color:#64748b}
+
+@media(max-width:1100px){.branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+  .branch-grid{grid-template-columns:1fr}
+  .top{position:static}
+  .brand{width:100%}
+  .hero{margin-top:18px}
+  .map{padding:0 10px 35px}
+  .root{padding:16px}
+  .branch>summary{font-size:15px}
+  .split{grid-template-columns:1fr}
+}
+
+@media print{
+  .top{display:none}
+  .hero{margin:0 auto 12px}
+  .map{max-width:none;padding:0}
+  .branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .branch,.sub{break-inside:avoid;box-shadow:none}
+  details:not([open])>.branch-body,details:not([open])>.sub-body{display:block}
+  .branch>summary,.sub>summary,.root{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  body{background:white;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">🧩 DAA • UNIT 5 • BACKTRACKING</div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search any concept… (e.g. N-Queens, chromatic, implicit, pruning)">
+    <button onclick="expandAll(true)">Expand all</button>
+    <button onclick="expandAll(false)">Collapse all</button>
+    <button onclick="resetView()">Reset</button>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Backtracking — Unit 5</h1>
+  <p>Design &amp; Analysis of Algorithms · complete study mindmap with expandable branches</p>
+  <div class="legend">
+    <span style="background:var(--b1t)">1 Strategy</span>
+    <span style="background:var(--b2t)">2 General Approach</span>
+    <span style="background:var(--b3t)">3 Problem Types</span>
+    <span style="background:var(--b4t)">4 Constraints</span>
+    <span style="background:var(--b5t)">5 N-Queens</span>
+    <span style="background:var(--b6t)">6 Graph Coloring</span>
+    <span style="background:var(--b7t)">7 Applications</span>
+    <span style="background:var(--b8t)">8 Worked Example</span>
+    <span style="background:var(--summary-t)">★ Summary</span>
+    <span style="background:var(--hooks-t)">🎯 Hooks</span>
+  </div>
+</section>
+
+<main class="map">
+  <div class="root">
+    <h2>🧩 BACKTRACKING — UNIT 5</h2>
+    <small>Eight connected knowledge branches · select a heading to expand its details</small>
+  </div>
+
+  <div class="branch-grid">
+
+    <!-- ============ 1. BACKTRACKING STRATEGY ============ -->
+    <details class="branch b1" open>
+      <summary><span class="num">1</span> Backtracking Strategy</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is backtracking?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Like trying different paths — when you hit a <b>dead end</b>, you backtrack to the previous choice and try a different route.</li>
+              <li>A problem-solving technique that finds a solution <b>incrementally</b> by trying different options and <b>undoing</b> them if they lead to a dead end.</li>
+              <li>A <b>systematic trial-and-error</b> technique: build a solution step by step and undo ("backtrack") whenever you hit a dead end.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Core idea — 5 steps</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Make a choice.</b></li>
+              <li><b>Check whether the choice is valid.</b></li>
+              <li>If valid → <b>continue</b>.</li>
+              <li>If invalid → <b>go back</b> (backtrack).</li>
+              <li><b>Try another choice.</b></li>
+            </ol>
+            <div class="hook">Memory hook: Choose → Check → Continue / Backtrack → Try another.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Real-life analogy — the junction</summary>
+          <div class="sub-body">
+            <p>You reach a junction:</p>
+            <div class="diagram">
+A → B → DEAD END
+✗ don't continue walking through the wall
+↩ BACKTRACK
+A → C → D → EXIT ✓
+            </div>
+            <ul>
+              <li>Backtracking means going back to the <b>most recent decision point</b> and trying another option.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Where it is used</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Situations where you need to <b>explore multiple possibilities</b> to solve a problem.</li>
+              <li>Examples: searching for a path in a <b>maze</b>, solving puzzles like <b>Sudoku</b>.</li>
+              <li>When a dead end is reached, the algorithm backtracks to the previous decision point and explores a different path until a solution is found or all possibilities are exhausted.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. When NOT to use backtracking</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Greedy or DP fits better</b> — if the problem can be solved directly using a greedy strategy or dynamic programming, backtracking is overkill.</li>
+              <li><b>No pruning possible</b> — if all branches must be explored anyway (no constraints to cut early), brute force or iterative methods may be simpler.</li>
+              <li><b>Large input size</b> — backtracking can be exponential in time; for very large inputs without strong pruning it becomes impractical.</li>
+              <li><b>Single optimal solution</b> — if the task only needs one best solution with clear optimisation criteria, DP, greedy or graph search may be faster.</li>
+            </ul>
+            <div class="hook">Memory hook: Backtracking shines when constraints let you <b>prune early</b>.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 2. GENERAL APPROACH & WORKING ============ -->
+    <details class="branch b2" open>
+      <summary><span class="num">2</span> General Approach &amp; Working</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Working steps</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Choose</b> a possible solution component.</li>
+              <li><b>Verify</b> if it satisfies the constraints.
+                <ul>
+                  <li>If it satisfies → proceed to the next step.</li>
+                  <li>If it violates → backtrack and try another option.</li>
+                </ul>
+              </li>
+              <li><b>Repeat</b> until a complete solution is found.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Algorithm structure (pseudocode)</summary>
+          <div class="sub-body">
+            <div class="code"><span class="k">Backtrack</span>(solution):
+    <span class="k">if</span> solution is complete:
+        process the solution
+        <span class="k">return</span>
+
+    <span class="k">for each</span> possible choice:
+        <span class="k">if</span> choice is valid:
+            make the choice
+            <span class="k">Backtrack</span>(solution)      <span class="c">// recursive call</span>
+            undo the choice             <span class="c">// backtrack</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Detailed explanation</summary>
+          <div class="sub-body">
+            <div class="split">
+              <div>
+                <b>Base case</b>
+                If the solution is complete, process it and return.
+              </div>
+              <div>
+                <b>Recursive case</b>
+                Loop through all possible choices at the current step; check validity; if valid, include the choice and move to the next step.
+              </div>
+            </div>
+            <ul>
+              <li>If <b>no valid solution</b> is found, <b>backtrack</b> by undoing the last choice.</li>
+              <li>The undo step is what makes backtracking different from plain recursion — the state is restored before trying the next branch.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Complexity</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Time complexity <b>depends on the problem</b>.</li>
+              <li>In general, worst-case complexity is <b>exponential</b> — the algorithm may need to explore a large portion of the <b>state-space tree</b>.</li>
+              <li>Pruning (constraint checks) is what keeps the tree manageable in practice.</li>
+            </ul>
+            <div class="hook">Memory hook: Backtracking = DFS on the state-space tree + pruning.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 3. TYPES OF BACKTRACKING PROBLEMS ============ -->
+    <details class="branch b3" open>
+      <summary><span class="num">3</span> Types of Backtracking Problems</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. The three categories</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Decision Problems</b> — determine <b>whether</b> a solution exists (yes/no).<br>
+                <i>Example:</i> checking if a Hamiltonian cycle exists in a graph.</li>
+              <li><b>Optimization Problems</b> — find the <b>best</b> solution from multiple possibilities.<br>
+                <i>Example:</i> Traveling Salesman Problem (TSP) — shortest route covering all cities.</li>
+              <li><b>Constraint Satisfaction Problems (CSPs)</b> — a solution must satisfy a given set of constraints.<br>
+                <i>Example:</i> Sudoku, N-Queens, Graph Coloring.</li>
+            </ol>
+            <div class="hook">Memory hook: Decision = "does it exist?" · Optimization = "which is best?" · CSP = "satisfy all rules".</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Which type uses backtracking most?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Generally, <b>constraint satisfaction problems</b> can be solved using backtracking.</li>
+              <li>Backtracking is the natural fit because constraints let us prune partial solutions as soon as they violate a rule.</li>
+            </ul>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Type</th><th>Answer sought</th><th>Example</th></tr></thead>
+                <tbody>
+                  <tr><td>Decision</td><td>Yes / No</td><td>Hamiltonian cycle exists?</td></tr>
+                  <tr><td>Optimization</td><td>Best solution</td><td>TSP shortest route</td></tr>
+                  <tr><td>CSP</td><td>Any solution satisfying constraints</td><td>Sudoku, N-Queens, Graph Coloring</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 4. CONSTRAINTS ============ -->
+    <details class="branch b4" open>
+      <summary><span class="num">4</span> Explicit &amp; Implicit Constraints</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is a constraint?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A <b>condition that a solution must satisfy</b>.</li>
+              <li>Backtracking problems involve two types of constraints: <b>Explicit</b> and <b>Implicit</b>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Explicit constraints — WHAT values are allowed</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Define the <b>properties of a valid solution</b>.</li>
+              <li>Directly define the <b>possible values / options</b> for a component of the solution.</li>
+              <li>Tell us <b>WHAT</b> values are allowed.</li>
+              <li>If an explicit constraint is violated, backtracking occurs <b>immediately</b>.</li>
+            </ul>
+            <p><b>Examples</b></p>
+            <ul>
+              <li><b>N-Queens</b> — no two queens should be in the same row, column or diagonal.</li>
+              <li><b>Graph Coloring</b> — adjacent nodes must not have the same colour.</li>
+              <li><b>Student rule</b> — only third-year students can participate (allowed: third-year; not allowed: first, second, final year).</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Implicit constraints — can the choices go together?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Define the <b>rules for selecting the next possible solution step</b>.</li>
+              <li>They <b>dynamically evolve</b> as the solution is built.</li>
+              <li>Tell us whether the choices we have made <b>can go together</b>.</li>
+            </ul>
+            <p><b>Examples</b></p>
+            <ul>
+              <li><b>Sudoku</b> — a number can be placed in a cell only if it is not present in the same row, column or box.</li>
+              <li><b>Word Search</b> — the next selected letter must form a valid word.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Worked example — selecting 2 students from A, B, C, D, E</summary>
+          <div class="sub-body">
+            <div class="split">
+              <div>
+                <b>Explicit constraint</b>
+                Rule: only students A, B, C, D, E can be selected.<br>
+                → These are the <b>allowed choices</b>.<br>
+                <i>Tells us WHAT we can choose.</i>
+              </div>
+              <div>
+                <b>Implicit constraint</b>
+                Rule: A and B cannot be in the same team.<br>
+                → A alone allowed · B alone allowed · <b>A + B not allowed</b>.<br>
+                <i>Checks whether our selected choices can be together.</i>
+              </div>
+            </div>
+            <ul>
+              <li>First choice: <b>A</b> → allowed.</li>
+              <li>Second choice: <b>B</b> → B is allowed to be selected, but <b>A + B together are not allowed</b>.</li>
+              <li>So B is <b>rejected</b> at this point and the algorithm backtracks to try another student.</li>
+            </ul>
+            <div class="hook">Memory hook: Explicit = <b>WHAT</b> can I pick · Implicit = <b>CAN my picks coexist</b>.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Explicit vs Implicit — comparison</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Aspect</th><th>Explicit</th><th>Implicit</th></tr></thead>
+                <tbody>
+                  <tr><td>Defines</td><td>Properties of a valid solution</td><td>Rules for the next selection step</td></tr>
+                  <tr><td>Question answered</td><td>WHAT values are allowed?</td><td>CAN the chosen values go together?</td></tr>
+                  <tr><td>When fixed</td><td>Fixed in advance</td><td>Evolves as the solution is built</td></tr>
+                  <tr><td>On violation</td><td>Backtrack immediately</td><td>Reject the current partial combination</td></tr>
+                  <tr><td>N-Queens</td><td>No same row / col / diagonal</td><td>Whether a new queen conflicts with placed queens</td></tr>
+                  <tr><td>Graph Coloring</td><td>Adjacent nodes differ in colour</td><td>Whether the next vertex can take the candidate colour</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 5. N-QUEENS ============ -->
+    <details class="branch b5" open>
+      <summary><span class="num">5</span> N-Queens Problem</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Problem statement</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Place <b>N queens</b> on an <b>N×N</b> chessboard.</li>
+              <li><b>Constraint:</b> no two queens attack each other — no two may share the <b>same row, same column, or same diagonal</b>.</li>
+              <li>This is a classic <b>Constraint Satisfaction Problem</b> solved by backtracking.</li>
+            </ul>
+            <div class="diagram">4-Queens — one valid solution
+. Q . .
+. . . Q
+Q . . .
+. . Q .</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Constraints applied to N-Queens</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Explicit constraint:</b> no two queens in the same row, column or diagonal.</li>
+              <li><b>Implicit constraint:</b> when placing queen <code>i</code> in column <code>i</code>, it must not conflict with any queen already placed in columns <code>1…i−1</code>.</li>
+              <li>Column conflict is avoided by construction — place exactly one queen per column.</li>
+              <li>Row and diagonal conflicts are checked at each placement.</li>
+            </ul>
+            <div class="code"><span class="c">// conflict check for a new queen at (row r, column c)</span>
+<span class="k">for</span> each previously placed queen at (r', c'):
+    <span class="k">if</span> r == r'                        <span class="c">// same row</span>
+    <span class="k">or</span> |r − r'| == |c − c'|            <span class="c">// same diagonal</span>
+        <span class="k">return</span> <span class="s">conflict</span>
+<span class="k">return</span> <span class="s">safe</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Backtracking algorithm</summary>
+          <div class="sub-body">
+            <div class="code"><span class="k">Solve</span>(col):
+    <span class="k">if</span> col &gt; N:                  <span class="c">// base case: all queens placed</span>
+        print board
+        <span class="k">return</span> true
+
+    <span class="k">for</span> row = 1 <span class="k">to</span> N:
+        <span class="k">if</span> <span class="s">isSafe</span>(row, col):
+            place queen at (row, col)   <span class="c">// make choice</span>
+            <span class="k">if</span> <span class="k">Solve</span>(col + 1):          <span class="c">// recurse</span>
+                <span class="k">return</span> true
+            remove queen from (row, col) <span class="c">// backtrack</span>
+
+    <span class="k">return</span> false                    <span class="c">// no row works in this column</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. State-space tree (concept)</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Each <b>level</b> of the tree corresponds to a column.</li>
+              <li>Each <b>branch</b> corresponds to a choice of row for that column.</li>
+              <li>A node is <b>promising</b> if no conflict exists with the queens placed so far.</li>
+              <li><b>Pruning</b> happens when a queen placement violates row or diagonal constraints.</li>
+            </ul>
+            <div class="diagram">
+Level 1 (col 1): rows 1 2 3 4
+Level 2 (col 2): only safe rows survive
+Level 3 (col 3): further pruning
+Level 4 (col 4): a complete path = a solution</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Worked trace — 4-Queens</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Step</th><th>Action</th><th>Result</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>Q1 in col 1 → row 1</td><td>Place (1,1)</td></tr>
+                  <tr><td>2</td><td>Q2 in col 2 → try row 1, row 2</td><td>Conflicts → try row 3 → place (3,2)</td></tr>
+                  <tr><td>3</td><td>Q3 in col 3 → try rows 1–4</td><td>All conflict → <b>backtrack</b></td></tr>
+                  <tr><td>4</td><td>Q2 in col 2 → next row 4</td><td>Place (4,2)</td></tr>
+                  <tr><td>5</td><td>Q3 in col 3 → try rows</td><td>Row 2 works → place (2,3)</td></tr>
+                  <tr><td>6</td><td>Q4 in col 4 → try rows 1–4</td><td>All conflict → <b>backtrack</b></td></tr>
+                  <tr><td>7</td><td>Q3 exhausted, Q2 exhausted</td><td><b>Backtrack to Q1</b></td></tr>
+                  <tr><td>8</td><td>Q1 in col 1 → row 2</td><td>Place (2,1)</td></tr>
+                  <tr><td>9</td><td>Q2 col 2 → row 4</td><td>Place (4,2)</td></tr>
+                  <tr><td>10</td><td>Q3 col 3 → row 1</td><td>Place (1,3)</td></tr>
+                  <tr><td>11</td><td>Q4 col 4 → row 3</td><td>Place (3,4) → <b>solution (2,4,1,3)</b> ✓</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Solutions for N = 4</summary>
+          <div class="sub-body">
+            <p>The 4-Queens problem has exactly <b>2 solutions</b> (represented as the row of the queen in each column):</p>
+            <ul>
+              <li><b>(2, 4, 1, 3)</b></li>
+              <li><b>(3, 1, 4, 2)</b></li>
+            </ul>
+            <div class="diagram">(2,4,1,3)              (3,1,4,2)
+. Q . .                . . Q .
+. . . Q                Q . . .
+Q . . .                . . . Q
+. . Q .                . Q . .</div>
+            <div class="hook">Memory hook: N-Queens = place one queen per column, prune rows &amp; diagonals.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 6. GRAPH COLORING — BASICS ============ -->
+    <details class="branch b6" open>
+      <summary><span class="num">6</span> Graph Coloring — Basics</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Definition</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Colouring the <b>vertices</b> of a graph so that <b>no two adjacent vertices</b> have the same colour.</li>
+              <li>Also called the <b>vertex colouring</b> problem.</li>
+              <li>If colouring uses at most <b>m</b> colours, it is called <b>m-colouring</b>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Two versions of the problem</summary>
+          <div class="sub-body">
+            <div class="split">
+              <div>
+                <b>Decision problem</b>
+                "With given M colours and graph G, is such a colour scheme possible or not?"<br>
+                → answer is <b>yes / no</b>.
+              </div>
+              <div>
+                <b>Optimization problem</b>
+                "Given M colours and graph G, find the <b>minimum number of colours</b> required for graph colouring."<br>
+                → answer is a <b>number + scheme</b>.
+              </div>
+            </div>
+            <p>Graph colouring is <b>both</b> a decision problem <b>and</b> an optimization problem.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Chromatic number</summary>
+          <div class="sub-body">
+            <ul>
+              <li>The <b>minimum number of colours</b> needed to colour a graph is called its <b>chromatic number</b>, written <code>χ(G)</code>.</li>
+              <li>For example, some graphs can be coloured with a minimum of <b>2 colours</b>.</li>
+            </ul>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Graph</th><th>Chromatic number χ(G)</th></tr></thead>
+                <tbody>
+                  <tr><td>Empty graph (no edges)</td><td>1</td></tr>
+                  <tr><td>Even cycle (C₄, C₆, …)</td><td>2</td></tr>
+                  <tr><td>Odd cycle (C₃, C₅, …)</td><td>3</td></tr>
+                  <tr><td>Tree / bipartite graph</td><td>2</td></tr>
+                  <tr><td>Complete graph Kₙ</td><td>n</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Chromatic number = smallest palette that works.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Why backtracking fits graph colouring</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Assigning colours vertex by vertex builds a <b>partial colouring</b>.</li>
+              <li>As soon as an adjacent pair shares a colour, the partial colouring is <b>invalid</b> → prune and backtrack.</li>
+              <li>The explicit constraint (adjacent vertices differ) is checked at every step, giving early pruning.</li>
+            </ul>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 7. GRAPH COLORING — APPLICATIONS ============ -->
+    <details class="branch b7" open>
+      <summary><span class="num">7</span> Graph Coloring — Applications</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Map colouring</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Ensures no two adjacent regions (countries, states, districts) share the same colour.</li>
+              <li>Used in geographical maps to differentiate neighbouring areas.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Task scheduling</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Assigns resources (CPU, workers, classrooms) to tasks while avoiding conflicts.</li>
+              <li>Example: parallel processing where dependent tasks get different colours to avoid execution conflicts.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Timetable scheduling</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Allocates different time slots for classes / exams.</li>
+              <li>Ensures no two overlapping events occur at the same time.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Assignment problems</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Assigns workers to tasks, ensuring no worker is assigned two conflicting tasks.</li>
+              <li>Example: assigning interviewers to candidates in a recruitment process.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Conflict resolution</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Used in networks, databases and traffic systems to prevent conflicts.</li>
+              <li>Example: deadlock prevention in operating systems by ensuring non-conflicting resource allocation.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Sudoku puzzle solving</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Each cell in a Sudoku grid represents a <b>node</b> in a graph.</li>
+              <li>Each number represents a different <b>colour</b>.</li>
+              <li>Adjacent cells (same row, column or box) must not share a number — exactly the graph colouring constraint.</li>
+            </ul>
+            <div class="hook">Memory hook: Maps · Tasks · Timetables · Assignments · Conflicts · Sudoku.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 8. GRAPH COLORING — ALGORITHM & WORKED EXAMPLE ============ -->
+    <details class="branch b8" open>
+      <summary><span class="num">8</span> Graph Coloring — Algorithm &amp; Example</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Backtracking algorithm for m-colouring</summary>
+          <div class="sub-body">
+            <div class="code"><span class="k">Color</span>(vertex v):
+    <span class="k">if</span> v &gt; N:                       <span class="c">// all vertices coloured</span>
+        print colour assignment
+        <span class="k">return</span> true
+
+    <span class="k">for</span> c = 1 <span class="k">to</span> m:                  <span class="c">// try each of the m colours</span>
+        <span class="k">if</span> <span class="s">isSafe</span>(v, c):               <span class="c">// no adjacent vertex has colour c</span>
+            colour[v] = c               <span class="c">// make choice</span>
+            <span class="k">if</span> <span class="k">Color</span>(v + 1):            <span class="c">// recurse to next vertex</span>
+                <span class="k">return</span> true
+            colour[v] = 0               <span class="c">// backtrack</span>
+
+    <span class="k">return</span> false                       <span class="c">// no colour works for v</span></div>
+            <p>The explicit constraint is applied inside <code>isSafe</code>: for every neighbour <code>u</code> of <code>v</code>, <code>colour[u] ≠ c</code>.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Worked example — graph used</summary>
+          <div class="sub-body">
+            <p>Vertices <b>A, B, C, D</b>. Edges: <b>A–B, B–C, C–D, D–A, A–C</b>.</p>
+            <div class="diagram">
+    A ----- B
+    | \     |
+    |  \    |
+    |   \   |
+    D ----- C
+
+Adjacency: A→B,C,D · B→A,C · C→A,B,D · D→A,C</div>
+            <p>This graph contains a triangle A–B–C, so it needs at least <b>3 colours</b>.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Trace with m = 2 → no solution (backtracking exhausts)</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Step</th><th>Action</th><th>Result</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>A ← colour 1</td><td>OK</td></tr>
+                  <tr><td>2</td><td>B ← try 1</td><td>Conflict with A → try 2 → B = 2</td></tr>
+                  <tr><td>3</td><td>C ← try 1</td><td>Conflict with A → try 2</td></tr>
+                  <tr><td>4</td><td>C ← try 2</td><td>Conflict with B → no colour left → <b>backtrack</b></td></tr>
+                  <tr><td>5</td><td>B ← exhausted</td><td><b>backtrack</b></td></tr>
+                  <tr><td>6</td><td>A ← try 2</td><td>OK</td></tr>
+                  <tr><td>7</td><td>B ← try 1</td><td>OK → B = 1</td></tr>
+                  <tr><td>8</td><td>C ← try 1</td><td>Conflict with B → try 2</td></tr>
+                  <tr><td>9</td><td>C ← try 2</td><td>Conflict with A → no colour left → <b>backtrack</b></td></tr>
+                  <tr><td>10</td><td>B ← try 2</td><td>Conflict with A → exhausted → <b>backtrack</b></td></tr>
+                  <tr><td>11</td><td>A ← exhausted</td><td><b>No 2-colouring exists</b> → return false</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Conclusion:</b> the search tree is fully exhausted with m = 2, proving the graph is not bipartite and <code>χ(G) ≥ 3</code>.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Trace with m = 3 → solution found</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Step</th><th>Vertex</th><th>Colour tried</th><th>Outcome</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>A</td><td>1</td><td>OK → A = 1</td></tr>
+                  <tr><td>2</td><td>B</td><td>1 → conflict A · 2 → OK</td><td>B = 2</td></tr>
+                  <tr><td>3</td><td>C</td><td>1 → conflict A · 2 → conflict B · 3 → OK</td><td>C = 3</td></tr>
+                  <tr><td>4</td><td>D</td><td>1 → conflict A, C · 2 → OK (D not adjacent to B)</td><td>D = 2 → <b>solution</b> ✓</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="diagram">
+A = 1    B = 2
+D = 2    C = 3
+
+Check: A–B (1,2) ✓   B–C (2,3) ✓   C–D (3,2) ✓   D–A (2,1) ✓   A–C (1,3) ✓</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Chromatic number of the example graph</summary>
+          <div class="sub-body">
+            <ul>
+              <li>m = 2 fails → χ(G) ≥ 3.</li>
+              <li>m = 3 succeeds → χ(G) ≤ 3.</li>
+              <li>Therefore <b>χ(G) = 3</b>.</li>
+            </ul>
+            <p>This is exactly how the <b>optimization version</b> is solved by backtracking: try m = 1, 2, 3, … until a colouring is found; the first m that works is the chromatic number.</p>
+            <div class="hook">Memory hook: Decision asks "can m colours work?" · Optimization asks "what is the smallest m?" — same backtracking search, different stopping rule.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ MASTER SUMMARY ============ -->
+    <details class="branch summary wide" open>
+      <summary><span class="num">★</span> Master Summary — Unit 5 at a Glance</summary>
+      <div class="branch-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Concept</th><th>Type</th><th>Key idea</th></tr></thead>
+            <tbody>
+              <tr><td>Backtracking</td><td>Technique</td><td>Build a solution incrementally; undo when a dead end is reached</td></tr>
+              <tr><td>Core loop</td><td>Process</td><td>Choose → Check validity → Continue / Backtrack → Try another</td></tr>
+              <tr><td>General pseudocode</td><td>Algorithm</td><td>Base case: solution complete; recursive case: loop choices, recurse, undo</td></tr>
+              <tr><td>Complexity</td><td>Analysis</td><td>Exponential worst case — explores the state-space tree; pruning reduces it</td></tr>
+              <tr><td>Decision problems</td><td>Category</td><td>Does a solution exist? e.g. Hamiltonian cycle</td></tr>
+              <tr><td>Optimization problems</td><td>Category</td><td>Find the best solution — e.g. TSP shortest route</td></tr>
+              <tr><td>CSPs</td><td>Category</td><td>Solution must satisfy constraints — Sudoku, N-Queens, Graph Coloring</td></tr>
+              <tr><td>Explicit constraint</td><td>Constraint</td><td>WHAT values are allowed; violation → backtrack immediately</td></tr>
+              <tr><td>Implicit constraint</td><td>Constraint</td><td>CAN the chosen values coexist; evolves as the solution is built</td></tr>
+              <tr><td>N-Queens</td><td>CSP</td><td>N queens on N×N board — no same row, column or diagonal</td></tr>
+              <tr><td>N-Queens pruning</td><td>Technique</td><td>One queen per column; check row and diagonal conflicts only</td></tr>
+              <tr><td>4-Queens</td><td>Example</td><td>Two solutions: (2,4,1,3) and (3,1,4,2)</td></tr>
+              <tr><td>Graph coloring</td><td>CSP</td><td>No two adjacent vertices share a colour</td></tr>
+              <tr><td>m-coloring</td><td>Notation</td><td>Colouring with at most m colours</td></tr>
+              <tr><td>Decision vs Optimization</td><td>Versions</td><td>"Is m-colouring possible?" vs "minimum colours required"</td></tr>
+              <tr><td>Chromatic number χ(G)</td><td>Metric</td><td>Minimum number of colours needed</td></tr>
+              <tr><td>Graph coloring algorithm</td><td>Algorithm</td><td>Try colours 1…m per vertex; check adjacency; backtrack on conflict</td></tr>
+              <tr><td>Applications</td><td>Use cases</td><td>Map coloring, task scheduling, timetables, assignment, conflict resolution, Sudoku</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============ MEMORY HOOKS ============ -->
+    <details class="branch hooks wide" open>
+      <summary><span class="num">🎯</span> Key Memory Hooks</summary>
+      <div class="branch-body">
+        <div class="hook-grid">
+          <div class="hook">Backtracking = Choose → Check → Continue / Backtrack → Try another</div>
+          <div class="hook">Analogy: A→B dead end → backtrack → A→C→D→exit</div>
+          <div class="hook">Don't use when: greedy/DP fits · no pruning · huge input · single optimal needed</div>
+          <div class="hook">Pseudocode: base case + loop choices + recurse + undo</div>
+          <div class="hook">Complexity = exponential worst case on the state-space tree</div>
+          <div class="hook">Types: Decision (exists?) · Optimization (best?) · CSP (satisfy rules)</div>
+          <div class="hook">Explicit = WHAT can I pick · Implicit = CAN my picks coexist</div>
+          <div class="hook">A alone OK · B alone OK · A+B not allowed → implicit constraint at work</div>
+          <div class="hook">N-Queens = one queen per column + check row &amp; diagonal</div>
+          <div class="hook">Diagonal check: |r − r'| == |c − c'|</div>
+          <div class="hook">4-Queens solutions: (2,4,1,3) and (3,1,4,2)</div>
+          <div class="hook">Graph coloring = adjacent vertices differ · m-coloring = at most m colours</div>
+          <div class="hook">Chromatic number = minimum colours = χ(G)</div>
+          <div class="hook">χ: empty = 1 · even cycle / tree = 2 · odd cycle = 3 · Kₙ = n</div>
+          <div class="hook">Coloring algorithm: try 1…m per vertex · check neighbours · backtrack</div>
+          <div class="hook">Applications: Maps · Tasks · Timetables · Assignments · Conflicts · Sudoku</div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <p class="no-results" id="noResults">No matching topics. Try another search term.</p>
+  <div class="foot">Single-file offline mindmap · Expand/collapse each branch · Search highlights matching topics · Print to PDF for a study copy</div>
+</main>
+
+<script>
+const allDetails = [...document.querySelectorAll('details')];
+
+function expandAll(open){ allDetails.forEach(d => d.open = open); }
+
+function resetView(){
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.hidden').forEach(e => e.classList.remove('hidden'));
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+  expandAll(true);
+  document.getElementById('noResults').style.display = 'none';
+}
+
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const q = search.value.trim().toLowerCase();
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+
+  if (!q){
+    document.querySelectorAll('.branch,.sub').forEach(e => e.classList.remove('hidden'));
+    document.getElementById('noResults').style.display = 'none';
+    return;
+  }
+
+  let count = 0;
+
+  document.querySelectorAll('.branch').forEach(branch => {
+    const branchMatch = branch.innerText.toLowerCase().includes(q);
+    const subMatches = [...branch.querySelectorAll('.sub')]
+      .filter(s => s.innerText.toLowerCase().includes(q));
+
+    if (branchMatch || subMatches.length){
+      branch.classList.remove('hidden');
+      branch.open = true;
+
+      subMatches.forEach(s => {
+        s.classList.remove('hidden');
+        s.open = true;
+        s.classList.add('hit');
+        count++;
+      });
+
+      branch.querySelectorAll('.sub').forEach(s => {
+        if (!subMatches.includes(s)) s.classList.add('hidden');
+      });
+
+      if (!subMatches.length){
+        branch.classList.add('hit');
+        count++;
+      }
+    } else {
+      branch.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('noResults').style.display = count ? 'none' : 'block';
+});
+</script>
+</body>
+</html>

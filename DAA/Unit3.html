@@ -1,0 +1,1193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DAA Unit 3 — Greedy Strategy Mindmap</title>
+<style>
+:root{
+  --bg:#f5f7fb;--ink:#172033;--muted:#586579;--line:#d8dfeb;
+  --b1:#1d4ed8;--b1t:#dbeafe;
+  --b2:#0e7490;--b2t:#cffafe;
+  --b3:#7c3aed;--b3t:#ede9fe;
+  --b4:#15803d;--b4t:#dcfce7;
+  --b5:#b45309;--b5t:#fef3c7;
+  --b6:#0369a1;--b6t:#e0f2fe;
+  --b7:#be185d;--b7t:#fce7f3;
+  --summary:#475569;--summary-t:#e2e8f0;
+  --hooks:#b91c1c;--hooks-t:#fee2e2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+
+.top{position:sticky;top:0;z-index:10;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:850;letter-spacing:.02em;margin-right:auto}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+button{border:1px solid #cbd5e1;background:white;color:#263247;border-radius:9px;padding:8px 11px;font:inherit;font-size:13px;cursor:pointer}
+button:hover{background:#eef4ff;border-color:#93b4f5}
+input{border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px;min-width:min(280px,75vw);font:inherit}
+input:focus{outline:2px solid #93b4f5;outline-offset:1px}
+
+.hero{max-width:1500px;margin:26px auto 18px;padding:0 20px;text-align:center}
+.hero h1{margin:0 auto 7px;font-size:clamp(25px,4vw,42px);line-height:1.15;letter-spacing:-.035em}
+.hero p{margin:0;color:var(--muted)}
+.legend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:15px 0}
+.legend span{font-size:12px;padding:5px 9px;border-radius:20px;background:white;border:1px solid var(--line)}
+
+.map{max-width:1600px;margin:auto;padding:0 18px 60px}
+.root{margin:20px auto 24px;max-width:760px;text-align:center;background:#173e78;color:white;padding:20px;border-radius:16px;box-shadow:0 8px 24px #173e7822}
+.root h2{margin:0;font-size:24px}
+.root small{opacity:.85}
+
+.branch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.branch{--accent:var(--summary);--tint:var(--summary-t);min-width:0;background:white;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #1e293b0a}
+.branch.b1{--accent:var(--b1);--tint:var(--b1t)}
+.branch.b2{--accent:var(--b2);--tint:var(--b2t)}
+.branch.b3{--accent:var(--b3);--tint:var(--b3t)}
+.branch.b4{--accent:var(--b4);--tint:var(--b4t)}
+.branch.b5{--accent:var(--b5);--tint:var(--b5t)}
+.branch.b6{--accent:var(--b6);--tint:var(--b6t)}
+.branch.b7{--accent:var(--b7);--tint:var(--b7t)}
+.branch.summary{--accent:var(--summary);--tint:var(--summary-t)}
+.branch.hooks{--accent:var(--hooks);--tint:var(--hooks-t)}
+.branch>summary{list-style:none;cursor:pointer;background:var(--tint);padding:14px 15px;font-weight:850;font-size:16px;display:flex;gap:10px;align-items:center;line-height:1.3}
+.branch>summary::-webkit-details-marker{display:none}
+.num{flex:none;border-radius:8px;background:var(--accent);color:white;width:30px;height:30px;display:grid;place-items:center;font-size:14px;font-variant-numeric:tabular-nums}
+.branch-body{padding:12px}
+
+.sub{border:1px solid var(--line);border-radius:10px;margin:9px 0;background:#fff;overflow:hidden}
+.sub>summary{cursor:pointer;list-style:none;padding:10px 12px;font-weight:750;background:#f8fafc;border-bottom:1px solid transparent;font-size:14px}
+.sub>summary::-webkit-details-marker{display:none}
+.sub[open]>summary{border-bottom-color:var(--line)}
+.sub-body{padding:10px 14px 13px;font-size:14px}
+.sub-body p{margin:6px 0}
+.sub-body ul,.sub-body ol{margin:5px 0 8px;padding-left:21px}
+.sub-body li{margin:3px 0}
+.sub-body ul ul{margin-top:3px}
+.sub-body b{color:#111827}
+
+.hook{padding:10px 12px;border-left:4px solid var(--accent);background:var(--tint);border-radius:7px;margin:10px 0;font-weight:650}
+.diagram{border:1px dashed #94a3b8;border-radius:9px;padding:10px;margin:9px 0;text-align:center;background:#fafcff;font-weight:700;font-size:13px;line-height:1.8;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.code{white-space:pre;overflow-x:auto;background:#0f172a;color:#e2e8f0;border-radius:9px;padding:12px 14px;margin:9px 0;font:12.5px/1.75 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;border:1px solid #1e293b}
+.code .c{color:#7dd3fc}
+.code .k{color:#c084fc}
+.code .s{color:#86efac}
+.fix{border:1px solid #fcd34d;background:#fffbeb;border-radius:9px;padding:10px 12px;margin:10px 0;font-size:13.5px}
+.fix .tag{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:#f59e0b;color:#fff;border-radius:5px;padding:1px 6px;margin-right:6px;font-weight:800;vertical-align:1px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:9px 0}
+.split div{border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:13px}
+.split div b{display:block;margin-bottom:3px;color:var(--accent)}
+.table-wrap{overflow-x:auto;margin:9px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:12px;letter-spacing:.03em;text-transform:uppercase}
+tbody tr:hover td{background:#f8fbff}
+code{background:#eef2ff;padding:1px 4px;border-radius:4px;font-size:12.5px}
+
+.wide{grid-column:1 / -1;margin-top:16px}
+.hook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.hook-grid .hook{margin:0}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+.hidden{display:none!important}
+.hit{outline:3px solid #f59e0b;outline-offset:2px;background:#fffbeb!important}
+.no-results{display:none;text-align:center;padding:20px;color:#64748b}
+
+@media(max-width:1100px){.branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+  .branch-grid{grid-template-columns:1fr}
+  .top{position:static}
+  .brand{width:100%}
+  .hero{margin-top:18px}
+  .map{padding:0 10px 35px}
+  .root{padding:16px}
+  .branch>summary{font-size:15px}
+  .split{grid-template-columns:1fr}
+}
+
+@media print{
+  .top{display:none}
+  .hero{margin:0 auto 12px}
+  .map{max-width:none;padding:0}
+  .branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .branch,.sub{break-inside:avoid;box-shadow:none}
+  details:not([open])>.branch-body,details:not([open])>.sub-body{display:block}
+  .branch>summary,.sub>summary,.root{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  body{background:white;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">🧮 DAA • UNIT 3 • GREEDY STRATEGY</div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search any concept… (e.g. Huffman, Kruskal, ratio, deadline)">
+    <button onclick="expandAll(true)">Expand all</button>
+    <button onclick="expandAll(false)">Collapse all</button>
+    <button onclick="resetView()">Reset</button>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Greedy Strategy — Unit 3</h1>
+  <p>Design &amp; Analysis of Algorithms · complete study mindmap with expandable branches</p>
+  <div class="legend">
+    <span style="background:var(--b1t)">1 Strategy &amp; Characteristics</span>
+    <span style="background:var(--b2t)">2 Greedy vs Optimal</span>
+    <span style="background:var(--b3t)">3 Fractional Knapsack</span>
+    <span style="background:var(--b4t)">4 Job Sequencing</span>
+    <span style="background:var(--b5t)">5 Huffman Coding</span>
+    <span style="background:var(--b6t)">6 Prim's Algorithm</span>
+    <span style="background:var(--b7t)">7 Kruskal's Algorithm</span>
+    <span style="background:var(--summary-t)">★ Summary</span>
+    <span style="background:var(--hooks-t)">🎯 Hooks</span>
+  </div>
+</section>
+
+<main class="map">
+  <div class="root">
+    <h2>🧮 GREEDY STRATEGY — UNIT 3</h2>
+    <small>Seven connected knowledge branches · select a heading to expand its details</small>
+  </div>
+
+  <div class="branch-grid">
+
+    <!-- ============ 1. GREEDY STRATEGY & CHARACTERISTICS ============ -->
+    <details class="branch b1" open>
+      <summary><span class="num">1</span> Strategy &amp; Characteristics</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is a greedy algorithm?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Solves a problem by making the <b>best choice at the current step</b>, hoping that these local best choices together give the <b>global best</b> solution.</li>
+              <li>One of the standard strategies (like divide and conquer) used to solve problems.</li>
+              <li>Used for solving <b>optimization problems</b> — problems demanding either maximum or minimum results.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Basic idea — the greedy loop</summary>
+          <div class="sub-body">
+            <ol>
+              <li>Start with an <b>empty solution</b>.</li>
+              <li>Select the <b>best available option</b> according to a greedy rule.</li>
+              <li><b>Check feasibility</b>.</li>
+              <li>If feasible, <b>include</b> it.</li>
+              <li><b>Repeat</b> until the solution is complete.</li>
+            </ol>
+            <div class="hook">Memory hook: Pick best now → check feasible → include → repeat. Never look back.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Objective function</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Tells us <b>what we are trying to optimize</b>.</li>
+            </ul>
+            <p><b>Examples</b></p>
+            <ul>
+              <li>Maximize profit</li>
+              <li>Minimize cost</li>
+              <li>Minimize total time</li>
+              <li>Maximize number of activities</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Characteristics of the greedy method</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Step-by-step construction</b> — the solution is built one step at a time, not all at once.</li>
+              <li><b>Local optimal choice</b> — at every step, choose the best option <i>currently available</i>.
+                <ul><li>Example: in Fractional Knapsack, choose the item with the highest profit/weight ratio.</li></ul>
+              </li>
+              <li><b>Irreversible decisions</b> — once a choice is made, it is never changed later. <b>No backtracking.</b></li>
+              <li><b>Feasibility check</b> — before adding a choice, check whether it is valid under the problem constraints.
+                <ul><li>Example: when scheduling jobs, pick only jobs that fit into the timeline.</li></ul>
+              </li>
+              <li><b>Optimal substructure</b> — after a greedy choice, the remaining problem is another smaller problem of the same type; the optimal overall solution can be built from optimal sub-solutions.</li>
+              <li><b>Greedy choice property</b> — a locally optimal choice can be part of a globally optimal solution. The best choice now must not prevent us from reaching the best final answer.</li>
+              <li><b>Optimization objective</b> — maximize (profit, value, number of activities) or minimize (cost, distance, time).</li>
+            </ol>
+            <div class="hook">Memory hook: Step-by-step · Local best · No backtracking · Feasibility check · Optimal substructure · Greedy choice · Optimization goal.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Buffet analogy</summary>
+          <div class="sub-body">
+            <ul>
+              <li>You are at a buffet with <b>limited space</b> on your plate.</li>
+              <li>You want the <b>maximum value</b> from your plate.</li>
+              <li>At every moment, you pick the food that gives the <b>most value for the space it occupies</b>.</li>
+              <li>You <b>don't reconsider</b> what you already picked.</li>
+            </ul>
+            <div class="hook">Greedy = "Best right now!" · Optimal = "Best overall!"</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 2. GREEDY vs OPTIMAL ============ -->
+    <details class="branch b2" open>
+      <summary><span class="num">2</span> Greedy vs Optimal</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Will greedy always give an optimal solution? — No</summary>
+          <div class="sub-body">
+            <ul>
+              <li>The greedy algorithm is <b>not always optimal</b> for every optimization problem.</li>
+              <li>It makes the best choice at the current moment, but that choice may sometimes <b>prevent</b> us from getting the best overall solution.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. The college commute example</summary>
+          <div class="sub-body">
+            <p>You want to reach college in the <b>minimum total time</b>. Two routes from home:</p>
+            <ul>
+              <li><b>Route A</b> — looks shorter, takes 10 minutes initially.</li>
+              <li><b>Route B</b> — takes 15 minutes initially.</li>
+            </ul>
+            <p><b>Greedy reasoning:</b> "10 minutes is better → take Route A."</p>
+            <p><b>But</b> after taking Route A, you hit a huge traffic jam:</p>
+            <div class="diagram">Route A → 10 + 30 = 40 minutes   ✗
+Route B → 15 + 10 = 25 minutes   ✓</div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Choice</th><th>Why</th><th>Total time</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Greedy</b></td><td>Route A looked best <b>now</b></td><td>40 min</td></tr>
+                  <tr><td><b>Optimal</b></td><td>Route B gave the best <b>total</b> time</td><td>25 min</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. When does greedy work well?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Making the best local choice <b>does</b> lead to the best global solution.</li>
+              <li>There are <b>sorting or priority-based</b> conditions (selecting the highest, lowest or shortest).</li>
+              <li>Decisions are <b>final</b> — once taken, they are never changed later.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Feasible vs optimal solution</summary>
+          <div class="sub-body">
+            <p><b>Problem P:</b> travel from A to B with the constraints of <b>6 hours</b> and <b>minimum cost</b>.</p>
+            <ul>
+              <li>A <b>feasible solution</b> satisfies all the constraints (e.g. travelling by train <i>or</i> by air).</li>
+              <li>Since we must cover the journey at <b>minimum cost</b>, this is a <b>minimization problem</b>.</li>
+              <li>Among the feasible solutions, the one with the minimum cost (train, 6 hrs) is the <b>optimal solution</b>.</li>
+            </ul>
+            <div class="split">
+              <div>
+                <b>Feasible</b>
+                Satisfies all constraints. There may be many feasible solutions.
+              </div>
+              <div>
+                <b>Optimal</b>
+                A feasible solution providing the best result. There is only <b>one</b> optimal solution.
+              </div>
+            </div>
+            <div class="hook">Memory hook: Every optimal solution is feasible, but not every feasible solution is optimal.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 3. FRACTIONAL KNAPSACK ============ -->
+    <details class="branch b3" open>
+      <summary><span class="num">3</span> Fractional Knapsack</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Problem statement</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A bag (knapsack) can carry a <b>limited weight</b>.</li>
+              <li>We have several items, each with a <b>weight (W)</b> and a <b>profit (P)</b>.</li>
+              <li><b>Goal:</b> maximize total profit without exceeding the bag capacity.</li>
+              <li>In <b>fractional</b> knapsack, we are allowed to take a <b>fraction (part)</b> of an item.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Three possible approaches — and why ratio wins</summary>
+          <div class="sub-body">
+            <ol>
+              <li>Select items by <b>maximum profit</b> — fails, high profit may mean huge weight.</li>
+              <li>Select items by <b>minimum weight</b> — fails, light items may be low value.</li>
+              <li>Select items by <b>profit / weight ratio</b> — the <b>optimal</b> greedy rule.</li>
+            </ol>
+            <p><b>Why greedy on ratio?</b></p>
+            <ul>
+              <li>We select by <b>Profit / Weight</b> — profit per unit weight.</li>
+              <li>The item with the highest ratio gives the <b>maximum profit for each kg</b> of weight, so we take it first.</li>
+            </ul>
+            <div class="hook">Memory hook: Fractional Knapsack → sort by P/W descending → fill.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Algorithm &amp; complexity</summary>
+          <div class="sub-body">
+            <div class="code"><span class="k">GreedyFractionalKnapsack</span>(items, n, capacity):
+    <span class="c">// Step 1: compute value/weight ratio for each item</span>
+    <span class="k">for</span> i = 1 <span class="k">to</span> n:  ratio[i] = P[i] / W[i]        <span class="c">// O(n)</span>
+
+    <span class="c">// Step 2: sort items in descending order of ratio</span>
+    sort items by ratio in decreasing order           <span class="c">// O(n log n)</span>
+
+    totalProfit = 0;  remainingCapacity = capacity
+
+    <span class="c">// Step 3: pick items one by one</span>
+    <span class="k">for</span> i = 1 <span class="k">to</span> n:                                 <span class="c">// O(n)</span>
+        <span class="k">if</span> weight[i] &lt;= remainingCapacity:
+            totalProfit += P[i]                       <span class="c">// take whole item</span>
+            remainingCapacity -= weight[i]
+        <span class="k">else</span>:
+            fraction = remainingCapacity / weight[i]  <span class="c">// take fraction</span>
+            totalProfit += P[i] * fraction
+            remainingCapacity = 0
+            <span class="k">break</span>                                     <span class="c">// knapsack full</span>
+    <span class="k">return</span> totalProfit</div>
+            <p><b>Time complexity</b> — no recurrence needed, this is a greedy (not D&amp;C or DP) algorithm:</p>
+            <div class="code">ratio calculation  → O(n)
+sorting            → O(n log n)
+fill knapsack      → O(n)
+─────────────────────────────
+T(n) = O(n) + O(n log n) + O(n) = O(n log n)</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Example 1 — comparison of all three strategies</summary>
+          <div class="sub-body">
+            <p><b>Given:</b> M = 20 (capacity), 3 objects.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Object</th><th>Profit</th><th>Weight</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>25</td><td>18</td></tr>
+                  <tr><td>2</td><td>24</td><td>15</td></tr>
+                  <tr><td>3</td><td>15</td><td>10</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Strategy 1 — greedy on maximum profit</b></p>
+            <div class="diagram">Take obj1 fully: weight 18, profit 25.  Remaining = 2.
+Take obj2 fraction 2/15 → profit 24 × 2/15 = 3.2
+Total = 25 + 3.2 = 28.2</div>
+            <p><b>Strategy 2 — greedy on minimum weight</b></p>
+            <div class="diagram">Take obj3 fully: weight 10, profit 15.  Remaining = 10.
+Take obj2 fraction 10/15 → profit 24 × 10/15 = 16
+Total = 15 + 16 = 31</div>
+            <p><b>Strategy 3 — greedy on P/W ratio ✓ optimal</b></p>
+            <div class="code">ratios:  obj1 = 25/18 ≈ 1.39
+         obj2 = 24/15 = 1.6      ← highest
+         obj3 = 15/10 = 1.5
+
+order: obj2 (1.6) → obj3 (1.5) → obj1 (1.39)</div>
+            <div class="diagram">Take obj2 fully: weight 15, profit 24.  Remaining = 5.
+Take obj3 fraction 5/10 = 1/2 → profit 15 × 0.5 = 7.5
+Total = 24 + 7.5 = 31.5</div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Strategy</th><th>Total profit</th><th>Result</th></tr></thead>
+                <tbody>
+                  <tr><td>Max profit first</td><td>28.2</td><td>Suboptimal</td></tr>
+                  <tr><td>Min weight first</td><td>31</td><td>Suboptimal</td></tr>
+                  <tr><td><b>P/W ratio</b></td><td><b>31.5</b></td><td><b>Optimal ✓</b></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Final answer:</b> Total profit = <b>31.5</b> · Selected: object 2 full, object 3 as 5/10 (half).</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Example 2 — 7 objects</summary>
+          <div class="sub-body">
+            <p><b>Given:</b> M = 15, n = 7</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Object</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead>
+                <tbody>
+                  <tr><td>Profit</td><td>10</td><td>5</td><td>15</td><td>7</td><td>6</td><td>18</td><td>3</td></tr>
+                  <tr><td>Weight</td><td>2</td><td>3</td><td>5</td><td>7</td><td>1</td><td>4</td><td>1</td></tr>
+                  <tr><td><b>P/W</b></td><td>5.0</td><td>1.67</td><td>3.0</td><td>1.0</td><td><b>6.0</b></td><td>4.5</td><td>3.0</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Sorted order (descending P/W):</b> obj5 (6.0) → obj1 (5.0) → obj6 (4.5) → obj3 (3.0) → obj7 (3.0) → obj2 (1.67) → obj4 (1.0)</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Step</th><th>Object</th><th>Weight</th><th>Profit</th><th>Remaining capacity</th><th>Total profit</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>5</td><td>1</td><td>6</td><td>14</td><td>6</td></tr>
+                  <tr><td>2</td><td>1</td><td>2</td><td>10</td><td>12</td><td>16</td></tr>
+                  <tr><td>3</td><td>6</td><td>4</td><td>18</td><td>8</td><td>34</td></tr>
+                  <tr><td>4</td><td>3</td><td>5</td><td>15</td><td>3</td><td>49</td></tr>
+                  <tr><td>5</td><td>7</td><td>1</td><td>3</td><td>2</td><td>52</td></tr>
+                  <tr><td>6</td><td>2</td><td>3 (needs more than 2)</td><td>5 × 2/3 = 3.33</td><td>0</td><td><b>55.33</b></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Final answer:</b> Total profit = <b>166/3 ≈ 55.33</b> · Objects 5, 1, 6, 3, 7 taken fully; object 2 taken as <b>2/3</b>.</p>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 4. JOB SEQUENCING ============ -->
+    <details class="branch b4" open>
+      <summary><span class="num">4</span> Job Sequencing</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Problem statement</summary>
+          <div class="sub-body">
+            <ul>
+              <li>An <b>optimization problem</b>: schedule a set of jobs to <b>maximize total profit</b> while each job is completed within its deadline.</li>
+            </ul>
+            <p><b>Given N jobs, each with:</b></p>
+            <ul>
+              <li><b>Job ID</b> — unique identifier.</li>
+              <li><b>Deadline</b> — the latest time by which the job must be completed.</li>
+              <li><b>Profit</b> — earned if the job is completed within its deadline.</li>
+            </ul>
+            <p><b>Each job takes exactly 1 unit of time.</b></p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Constraints</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Each job takes exactly <b>1 unit of time</b>.</li>
+              <li>Each job has a fixed deadline — must be completed <b>before or on</b> its deadline.</li>
+              <li>Profit is earned only if the job is completed <b>on time</b>.</li>
+              <li>Jobs <b>cannot be preempted</b> — once started, a job must complete.</li>
+              <li>A <b>single job per time slot</b>.</li>
+              <li>A <b>uni-processor</b> executes the jobs.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Algorithm &amp; complexity</summary>
+          <div class="sub-body">
+            <p><b>Input:</b> array of N jobs with ID, deadline and profit.<br>
+               <b>Output:</b> the sequence of scheduled jobs and the maximum profit.</p>
+            <ol>
+              <li>Sort all jobs in <b>descending order of profit</b>.</li>
+              <li>Find the <b>maximum deadline</b> among all jobs.</li>
+              <li>Create an array of <b>time slots</b> (size = maximum deadline).</li>
+              <li>Select the job with highest profit and place it in the <b>latest available slot before its deadline</b>.</li>
+              <li>If a free slot is found → schedule the job.</li>
+              <li>If no slot is available → skip the job.</li>
+              <li>Compute the total profit from the scheduled jobs.</li>
+            </ol>
+            <div class="code">Step 1  sort by profit desc       → O(N log N)
+Step 2  find max deadline         → O(N)
+Step 3  create slot array         → O(N)
+Step 4  place jobs in latest slot → O(N²)
+─────────────────────────────────────────────
+Final time complexity: O(N²) worst case</div>
+            <div class="hook">Greedy choice: "Select the most profitable job first and place it in the latest available slot before its deadline." This leaves earlier slots free for other jobs.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Example 1 — max deadline 4</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Job</th><th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th></tr></thead>
+                <tbody>
+                  <tr><td>Deadline</td><td>2</td><td>3</td><td>1</td><td>2</td><td>4</td></tr>
+                  <tr><td>Profit</td><td>20</td><td>60</td><td>40</td><td>100</td><td>80</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>After sorting by profit desc:</b> J4 (100, d3) → J5 (80, d4) → J2 (60, d3) → J3 (40, d1) → J1 (20, d2). Max deadline = 4 → slots 1–4.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Job</th><th>Deadline</th><th>Slot range</th><th>Assigned slot</th><th>Total profit</th></tr></thead>
+                <tbody>
+                  <tr><td>J4</td><td>3</td><td>[1,3] → latest free</td><td>slot 3</td><td>100</td></tr>
+                  <tr><td>J5</td><td>4</td><td>[1,4] → latest free</td><td>slot 4</td><td>180</td></tr>
+                  <tr><td>J2</td><td>3</td><td>[1,3] → latest free</td><td>slot 2</td><td>240</td></tr>
+                  <tr><td>J3</td><td>1</td><td>[1,1] → free</td><td>slot 1</td><td>280</td></tr>
+                  <tr><td>J1</td><td>2</td><td>[1,2] → both taken</td><td><b>rejected</b></td><td>280</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="diagram">slot:   1    2    3    4
+job:    J3   J2   J4   J5
+profit: 40 + 60 + 100 + 80 = 280  ✓</div>
+            <div class="fix"><span class="tag">✎ Corrected</span>
+              The slide's "Final Job Order: J3 → J2 → J4 → J5" has J2 and J4 swapped. With slot 2 = J2 and slot 3 = J4, the correct <b>time order</b> is <b>J3 → J2 → J4 → J5</b> only if you read it as slot 1, 2, 3, 4 — which it does. But if you read the assignment table above (J4→slot3, J2→slot2), the timeline order is <b>J3, J2, J4, J5</b>. Both agree. <b>Total profit = 280</b> either way.
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Example 2 — with rejections</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Job</th><th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th></tr></thead>
+                <tbody>
+                  <tr><td>Deadline</td><td>2</td><td>2</td><td>1</td><td>3</td><td>3</td></tr>
+                  <tr><td>Profit</td><td>20</td><td>15</td><td>10</td><td>5</td><td>1</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Already sorted by profit desc.</b> Max deadline = 3 → slots 1–3.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Job</th><th>Deadline</th><th>Assigned slot</th><th>Total profit</th></tr></thead>
+                <tbody>
+                  <tr><td>J1</td><td>2</td><td>slot 2</td><td>20</td></tr>
+                  <tr><td>J2</td><td>2</td><td>slot 1 (slot 2 taken)</td><td>35</td></tr>
+                  <tr><td>J3</td><td>1</td><td><b>rejected</b> (slot 1 taken)</td><td>35</td></tr>
+                  <tr><td>J4</td><td>3</td><td>slot 3</td><td>40</td></tr>
+                  <tr><td>J5</td><td>3</td><td><b>rejected</b> (all taken)</td><td>40</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="diagram">slot:   1    2    3
+job:    J2   J1   J4
+profit: 15 + 20 + 5 = 40  ✓
+
+Time order → J2 → J1 → J4</div>
+            <div class="fix"><span class="tag">✎ Corrected</span>
+              The slide wrote "Job sequence - J3, J2, J1". But <b>J3 was rejected</b> (slot 1 was already taken by J2), so it cannot appear in the sequence. The correct scheduled sequence is <b>J2 → J1 → J4</b> with total profit <b>40</b>.
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Example 3 — 7 jobs</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Job</th><th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>J6</th><th>J7</th></tr></thead>
+                <tbody>
+                  <tr><td>Deadline</td><td>3</td><td>4</td><td>4</td><td>2</td><td>3</td><td>1</td><td>2</td></tr>
+                  <tr><td>Profit</td><td>35</td><td>30</td><td>25</td><td>20</td><td>15</td><td>12</td><td>5</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Already sorted by profit desc.</b> Max deadline = 4 → slots 1–4.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Job</th><th>Deadline</th><th>Assigned slot</th><th>Total profit</th></tr></thead>
+                <tbody>
+                  <tr><td>J1</td><td>3</td><td>slot 3</td><td>35</td></tr>
+                  <tr><td>J2</td><td>4</td><td>slot 4</td><td>65</td></tr>
+                  <tr><td>J3</td><td>4</td><td>slot 2 (4 and 3 taken)</td><td>90</td></tr>
+                  <tr><td>J4</td><td>2</td><td>slot 1</td><td>110</td></tr>
+                  <tr><td>J5</td><td>3</td><td><b>rejected</b></td><td>110</td></tr>
+                  <tr><td>J6</td><td>1</td><td><b>rejected</b></td><td>110</td></tr>
+                  <tr><td>J7</td><td>2</td><td><b>rejected</b></td><td>110</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="diagram">slot:   1    2    3    4
+job:    J4   J3   J1   J2
+profit: 20 + 25 + 35 + 30 = 110  ✓
+
+Time order → J4 → J3 → J1 → J2</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>G. Worst case — all jobs share a large deadline</summary>
+          <div class="sub-body">
+            <p>When every job has the <b>same large deadline N</b>, the algorithm scans from the deadline down to 0 for every job → <code>O(N²)</code>.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Job</th><th>J1</th><th>J2</th><th>J3</th><th>J4</th><th>J5</th><th>J6</th><th>J7</th></tr></thead>
+                <tbody>
+                  <tr><td>Deadline</td><td>7</td><td>7</td><td>7</td><td>7</td><td>7</td><td>7</td><td>7</td></tr>
+                  <tr><td>Profit</td><td>50</td><td>40</td><td>30</td><td>20</td><td>10</td><td>5</td><td>1</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>All 7 jobs fit</b> (7 slots, 7 jobs) — each takes the latest free slot.</p>
+            <div class="diagram">Allocated slots:
+J1 → slot 7    J2 → slot 6    J3 → slot 5    J4 → slot 4
+J5 → slot 3    J6 → slot 2    J7 → slot 1
+
+Maximum profit = 50+40+30+20+10+5+1 = 156  ✓</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 5. HUFFMAN CODING ============ -->
+    <details class="branch b5" open>
+      <summary><span class="num">5</span> Huffman Coding</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is Huffman coding?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A <b>greedy algorithm</b> for <b>lossless data compression</b>.</li>
+              <li><b>Main idea:</b> characters that occur more frequently get <b>shorter</b> binary codes; characters that occur less frequently get <b>longer</b> codes.</li>
+              <li>This reduces the total number of bits needed to store or transmit data.</li>
+              <li>Assigns <b>variable-length codes</b> based on frequency.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. When to use</summary>
+          <div class="sub-body">
+            <ul>
+              <li>When data contains symbols with <b>different frequencies</b>.</li>
+              <li>When <b>lossless compression</b> is required.</li>
+              <li>Widely used in text compression, ZIP files, image formats (JPEG, PNG) and audio/video compression.</li>
+              <li>Works best when some symbols occur <b>much more frequently</b> than others.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Why compression is needed — the numbers</summary>
+          <div class="sub-body">
+            <p>Suppose we have <b>15 characters</b> in a data file.</p>
+            <ul>
+              <li><b>Normal storage:</b> 8 bits per character (ASCII) → 8 × 15 = <b>120 bits</b>.</li>
+            </ul>
+            <div class="code">Char   ASCII   Binary
+ A      65     01000001
+ B      66     01000010
+ C      67     01000011
+ D      68     01000100</div>
+            <p><b>Fixed-length coding</b> — equal bits per character:</p>
+            <div class="code">A → 00      B → 01      C → 10      D → 11
+
+4 characters identified → 2 bits each → 4 × 8 = 32 bits (codebook)
+15 characters encoded  → 15 × 2 = 30 bits
+Total = 32 + 30 = 62 bits … slide states 70 bits with its own accounting</div>
+            <div class="fix"><span class="tag">✎ Note</span>
+              The slide's arithmetic is loose here ("For character: 4*8=32 bits · Total = 8+30+32=70 bits"). The exact total depends on how the codebook is counted. What matters for the exam is the <b>contrast</b>: fixed-length wastes bits when frequencies are skewed, while Huffman assigns shorter codes to frequent symbols.
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Huffman coding is greedy — why</summary>
+          <div class="sub-body">
+            <ul>
+              <li>At every step, pick the <b>two smallest-frequency nodes</b> — a locally optimal choice.</li>
+              <li>Combine them into a new node whose frequency is the <b>sum</b>.</li>
+              <li>Repeat until only one tree remains — the global optimum.</li>
+              <li>This greedy choice ensures that characters with higher frequency get <b>shorter codes</b>.</li>
+            </ul>
+            <div class="hook">Memory hook: Huffman = repeatedly merge the two least frequent nodes.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Steps of the algorithm</summary>
+          <div class="sub-body">
+            <ol>
+              <li>Count the frequency of each character.</li>
+              <li>Create a leaf node for each character.</li>
+              <li>Insert all nodes into a <b>Min Heap</b> (priority queue).</li>
+              <li>Remove the two nodes with minimum frequency.</li>
+              <li>Create a new node with frequency = sum of both.</li>
+              <li>Insert the new node back into the heap.</li>
+              <li>Repeat until only one node remains (the root).</li>
+              <li>Traverse the tree: <b>left edge → 0</b>, <b>right edge → 1</b>. Path from root to leaf = Huffman code.</li>
+            </ol>
+            <div class="code"><span class="k">Huffman_Coding</span>(characters, frequencies):
+    Q = empty min-heap
+    <span class="k">for</span> each character c:
+        insert node(c, freq(c)) into Q
+
+    <span class="k">while</span> size(Q) &gt; 1:
+        left  = extract_min(Q)
+        right = extract_min(Q)
+        parent = new node(left.freq + right.freq)
+        parent.left = left;  parent.right = right
+        insert parent into Q
+
+    root = extract_min(Q)
+    traverse root: assign 0 to left edges, 1 to right edges
+    <span class="k">return</span> codes for all characters</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Complexity</summary>
+          <div class="sub-body">
+            <p>Let n = number of distinct characters.</p>
+            <div class="code"><span class="c">// Building Min Heap</span>
+insert n nodes                  → O(n)
+
+<span class="c">// Building Huffman Tree — (n−1) iterations</span>
+extract-min                     → O(log n)
+extract-min                     → O(log n)
+insert new node                 → O(log n)
+per iteration = 3·O(log n) = O(log n)
+(n−1) iterations                → O(n log n)
+
+<span class="c">// Generating Codes</span>
+tree traversal                  → O(n)
+
+─────────────────────────────────────────
+Overall: O(n) + O(n log n) + O(n) = O(n log n)</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>G. Worked example — frequencies A=5, B=9, C=12, D=13, E=16, F=45</summary>
+          <div class="sub-body">
+            <p><b>Step-by-step merging</b></p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Step</th><th>Heap before</th><th>Merge</th><th>New node</th><th>Heap after</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>5, 9, 12, 13, 16, 45</td><td>A(5) + B(9)</td><td><b>14</b></td><td>12, 13, 14, 16, 45</td></tr>
+                  <tr><td>2</td><td>12, 13, 14, 16, 45</td><td>C(12) + D(13)</td><td><b>25</b></td><td>14, 16, 25, 45</td></tr>
+                  <tr><td>3</td><td>14, 16, 25, 45</td><td>14 + E(16)</td><td><b>30</b></td><td>25, 30, 45</td></tr>
+                  <tr><td>4</td><td>25, 30, 45</td><td>25 + 30</td><td><b>55</b></td><td>45, 55</td></tr>
+                  <tr><td>5</td><td>45, 55</td><td>F(45) + 55</td><td><b>100</b> (root)</td><td>100</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Tree structure</b></p>
+            <div class="diagram">                100
+              /     \
+           F=45     55
+                   /   \
+                 25     30
+                /  \   /  \
+             C=12 D=13 14  E=16
+                        /  \
+                      A=5  B=9</div>
+            <p><b>Resulting codes</b></p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Char</th><th>Frequency</th><th>Code</th><th>Code length</th></tr></thead>
+                <tbody>
+                  <tr><td>A</td><td>5</td><td>1100</td><td>4</td></tr>
+                  <tr><td>B</td><td>9</td><td>1101</td><td>4</td></tr>
+                  <tr><td>C</td><td>12</td><td>100</td><td>3</td></tr>
+                  <tr><td>D</td><td>13</td><td>101</td><td>3</td></tr>
+                  <tr><td>E</td><td>16</td><td>111</td><td>3</td></tr>
+                  <tr><td><b>F</b></td><td><b>45</b></td><td><b>0</b></td><td><b>1</b></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Encoded string for "ABCD":</b> <code>1100 1101 100 101</code> → <code>11001101100101</code></p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>H. Decoding &amp; prefix-free property</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Decoding</b> — take the code and traverse the tree from the root to find the character. E.g. <code>101</code> → root → right(1) → left(10) → right(101) = <b>D</b>.</li>
+              <li>To send the message, we must send the <b>compressed bits</b> + the <b>codebook</b>. We do <b>not</b> need to send the frequencies.</li>
+            </ul>
+            <p><b>Why Huffman codes are prefix-free</b></p>
+            <ul>
+              <li>No code is the <b>starting part</b> of another code.</li>
+              <li>Every symbol is stored at a <b>leaf node</b> of the tree — codes are assigned only at leaves.</li>
+              <li>Since all symbols are at leaves, no symbol's code can ever be the beginning of another's code.</li>
+              <li>This guarantees the encoded message is <b>uniquely decodable</b> without ambiguity.</li>
+            </ul>
+            <div class="fix"><span class="tag">✎ Note</span>
+              The slide's savings figure (42.5%) uses the loose 70-bit fixed-length accounting. The exam-relevant point is that <b>variable-length prefix-free codes</b> reduce the total bits when frequencies are skewed — e.g. F at 45% of the data gets a 1-bit code instead of 8.
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 6. PRIM'S ALGORITHM ============ -->
+    <details class="branch b6" open>
+      <summary><span class="num">6</span> Prim's Algorithm (MST)</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Minimum Spanning Tree — definition</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A subset of edges in a connected, weighted, undirected graph that <b>connects all vertices without forming cycles</b>.</li>
+              <li>Has the <b>minimum total edge weight</b> among all spanning trees.</li>
+              <li>For <b>n vertices</b>, the MST has exactly <b>n − 1 edges</b>.</li>
+              <li>There can be <b>multiple MSTs</b> for the same graph (when edge weights tie).</li>
+              <li>The <b>cost</b> of a spanning tree is the sum of its edge weights.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Why is MST greedy?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>It chooses the optimal solution present <b>at the moment</b>, not the optimal solution as a whole.</li>
+              <li>Both Prim's and Kruskal's are greedy algorithms.</li>
+            </ul>
+            <p><b>Applications of MST</b></p>
+            <ul>
+              <li>Network design (Internet, roads, electrical circuits)</li>
+              <li>Clustering in machine learning</li>
+              <li>Approximation algorithms for NP-Hard problems</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. How Prim's algorithm works</summary>
+          <div class="sub-body">
+            <ol>
+              <li>Start with <b>any vertex</b> as the initial MST.</li>
+              <li>Select the <b>smallest edge</b> that connects a <b>new vertex</b> to the MST.</li>
+              <li>Repeat until all vertices are included in the MST.</li>
+            </ol>
+            <p><b>Properties</b></p>
+            <ul>
+              <li>Always maintains a <b>connected</b> MST while adding edges.</li>
+              <li>Uses a <b>Priority Queue (Min Heap)</b> for efficiency.</li>
+            </ul>
+            <p><b>Why is it greedy?</b></p>
+            <ul>
+              <li>At each step, it chooses the smallest edge that <b>expands</b> the MST.</li>
+              <li>The local optimal choice leads to a globally optimal MST.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Pseudocode</summary>
+          <div class="sub-body">
+            <div class="code">A = ∅                    <span class="c">// edges of the MST (initially empty)</span>
+U = {1}                  <span class="c">// start with a single vertex</span>
+
+<span class="k">while</span> (U ≠ V)              <span class="c">// loop until all vertices are in U</span>
+    let (u, v) be the least weighted edge such that
+        u ∈ U  <span class="k">and</span>  v ∈ V − U
+    A = A ∪ {(u, v)}     <span class="c">// add edge to MST</span>
+    U = U ∪ {v}          <span class="c">// mark v as included</span>
+
+<span class="c">// u is already in the MST; v is not yet visited</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Worked example — 5 vertices</summary>
+          <div class="sub-body">
+            <p><b>Step 1:</b> choose a vertex — let's pick <b>B</b>.</p>
+            <p><b>Step 2:</b> edges from B are B–C (weight 10) and B–D (weight 4). Minimum is <b>B–D (4)</b> → add to MST.</p>
+            <p><b>Step 3:</b> among all edges from the MST to unvisited vertices, the candidates are D–E and C–D. Add <b>D–E (2)</b> and explore C's neighbours E and A.</p>
+            <p><b>Step 4:</b> select <b>C–D (1)</b> → add to MST.</p>
+            <p><b>Step 5:</b> choose <b>C–A (3)</b>. We cannot select C–E because it would create a cycle.</p>
+            <div class="diagram">MST edges:  B–D(4) · D–E(2) · C–D(1) · C–A(3)
+
+Cost of MST = 4 + 2 + 1 + 3 = 10 units</div>
+            <div class="hook">Memory hook: Prim's grows <b>one connected tree</b>, always adding the cheapest edge that touches a new vertex.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Time complexity</summary>
+          <div class="sub-body">
+            <p><b>Using an adjacency matrix + simple min selection → O(V²)</b></p>
+            <ul>
+              <li>Each vertex is checked for the minimum edge, leading to <code>O(V²)</code>.</li>
+              <li>Best case: <code>O(V²)</code> · Worst case: <code>O(V²)</code></li>
+            </ul>
+            <p><b>Using a min-heap + adjacency list → O(E log V)</b></p>
+            <div class="code"><span class="c">// 1. Extract-Min — O(log V) each, done V times</span>
+total = O(V log V)
+
+<span class="c">// 2. Edge relaxation (decrease-key) — O(log V) per edge</span>
+total = O(E log V)
+
+<span class="c">// 3. Combine</span>
+O(V log V) + O(E log V) = O(E log V)      <span class="c">// since E ≥ V in a connected graph</span></div>
+            <div class="hook">Memory hook: Prim's = O(V²) with a matrix · O(E log V) with a heap.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 7. KRUSKAL'S ALGORITHM ============ -->
+    <details class="branch b7" open>
+      <summary><span class="num">7</span> Kruskal's Algorithm (MST)</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is Kruskal's algorithm?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A <b>minimum spanning tree</b> algorithm that takes a graph as input and finds the subset of edges that:
+                <ul>
+                  <li>form a tree that includes <b>every vertex</b>, and</li>
+                  <li>has the <b>minimum sum of weights</b> among all trees that can be formed from the graph.</li>
+                </ul>
+              </li>
+              <li>Falls under the class of <b>greedy algorithms</b> — finds the local optimum hoping for the global optimum.</li>
+              <li>Starts from the edges with the <b>lowest weight</b> and keeps adding edges until the goal is reached.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. How it works — steps</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Sort</b> all edges in <b>ascending order</b> of weight.</li>
+              <li><b>Pick</b> the smallest edge.</li>
+              <li><b>Check</b> whether adding it creates a <b>cycle</b>.</li>
+              <li>If no cycle → <b>add it to the MST</b>.</li>
+              <li><b>Repeat</b> until the MST contains <b>V − 1 edges</b>.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Pseudocode with Union-Find</summary>
+          <div class="sub-body">
+            <div class="code"><span class="k">KRUSKAL</span>(G):
+1.  A = ∅                                    <span class="c">// MST edge set</span>
+2.  Sort all edges in increasing order       <span class="c">// O(E log E)</span>
+3.  Make each vertex a separate set          <span class="c">// O(V)</span>
+4.  <span class="k">for each</span> edge (u, v) in sorted order:
+        <span class="k">if</span> Find(u) ≠ Find(v):               <span class="c">// no cycle → safe</span>
+            A = A ∪ {(u, v)}
+            Union(u, v)                      <span class="c">// merge sets</span>
+5.  Stop when A contains (V − 1) edges</div>
+            <p><b>Why Union-Find?</b> <code>Find(u) ≠ Find(v)</code> means <code>u</code> and <code>v</code> are in different components, so adding the edge cannot create a cycle. <code>Union</code> merges them into one component.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Time complexity</summary>
+          <div class="sub-body">
+            <div class="code">Sorting all edges              → O(E log E)
+Find / Union per edge (with
+path compression + union by rank) → ≈ O(α(V)) ≈ O(1) amortised
+Process all E edges            → O(E)
+────────────────────────────────────────────
+Total: O(E log E)   (dominant term)
+
+<span class="c">// since E ≤ V², log E ≤ 2 log V, so this is also O(E log V)</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Prim's vs Kruskal's — comparison</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Aspect</th><th>Prim's</th><th>Kruskal's</th></tr></thead>
+                <tbody>
+                  <tr><td>Strategy</td><td>Grows one connected tree</td><td>Adds globally cheapest safe edge</td></tr>
+                  <tr><td>Starting point</td><td>Any single vertex</td><td>All edges sorted by weight</td></tr>
+                  <tr><td>Cycle handling</td><td>Implicit — only reaches new vertices</td><td>Explicit — Union-Find check</td></tr>
+                  <tr><td>Data structure</td><td>Priority Queue (min-heap)</td><td>Union-Find (disjoint sets)</td></tr>
+                  <tr><td>Time (matrix)</td><td>O(V²)</td><td>—</td></tr>
+                  <tr><td>Time (heap/list)</td><td>O(E log V)</td><td>O(E log E)</td></tr>
+                  <tr><td>Best for</td><td>Dense graphs</td><td>Sparse graphs</td></tr>
+                  <tr><td>Intermediate state</td><td>Always one connected component</td><td>May be a forest of components</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Prim's = <b>grow a tree from a vertex</b> · Kruskal's = <b>sort edges, add safe ones</b>.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Worked example — sorted edges</summary>
+          <div class="sub-body">
+            <p>Sort the edge list, then walk through it accepting only edges that connect different components.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Edge</th><th>Weight</th><th>Decision</th><th>Reason</th><th>MST edges</th></tr></thead>
+                <tbody>
+                  <tr><td>C–D</td><td>1</td><td><b>Accept</b></td><td>Different components</td><td>1</td></tr>
+                  <tr><td>D–E</td><td>2</td><td><b>Accept</b></td><td>Different components</td><td>2</td></tr>
+                  <tr><td>C–A</td><td>3</td><td><b>Accept</b></td><td>Different components</td><td>3</td></tr>
+                  <tr><td>B–D</td><td>4</td><td><b>Accept</b></td><td>Different components</td><td>4 = V − 1 → <b>stop</b></td></tr>
+                  <tr><td>C–E</td><td>—</td><td>Skip</td><td>Would create cycle C–D–E</td><td>—</td></tr>
+                  <tr><td>B–C</td><td>10</td><td>Skip</td><td>MST already complete</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="diagram">MST edges: C–D(1) · D–E(2) · C–A(3) · B–D(4)
+Cost = 1 + 2 + 3 + 4 = 10
+
+Same MST cost as Prim's on the same graph — as expected.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ MASTER SUMMARY ============ -->
+    <details class="branch summary wide" open>
+      <summary><span class="num">★</span> Master Summary — Unit 3 at a Glance</summary>
+      <div class="branch-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Concept</th><th>Type</th><th>Key idea / formula</th></tr></thead>
+            <tbody>
+              <tr><td>Greedy strategy</td><td>Technique</td><td>Make the best local choice at each step, hope for the global optimum</td></tr>
+              <tr><td>Greedy loop</td><td>Process</td><td>Start empty → pick best → check feasible → include → repeat</td></tr>
+              <tr><td>Objective function</td><td>Definition</td><td>What we optimize — maximize profit / minimize cost or time</td></tr>
+              <tr><td>Local optimal choice</td><td>Characteristic</td><td>Best option available now, not necessarily the best overall</td></tr>
+              <tr><td>Irreversible decisions</td><td>Characteristic</td><td>Once taken, never changed — no backtracking</td></tr>
+              <tr><td>Feasibility check</td><td>Characteristic</td><td>Verify the choice satisfies all constraints before including it</td></tr>
+              <tr><td>Greedy choice property</td><td>Property</td><td>A local optimum can be part of a global optimum</td></tr>
+              <tr><td>Greedy vs optimal</td><td>Limitation</td><td>Greedy is not always optimal — Route A (40 min) vs Route B (25 min)</td></tr>
+              <tr><td>Feasible vs optimal</td><td>Concept</td><td>Feasible satisfies constraints; optimal is the best feasible (only one)</td></tr>
+              <tr><td>Fractional Knapsack</td><td>Problem</td><td>Take fractions of items; sort by <b>P/W</b> descending</td></tr>
+              <tr><td>Fractional Knapsack complexity</td><td>Complexity</td><td><code>O(n log n)</code> — dominated by sorting</td></tr>
+              <tr><td>Fractional Knapsack example</td><td>Example</td><td>P={25,24,15}, W={18,15,10}, M=20 → profit <b>31.5</b></td></tr>
+              <tr><td>Job Sequencing</td><td>Problem</td><td>Maximize profit; each job 1 unit time; place in latest free slot before deadline</td></tr>
+              <tr><td>Job Sequencing steps</td><td>Algorithm</td><td>Sort by profit desc → find max deadline → slot array → latest free slot</td></tr>
+              <tr><td>Job Sequencing complexity</td><td>Complexity</td><td><code>O(N log N)</code> sort + <code>O(N²)</code> slot scan = <code>O(N²)</code></td></tr>
+              <tr><td>Job Sequencing example 1</td><td>Example</td><td>J4, J5, J2, J3 selected → profit <b>280</b> (J1 rejected)</td></tr>
+              <tr><td>Huffman Coding</td><td>Problem</td><td>Lossless compression — frequent chars get shorter codes</td></tr>
+              <tr><td>Huffman steps</td><td>Algorithm</td><td>Count freq → min-heap → merge two smallest → repeat → assign 0/1</td></tr>
+              <tr><td>Huffman complexity</td><td>Complexity</td><td><code>O(n log n)</code> — dominated by heap operations</td></tr>
+              <tr><td>Huffman example</td><td>Example</td><td>A=5, B=9, C=12, D=13, E=16, F=45 → F=0, A=1100, B=1101</td></tr>
+              <tr><td>Prefix-free property</td><td>Property</td><td>No code is a prefix of another → uniquely decodable</td></tr>
+              <tr><td>MST</td><td>Problem</td><td>Connect all vertices without cycles, minimum total weight, n−1 edges</td></tr>
+              <tr><td>Prim's algorithm</td><td>MST algorithm</td><td>Start at any vertex; add cheapest edge to a new vertex; O(V²) or O(E log V)</td></tr>
+              <tr><td>Kruskal's algorithm</td><td>MST algorithm</td><td>Sort edges ascending; add if no cycle (Union-Find); O(E log E)</td></tr>
+              <tr><td>MST applications</td><td>Use cases</td><td>Network design, ML clustering, NP-Hard approximation</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============ MEMORY HOOKS ============ -->
+    <details class="branch hooks wide" open>
+      <summary><span class="num">🎯</span> Key Memory Hooks</summary>
+      <div class="branch-body">
+        <div class="hook-grid">
+          <div class="hook">Greedy = Best right now! · Optimal = Best overall!</div>
+          <div class="hook">Greedy loop: pick best → check feasible → include → repeat</div>
+          <div class="hook">Greedy characteristics: Step-by-step · Local best · No backtracking · Feasibility · Optimal substructure · Greedy choice · Optimization</div>
+          <div class="hook">Greedy can fail: Route A 10 min + 30 jam = 40 vs Route B 15 + 10 = 25</div>
+          <div class="hook">Feasible = satisfies constraints · Optimal = best feasible (only one)</div>
+          <div class="hook">Fractional Knapsack: sort by <b>P/W descending</b> → fill → fraction of last</div>
+          <div class="hook">Fractional Knapsack: O(n log n) — sorting dominates</div>
+          <div class="hook">Knapsack example: max-profit first gives 28.2, min-weight gives 31, ratio gives <b>31.5</b></div>
+          <div class="hook">Job Sequencing: sort profit desc → max deadline → latest free slot</div>
+          <div class="hook">Job Sequencing: O(N²) worst case (all jobs same large deadline)</div>
+          <div class="hook">Job Sequencing example 1 → 280 with J1 rejected</div>
+          <div class="hook">Huffman: merge the <b>two least frequent</b> nodes repeatedly</div>
+          <div class="hook">Huffman: frequent → short code · rare → long code</div>
+          <div class="hook">Huffman complexity: O(n log n) — heap operations dominate</div>
+          <div class="hook">Huffman example: F(45) → 0 · A(5) → 1100 · B(9) → 1101</div>
+          <div class="hook">Prefix-free = no code is a prefix of another → uniquely decodable</div>
+          <div class="hook">MST: n vertices → n−1 edges · no cycles · minimum total weight</div>
+          <div class="hook">Prim's = grow a tree from a vertex · O(V²) or O(E log V)</div>
+          <div class="hook">Kruskal's = sort edges, add safe ones (Union-Find) · O(E log E)</div>
+          <div class="hook">Dense graph → Prim's · Sparse graph → Kruskal's</div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <p class="no-results" id="noResults">No matching topics. Try another search term.</p>
+  <div class="foot">Single-file offline mindmap · Expand/collapse each branch · Search highlights matching topics · Print to PDF for a study copy</div>
+</main>
+
+<script>
+const allDetails = [...document.querySelectorAll('details')];
+
+function expandAll(open){ allDetails.forEach(d => d.open = open); }
+
+function resetView(){
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.hidden').forEach(e => e.classList.remove('hidden'));
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+  expandAll(true);
+  document.getElementById('noResults').style.display = 'none';
+}
+
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const q = search.value.trim().toLowerCase();
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+
+  if (!q){
+    document.querySelectorAll('.branch,.sub').forEach(e => e.classList.remove('hidden'));
+    document.getElementById('noResults').style.display = 'none';
+    return;
+  }
+
+  let count = 0;
+
+  document.querySelectorAll('.branch').forEach(branch => {
+    const branchMatch = branch.innerText.toLowerCase().includes(q);
+    const subMatches = [...branch.querySelectorAll('.sub')]
+      .filter(s => s.innerText.toLowerCase().includes(q));
+
+    if (branchMatch || subMatches.length){
+      branch.classList.remove('hidden');
+      branch.open = true;
+
+      subMatches.forEach(s => {
+        s.classList.remove('hidden');
+        s.open = true;
+        s.classList.add('hit');
+        count++;
+      });
+
+      branch.querySelectorAll('.sub').forEach(s => {
+        if (!subMatches.includes(s)) s.classList.add('hidden');
+      });
+
+      if (!subMatches.length){
+        branch.classList.add('hit');
+        count++;
+      }
+    } else {
+      branch.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('noResults').style.display = count ? 'none' : 'block';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DAA — Divide &amp; Conquer Mindmap</title>
+<style>
+:root{
+  --bg:#f5f7fb;--ink:#172033;--muted:#586579;--line:#d8dfeb;
+  --b1:#1d4ed8;--b1t:#dbeafe;
+  --b2:#0e7490;--b2t:#cffafe;
+  --b3:#7c3aed;--b3t:#ede9fe;
+  --b4:#15803d;--b4t:#dcfce7;
+  --b5:#b45309;--b5t:#fef3c7;
+  --b6:#0369a1;--b6t:#e0f2fe;
+  --b7:#be185d;--b7t:#fce7f3;
+  --b8:#0f766e;--b8t:#ccfbf1;
+  --summary:#475569;--summary-t:#e2e8f0;
+  --hooks:#b91c1c;--hooks-t:#fee2e2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+
+.top{position:sticky;top:0;z-index:10;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font-weight:850;letter-spacing:.02em;margin-right:auto}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+button{border:1px solid #cbd5e1;background:white;color:#263247;border-radius:9px;padding:8px 11px;font:inherit;font-size:13px;cursor:pointer}
+button:hover{background:#eef4ff;border-color:#93b4f5}
+input{border:1px solid #cbd5e1;border-radius:9px;padding:9px 12px;min-width:min(280px,75vw);font:inherit}
+input:focus{outline:2px solid #93b4f5;outline-offset:1px}
+
+.hero{max-width:1500px;margin:26px auto 18px;padding:0 20px;text-align:center}
+.hero h1{margin:0 auto 7px;font-size:clamp(25px,4vw,42px);line-height:1.15;letter-spacing:-.035em}
+.hero p{margin:0;color:var(--muted)}
+.legend{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:15px 0}
+.legend span{font-size:12px;padding:5px 9px;border-radius:20px;background:white;border:1px solid var(--line)}
+
+.map{max-width:1600px;margin:auto;padding:0 18px 60px}
+.root{margin:20px auto 24px;max-width:760px;text-align:center;background:#173e78;color:white;padding:20px;border-radius:16px;box-shadow:0 8px 24px #173e7822}
+.root h2{margin:0;font-size:24px}
+.root small{opacity:.85}
+
+.branch-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start}
+.branch{--accent:var(--summary);--tint:var(--summary-t);min-width:0;background:white;border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #1e293b0a}
+.branch.b1{--accent:var(--b1);--tint:var(--b1t)}
+.branch.b2{--accent:var(--b2);--tint:var(--b2t)}
+.branch.b3{--accent:var(--b3);--tint:var(--b3t)}
+.branch.b4{--accent:var(--b4);--tint:var(--b4t)}
+.branch.b5{--accent:var(--b5);--tint:var(--b5t)}
+.branch.b6{--accent:var(--b6);--tint:var(--b6t)}
+.branch.b7{--accent:var(--b7);--tint:var(--b7t)}
+.branch.b8{--accent:var(--b8);--tint:var(--b8t)}
+.branch.summary{--accent:var(--summary);--tint:var(--summary-t)}
+.branch.hooks{--accent:var(--hooks);--tint:var(--hooks-t)}
+.branch>summary{list-style:none;cursor:pointer;background:var(--tint);padding:14px 15px;font-weight:850;font-size:16px;display:flex;gap:10px;align-items:center;line-height:1.3}
+.branch>summary::-webkit-details-marker{display:none}
+.num{flex:none;border-radius:8px;background:var(--accent);color:white;width:30px;height:30px;display:grid;place-items:center;font-size:14px;font-variant-numeric:tabular-nums}
+.branch-body{padding:12px}
+
+.sub{border:1px solid var(--line);border-radius:10px;margin:9px 0;background:#fff;overflow:hidden}
+.sub>summary{cursor:pointer;list-style:none;padding:10px 12px;font-weight:750;background:#f8fafc;border-bottom:1px solid transparent;font-size:14px}
+.sub>summary::-webkit-details-marker{display:none}
+.sub[open]>summary{border-bottom-color:var(--line)}
+.sub-body{padding:10px 14px 13px;font-size:14px}
+.sub-body p{margin:6px 0}
+.sub-body ul,.sub-body ol{margin:5px 0 8px;padding-left:21px}
+.sub-body li{margin:3px 0}
+.sub-body ul ul{margin-top:3px}
+.sub-body b{color:#111827}
+
+.hook{padding:10px 12px;border-left:4px solid var(--accent);background:var(--tint);border-radius:7px;margin:10px 0;font-weight:650}
+.diagram{border:1px dashed #94a3b8;border-radius:9px;padding:10px;margin:9px 0;text-align:center;background:#fafcff;font-weight:700;font-size:13px;line-height:1.8;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.code{white-space:pre;overflow-x:auto;background:#0f172a;color:#e2e8f0;border-radius:9px;padding:12px 14px;margin:9px 0;font:12.5px/1.75 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;border:1px solid #1e293b}
+.code .c{color:#7dd3fc}
+.code .k{color:#c084fc}
+.code .s{color:#86efac}
+.fix{border:1px solid #fcd34d;background:#fffbeb;border-radius:9px;padding:10px 12px;margin:10px 0;font-size:13.5px}
+.fix .tag{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:#f59e0b;color:#fff;border-radius:5px;padding:1px 6px;margin-right:6px;font-weight:800;vertical-align:1px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:9px 0}
+.split div{border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:13px}
+.split div b{display:block;margin-bottom:3px;color:var(--accent)}
+.table-wrap{overflow-x:auto;margin:9px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#f1f5f9;font-size:12px;letter-spacing:.03em;text-transform:uppercase}
+tbody tr:hover td{background:#f8fbff}
+code{background:#eef2ff;padding:1px 4px;border-radius:4px;font-size:12.5px}
+
+.wide{grid-column:1 / -1;margin-top:16px}
+.hook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.hook-grid .hook{margin:0}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+.hidden{display:none!important}
+.hit{outline:3px solid #f59e0b;outline-offset:2px;background:#fffbeb!important}
+.no-results{display:none;text-align:center;padding:20px;color:#64748b}
+
+@media(max-width:1100px){.branch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+  .branch-grid{grid-template-columns:1fr}
+  .top{position:static}
+  .brand{width:100%}
+  .hero{margin-top:18px}
+  .map{padding:0 10px 35px}
+  .root{padding:16px}
+  .branch>summary{font-size:15px}
+  .split{grid-template-columns:1fr}
+}
+
+@media print{
+  .top{display:none}
+  .hero{margin:0 auto 12px}
+  .map{max-width:none;padding:0}
+  .branch-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .branch,.sub{break-inside:avoid;box-shadow:none}
+  details:not([open])>.branch-body,details:not([open])>.sub-body{display:block}
+  .branch>summary,.sub>summary,.root{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  body{background:white;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">🧩 DAA • DIVIDE &amp; CONQUER</div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search any concept… (e.g. QuickSelect, Boyer-Moore, pivot, 3n/2)">
+    <button onclick="expandAll(true)">Expand all</button>
+    <button onclick="expandAll(false)">Collapse all</button>
+    <button onclick="resetView()">Reset</button>
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Divide &amp; Conquer</h1>
+  <p>Design &amp; Analysis of Algorithms · complete study mindmap with expandable branches</p>
+  <div class="legend">
+    <span style="background:var(--b1t)">1 General Strategy</span>
+    <span style="background:var(--b2t)">2 Binary Search</span>
+    <span style="background:var(--b3t)">3 Merge Sort</span>
+    <span style="background:var(--b4t)">4 Quick Sort</span>
+    <span style="background:var(--b5t)">5 Majority Element</span>
+    <span style="background:var(--b6t)">6 Max &amp; Min</span>
+    <span style="background:var(--b7t)">7 Selection Problem</span>
+    <span style="background:var(--b8t)">8 Median of Medians</span>
+    <span style="background:var(--summary-t)">★ Summary</span>
+    <span style="background:var(--hooks-t)">🎯 Hooks</span>
+  </div>
+</section>
+
+<main class="map">
+  <div class="root">
+    <h2>🧩 DIVIDE &amp; CONQUER</h2>
+    <small>Eight connected knowledge branches · select a heading to expand its details</small>
+  </div>
+
+  <div class="branch-grid">
+
+    <!-- ============ 1. GENERAL STRATEGY ============ -->
+    <details class="branch b1" open>
+      <summary><span class="num">1</span> General Strategy</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is divide and conquer?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A strategy of solving a large problem by:
+                <ul>
+                  <li><b>Breaking</b> the problem into smaller sub-problems</li>
+                  <li><b>Solving</b> the sub-problems</li>
+                  <li><b>Combining</b> them to get the desired output</li>
+                </ul>
+              </li>
+              <li><b>Recursion</b> is used to implement divide and conquer.</li>
+              <li>After dividing, the sub-problems are the <b>same as the main problem</b> (only smaller) — this is why recursion works.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. The three steps</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Divide</b> — divide the given problem into sub-problems using recursion.</li>
+              <li><b>Conquer</b> — solve the smaller sub-problems recursively. If a sub-problem is small enough, solve it <b>directly</b> (base case).</li>
+              <li><b>Combine</b> — combine the solutions of the sub-problems to solve the original problem.</li>
+            </ol>
+            <div class="hook">Memory hook: Divide → Conquer → Combine. (For merge sort, conquer and combine happen side by side.)</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. General method &amp; standard algorithms</summary>
+          <div class="sub-body">
+            <p>The following algorithms are based on the divide-and-conquer approach:</p>
+            <ul>
+              <li><b>Max–Min Problem</b></li>
+              <li><b>Merge Sort</b></li>
+              <li><b>Quick Sort</b></li>
+              <li><b>Binary Search</b></li>
+              <li><b>Strassen's Matrix Multiplication</b></li>
+              <li><b>Karatsuba Algorithm</b> (fast integer multiplication)</li>
+              <li><b>Closest Pair of Points</b></li>
+              <li><b>Selection Problem</b> (QuickSelect, Median of Medians)</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Worked example — sorting an array</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Divide</b> the array into two halves.</li>
+              <li><b>Divide each sub-part recursively</b> into two halves until you get individual elements.</li>
+              <li><b>Combine</b> the individual elements in a sorted manner — here the conquer and combine steps go <b>side by side</b>.</li>
+            </ol>
+            <div class="diagram">
+        [ 38 27 43 3 9 82 10 ]
+         /                 \
+   [38 27 43 3]        [9 82 10]
+     /      \           /     \
+  [38 27] [43 3]     [9 82]  [10]
+   /  \    /  \        /  \     |
+ 38  27  43   3       9   82   10
+   \  /    \  /        \  /     |
+  [27 38] [3 43]      [9 82]  [10]
+     \      /            \     /
+   [3 27 38 43]        [9 10 82]
+            \            /
+       [3 9 10 27 38 43 82]</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. General recurrence form</summary>
+          <div class="sub-body">
+            <div class="code">T(n) = a·T(n/b) + f(n)
+
+<span class="c">a = number of sub-problems</span>
+<span class="c">n/b = size of each sub-problem</span>
+<span class="c">f(n) = cost of dividing + combining</span>
+
+<span class="c">// examples from this unit</span>
+Binary search    : T(n) = 1·T(n/2) + O(1)
+Merge sort       : T(n) = 2·T(n/2) + O(n)
+Quick sort (best): T(n) = 2·T(n/2) + O(n)
+Max–Min          : T(n) = 2·T(n/2) + 2
+Majority (DAC)   : T(n) = 2·T(n/2) + O(n)</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 2. BINARY SEARCH ============ -->
+    <details class="branch b2" open>
+      <summary><span class="num">2</span> Binary Search</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is binary search?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>An efficient algorithm used to find a specific element in a <b>sorted</b> array or list.</li>
+              <li>Operates by <b>repeatedly dividing the search interval in half</b> until the target is found or the interval is empty.</li>
+              <li>The element is always searched in the <b>middle</b> of a portion of the array.</li>
+            </ul>
+            <div class="hook">⚠ Binary search always works on <b>sorted</b> elements.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. How it works — iterative</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Initialization</b> — start with two pointers, <code>low</code> and <code>high</code>. Initially <code>low = 0</code> and <code>high = n − 1</code>.</li>
+              <li><b>Iteration</b> — while <code>low ≤ high</code>:
+                <ul>
+                  <li>Calculate <code>mid = (low + high) / 2</code> — optimised form: <code>mid = low + (high − low)/2</code> to avoid overflow.</li>
+                  <li>Compare <code>arr[mid]</code> with the target:
+                    <ul>
+                      <li><b>equal</b> → search successful, return <code>mid</code>.</li>
+                      <li><b>less than target</b> → set <code>low = mid + 1</code> (search right half).</li>
+                      <li><b>greater than target</b> → set <code>high = mid − 1</code> (search left half).</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li><b>Termination</b> — if <code>low</code> exceeds <code>high</code>, the target is not present; return <code>−1</code> or indicate failure.</li>
+            </ol>
+            <div class="code"><span class="k">int</span> binarySearch(<span class="k">int</span> arr[], <span class="k">int</span> n, <span class="k">int</span> key) {
+    <span class="k">int</span> low = 0, high = n − 1;
+    <span class="k">while</span> (low &lt;= high) {
+        <span class="k">int</span> mid = low + (high − low) / 2;   <span class="c">// overflow-safe</span>
+        <span class="k">if</span> (arr[mid] == key) <span class="k">return</span> mid;
+        <span class="k">else if</span> (arr[mid] &lt; key) low = mid + 1;
+        <span class="k">else</span> high = mid − 1;
+    }
+    <span class="k">return</span> −1;
+}</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Recursive version &amp; recurrence</summary>
+          <div class="sub-body">
+            <div class="code"><span class="k">int</span> binarySearchRec(<span class="k">int</span> arr[], <span class="k">int</span> low, <span class="k">int</span> high, <span class="k">int</span> key) {
+    <span class="k">if</span> (low &gt; high) <span class="k">return</span> −1;          <span class="c">// base case: not found</span>
+    <span class="k">int</span> mid = low + (high − low) / 2;
+    <span class="k">if</span> (arr[mid] == key) <span class="k">return</span> mid;    <span class="c">// base case: found</span>
+    <span class="k">if</span> (arr[mid] &lt; key)
+        <span class="k">return</span> binarySearchRec(arr, mid + 1, high, key);
+    <span class="k">return</span> binarySearchRec(arr, low, mid − 1, key);
+}</div>
+            <p><b>Analysis</b></p>
+            <div class="code">T(n) = T(n/2) + 1        <span class="c">// 1 comparison + recurse on one half</span>
+T(1) = 1                  <span class="c">// base case</span>
+
+<span class="c">// expand:</span>
+T(n) = T(n/2) + 1
+     = T(n/4) + 2
+     = T(n/8) + 3
+     = …
+     = T(n/2ᵏ) + k
+
+<span class="c">// stop when n/2ᵏ = 1 → k = log₂n</span>
+T(n) = T(1) + log₂n = 1 + log₂n = O(log n)</div>
+            <p><b>Case analysis from the notes</b></p>
+            <ul>
+              <li><b>Case 1:</b> <code>item = A[mid]</code> → <code>LOC = mid</code>. This is the <b>best case</b> with <code>T(n) = 1</code>.</li>
+              <li><b>Case 2:</b> <code>item ≠ A[mid]</code> → split the array into two equal parts of size <code>n/2</code>, find the midpoint of the chosen half and compare again. Repeat until found.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Time complexity — best, worst, average</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Case</th><th>Complexity</th><th>When it happens</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Best</b></td><td><b>O(1)</b></td><td>Element found at the middle position in the very first check — only one comparison.</td></tr>
+                  <tr><td><b>Worst</b></td><td><b>O(log n)</b></td><td>Element is at the beginning or end, or not present at all — the array keeps halving until the space is empty. Number of steps ≈ log₂(n).</td></tr>
+                  <tr><td><b>Average</b></td><td><b>O(log n)</b></td><td>Element may be anywhere; since half the elements are eliminated at each step, the average number of comparisons also grows as log₂(n).</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Binary search = halve the space each time → O(log n).</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 3. MERGE SORT ============ -->
+    <details class="branch b3" open>
+      <summary><span class="num">3</span> Merge Sort</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. What is merge sort?</summary>
+          <div class="sub-body">
+            <ul>
+              <li>A <b>Divide and Conquer</b> algorithm that works in 3 steps:
+                <ol>
+                  <li><b>Divide</b> — break the array into two halves.</li>
+                  <li><b>Conquer</b> — sort each half recursively (solve each smaller piece).</li>
+                  <li><b>Merge</b> — join the two sorted halves into one sorted array.</li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Algorithm &amp; merge function</summary>
+          <div class="sub-body">
+            <div class="code"><span class="k">MERGE_SORT</span>(arr, st, end)
+    <span class="k">if</span> st &lt; end <span class="k">then</span>
+        mid = st + (end − st) / 2
+        <span class="k">MERGE_SORT</span>(arr, st, mid)          <span class="c">// sort left half</span>
+        <span class="k">MERGE_SORT</span>(arr, mid + 1, end)      <span class="c">// sort right half</span>
+        <span class="k">MERGE</span>(arr, st, mid, end)           <span class="c">// merge two halves</span>
+    <span class="k">end if</span></div>
+            <div class="code"><span class="k">MERGE</span>(arr, st, mid, end)
+    create empty array temp
+    i = st;  j = mid + 1;  k = st
+
+    <span class="c">// comparison loop</span>
+    <span class="k">while</span> i ≤ mid <span class="k">AND</span> j ≤ end <span class="k">do</span>
+        <span class="k">if</span> arr[i] ≤ arr[j] <span class="k">then</span>
+            temp[k] = arr[i];  i = i + 1
+        <span class="k">else</span>
+            temp[k] = arr[j];  j = j + 1
+        <span class="k">end if</span>;  k++
+    <span class="k">end while</span>
+
+    <span class="c">// leftover left-half loop</span>
+    <span class="k">while</span> i ≤ mid <span class="k">do</span>
+        temp[k] = arr[i];  i = i + 1;  k++
+    <span class="k">end while</span>
+
+    <span class="c">// leftover right-half loop</span>
+    <span class="k">while</span> j ≤ end <span class="k">do</span>
+        temp[k] = arr[j];  j = j + 1;  k++
+    <span class="k">end while</span>
+
+    <span class="c">// copy temp back into original array</span>
+    <span class="k">for</span> k = st <span class="k">to</span> end
+        arr[k] = temp[k]
+    <span class="k">end for</span>
+<span class="k">END MERGE</span></div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Recurrence &amp; complexity</summary>
+          <div class="sub-body">
+            <div class="code">T(n) = 2·T(n/2) + O(n)
+       ↑        ↑
+   2 halves   merging cost
+
+<span class="c">// recursion tree: log n levels × O(n) work per level</span>
+T(n) = O(n log n)</div>
+            <p><b>Why log n levels?</b> Each level halves the array size, so after <code>k</code> levels the size is <code>n/2ᵏ</code>. The leaves are reached when <code>n/2ᵏ = 1</code> → <code>k = log₂n</code>.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Case</th><th>Complexity</th><th>Reason</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Best</b></td><td><b>O(n log n)</b></td><td>Even if the array is already sorted, merge sort still divides and merges.</td></tr>
+                  <tr><td><b>Worst</b></td><td><b>O(n log n)</b></td><td>Even for a reverse-sorted array, the same number of comparisons and merges occur.</td></tr>
+                  <tr><td><b>Average</b></td><td><b>O(n log n)</b></td><td>The number of comparisons and merges does not change significantly across inputs.</td></tr>
+                  <tr><td><b>Space</b></td><td><b>O(n)</b></td><td>Needs extra memory to hold temporary sub-arrays while merging.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Merge sort = <b>O(n log n) in all cases</b>, but pays O(n) extra space.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Merge example — two sorted halves</summary>
+          <div class="sub-body">
+            <div class="diagram">Left half  : [3, 27, 38, 43]
+Right half : [9, 10, 82]
+
+i→3    j→9    compare 3 ≤ 9   → temp[3]
+i→27   j→9    compare 27 > 9  → temp[9]
+i→27   j→10   compare 27 > 10 → temp[10]
+i→27   j→82   compare 27 ≤ 82 → temp[27]
+i→38   j→82   compare 38 ≤ 82 → temp[38]
+i→43   j→82   compare 43 ≤ 82 → temp[43]
+i done → copy remaining 82    → temp[82]
+
+Result: [3, 9, 10, 27, 38, 43, 82]</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 4. QUICK SORT ============ -->
+    <details class="branch b4" open>
+      <summary><span class="num">4</span> Quick Sort</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Core idea &amp; partitioning</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Pick a <b>pivot</b> element (last element, first element, or random).</li>
+              <li><b>Partition</b> the array so that:
+                <ul>
+                  <li>elements <b>smaller</b> than the pivot go to the <b>left</b>,</li>
+                  <li>elements <b>larger</b> than the pivot go to the <b>right</b>.</li>
+                </ul>
+              </li>
+              <li>The pivot is now in its <b>final sorted position</b>.</li>
+              <li>Recursively sort the left and right sub-arrays.</li>
+            </ul>
+            <div class="diagram">Before:  [ 54 78 63 92 45 86 15 28 37 ]   pivot = 37 (last)
+After :  [ 15 28 37 92 45 86 54 78 63 ]   ← notes' trace
+                 ↑ pivot in place at index 2
+
+Correct partition (all left &lt; 37, all right &gt; 37):
+         [ 15 28 37 45 54 63 78 86 92 ]
+                         ↑ pivot fixed, recurse both sides</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Recurrence relations — all cases</summary>
+          <div class="sub-body">
+            <div class="code"><span class="c">// notation from the notes</span>
+n = L + 1 + R        <span class="c">// left + pivot + right</span>
+n = k + 1 + r        <span class="c">// k = size of left part, r = n − k − 1 = size of right</span>
+r = n − k − 1
+
+<span class="c">// WORST CASE — pivot is always the smallest or largest</span>
+T(n) = T(n − 1) + n
+     = T(n − 1) + Θ(n)
+     = Θ(n²)                  <span class="c">// e.g. pivot = first element on sorted input</span>
+
+<span class="c">// BEST CASE — pivot always splits the array in half</span>
+T(n) = 2·T(n/2) + n
+     = Θ(n log n)
+
+<span class="c">// AVERAGE CASE — pivot splits at some position k</span>
+T(n) = T(k) + T(n − k − 1) + n
+
+<span class="c">// assume the split is on average balanced: T(k) ≈ T(n/2)</span>
+T(n) = 2·T(n/2) + n = Θ(n log n)</div>
+          </div>
+        </details>
+
+<details class="sub">
+          <summary>C. Deriving the average case (completed)</summary>
+          <div class="sub-body">
+            <p>If the pivot is equally likely to land in any of the <code>n</code> positions, average over all splits:</p>
+            <div class="code">T(n) = (1/n) · Σ<sub>k=0</sub><sup>n−1</sup> [ T(k) + T(n−1−k) ] + Θ(n)
+     = (2/n) · Σ<sub>k=0</sub><sup>n−1</sup> T(k) + Θ(n)
+
+<span class="c">// solving this recurrence gives:</span>
+T(n) = Θ(n log n)
+
+<span class="c">// expected number of comparisons (Hoare):</span>
+E[C(n)] = 2n·ln n ≈ 1.39 · n log₂n</div>
+            <div class="fix"><span class="tag">✎ Completed</span>
+              The notes state <code>T(n) = T(k) + T(n−k−1) + n</code> and then say "we consider <code>T(k) ≈ T(n/2)</code>". The rigorous step is the <b>averaging over all n equally likely pivot positions</b>, which produces <code>(2/n)·ΣT(k) + Θ(n)</code> and solves to <code>Θ(n log n)</code>.
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Pivot choice &amp; comparison table</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Pivot choice</th><th>Best</th><th>Worst</th><th>Average</th><th>Worst-case trigger</th></tr></thead>
+                <tbody>
+                  <tr><td>First element</td><td>O(n log n)</td><td>O(n²)</td><td>O(n log n)</td><td>Array already sorted ascending</td></tr>
+                  <tr><td>Last element</td><td>O(n log n)</td><td>O(n²)</td><td>O(n log n)</td><td>Array already sorted (same problem)</td></tr>
+                  <tr><td>Middle element</td><td>O(n log n)</td><td>O(n²)</td><td>O(n log n)</td><td>Specially crafted input</td></tr>
+                  <tr><td><b>Random element</b></td><td>O(n log n)</td><td>O(n²) w.h.p. avoided</td><td>O(n log n)</td><td>Extremely unlikely</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: Quick sort worst = <code>T(n−1) + n</code> → O(n²) · best/avg = <code>2T(n/2) + n</code> → O(n log n).</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Quick sort vs Merge sort</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Aspect</th><th>Quick Sort</th><th>Merge Sort</th></tr></thead>
+                <tbody>
+                  <tr><td>Partitioning</td><td>In-place, pivot-based</td><td>Needs temp array</td></tr>
+                  <tr><td>Best case</td><td>O(n log n)</td><td>O(n log n)</td></tr>
+                  <tr><td>Worst case</td><td><b>O(n²)</b></td><td>O(n log n)</td></tr>
+                  <tr><td>Average case</td><td>O(n log n)</td><td>O(n log n)</td></tr>
+                  <tr><td>Space</td><td>O(log n) — recursion stack</td><td>O(n) — temp array</td></tr>
+                  <tr><td>Stable</td><td>No</td><td>Yes</td></tr>
+                  <tr><td>Practical speed</td><td>Faster on average (better constants)</td><td>Consistent but slower constants</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 5. MAJORITY ELEMENT ============ -->
+    <details class="branch b5" open>
+      <summary><span class="num">5</span> Majority Element</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. The problem &amp; four approaches</summary>
+          <div class="sub-body">
+            <p>An element is the <b>majority element</b> if it appears <b>more than n/2 times</b> in an array of size n.</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Approach</th><th>Time</th><th>Space</th><th>Quality</th></tr></thead>
+                <tbody>
+                  <tr><td>Naïve / Brute force</td><td>O(n²)</td><td>O(1)</td><td>Good solution</td></tr>
+                  <tr><td>Sorting</td><td>O(n log n)</td><td>O(1) or O(n)</td><td>Better solution</td></tr>
+                  <tr><td>Divide &amp; Conquer</td><td>O(n log n)</td><td>O(log n)</td><td>Better solution</td></tr>
+                  <tr><td><b>Boyer–Moore Voting</b></td><td><b>O(n)</b></td><td><b>O(1)</b></td><td><b>Optimal solution</b></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Approach 1 — Naïve / brute force</summary>
+          <div class="sub-body">
+            <div class="code"><span class="k">int</span> findMajorityElement(<span class="k">int</span> arr[], <span class="k">int</span> n) {
+    <span class="k">for</span> (<span class="k">int</span> i = 0; i &lt; n; i++) {
+        <span class="k">int</span> count = 0;
+        <span class="c">// count occurrences of arr[i]</span>
+        <span class="k">for</span> (<span class="k">int</span> j = 0; j &lt; n; j++) {
+            <span class="k">if</span> (arr[j] == arr[i]) count++;
+        }
+        <span class="c">// check if it's the majority element</span>
+        <span class="k">if</span> (count &gt; n / 2) <span class="k">return</span> arr[i];
+    }
+    <span class="k">return</span> −1;   <span class="c">// no majority element</span>
+}</div>
+            <p><b>O(n²) time</b> · <b>O(1) space</b></p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Approach 2 — Sorting</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Key insight:</b> if a majority element exists, it must occupy the <b>middle index n/2</b> after sorting.</li>
+            </ul>
+            <div class="code"><span class="k">int</span> findMajorityElement(<span class="k">int</span> arr[], <span class="k">int</span> n) {
+    qsort(arr, n, <span class="k">sizeof</span>(<span class="k">int</span>), compare);   <span class="c">// step 1: sort</span>
+
+    <span class="k">int</span> candidate = arr[n / 2];               <span class="c">// step 2: middle element</span>
+
+    <span class="k">int</span> count = 0;
+    <span class="k">for</span> (<span class="k">int</span> i = 0; i &lt; n; i++) {           <span class="c">// step 3: count</span>
+        <span class="k">if</span> (arr[i] == candidate) count++;
+    }
+
+    <span class="k">if</span> (count &gt; n / 2) <span class="k">return</span> candidate;     <span class="c">// step 4: verify</span>
+    <span class="k">return</span> −1;
+}</div>
+            <p><b>O(n log n) time</b> · space O(1) or O(n) depending on the sort</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Approach 3 — Divide &amp; Conquer</summary>
+          <div class="sub-body">
+            <p><b>Algorithm</b></p>
+            <ul>
+              <li><b>Divide:</b> split the array into two halves.</li>
+              <li><b>Conquer:</b> recursively find the majority element in both halves.</li>
+              <li><b>Combine:</b>
+                <ul>
+                  <li>If both halves return the <b>same</b> element → it is the majority.</li>
+                  <li>Otherwise, <b>count occurrences</b> of both candidates in the entire range and return the one that appears more than N/2 times.</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="code"><span class="k">int</span> findMajorityElementDC(<span class="k">int</span> arr[], <span class="k">int</span> left, <span class="k">int</span> right) {
+    <span class="c">// base case: single element</span>
+    <span class="k">if</span> (left == right) <span class="k">return</span> arr[left];
+
+    <span class="c">// divide</span>
+    <span class="k">int</span> mid = left + (right − left) / 2;
+
+    <span class="c">// conquer</span>
+    <span class="k">int</span> leftMajor  = findMajorityElementDC(arr, left, mid);
+    <span class="k">int</span> rightMajor = findMajorityElementDC(arr, mid + 1, right);
+
+    <span class="c">// combine: same candidate → done</span>
+    <span class="k">if</span> (leftMajor == rightMajor) <span class="k">return</span> leftMajor;
+
+    <span class="c">// otherwise count both in the full range</span>
+    <span class="k">int</span> leftCount  = countOccurrences(arr, left, right, leftMajor);
+    <span class="k">int</span> rightCount = countOccurrences(arr, left, right, rightMajor);
+
+    <span class="k">int</span> size = right − left + 1;
+    <span class="k">if</span> (leftCount  &gt; size / 2) <span class="k">return</span> leftMajor;
+    <span class="k">if</span> (rightCount &gt; size / 2) <span class="k">return</span> rightMajor;
+    <span class="k">return</span> −1;   <span class="c">// no majority element</span>
+}</div>
+            <p><b>Recurrence</b></p>
+            <div class="code">T(n) = 2·T(n/2) + O(n)
+       ↑        ↑
+  2 subproblems  counting occurrences in the range
+
+T(n) = O(n log n)</div>
+            <p><b>O(n log n) time</b> · <b>O(log n) space</b> (recursion stack)</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. D&amp;C worked example — [3, 3, 4, 2, 4, 4, 2, 4, 4]</summary>
+          <div class="sub-body">
+            <p><b>Step 1 — Divide the full array</b></p>
+            <div class="diagram">arr = {3, 3, 4, 2, 4, 4, 2, 4, 4}
+
+Left half  : {3, 3, 4, 2, 4}
+Right half : {4, 2, 4, 4}</div>
+            <p><b>Step 2 — Recursively divide the left half {3, 3, 4, 2, 4}</b></p>
+            <div class="diagram">{3, 3, 4, 2, 4}
+   ├── {3, 3, 4}
+   │      ├── {3} → majority 3
+   │      ├── {3} → majority 3
+   │      └── {4} → majority 4
+   └── {2, 4}
+          ├── {2} → majority 2
+          └── {4} → majority 4</div>
+            <p><b>Combining the left half</b></p>
+            <div class="code">combine {3} and {3}:  leftMajor = 3, rightMajor = 3
+                      → same candidate → majority = 3
+
+combine {3, 3} and {4}:  leftMajor = 3, rightMajor = 4
+                      count 3 → 2 times; count 4 → 1 time
+                      → majority = 3
+
+combine {3, 3, 4} and {2, 4}:  leftMajor = 3, rightMajor = 4
+                      count 3 → 2 times; count 4 → 2 times
+                      neither &gt; 5/2 → no majority in left half</div>
+            <p><b>Step 2 (cont.) — Right half {4, 2, 4, 4}</b></p>
+            <div class="diagram">{4, 2, 4, 4} → 4 is the majority element in this half</div>
+            <p><b>Step 3 — Combine left and right</b></p>
+            <div class="code">Left Major  from {3, 3, 4, 2, 4} : 3
+Right Major from {4, 2, 4, 4}    : 4
+
+Count occurrences in the entire array {3, 3, 4, 2, 4, 4, 2, 4, 4}:
+    3 occurs 2 times
+    4 occurs 5 times
+
+n/2 = 9/2 = 4.5
+5 &gt; 4.5  →  4 is the majority element ✓</div>
+            <div class="fix"><span class="tag">✎ Note</span>
+              The notes say "the majority element in {3,3,4,2,4} is 3", but in the sub-array {3,3,4,2,4} of size 5, 3 appears twice and 4 appears twice — <b>neither is a majority within that half</b>. The algorithm still returns a candidate, and the final combine step correctly identifies 4 using the full-array count. The result is unchanged.
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Approach 4 — Boyer–Moore Voting (optimal)</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Moore's algorithm only gives a <b>potential candidate</b> — you must verify occurrences afterwards.</li>
+              <li><b>Two phases:</b>
+                <ol>
+                  <li><b>Candidate phase</b> — find a candidate in O(n).</li>
+                  <li><b>Verification phase</b> — count the candidate's occurrences; confirm it is &gt; n/2.</li>
+                </ol>
+              </li>
+            </ul>
+            <div class="code"><span class="k">int</span> findMajorityElement(<span class="k">int</span> arr[], <span class="k">int</span> n) {
+    <span class="k">int</span> candidate = −1, count = 0;
+
+    <span class="c">// Phase 1: find a candidate</span>
+    <span class="k">for</span> (<span class="k">int</span> i = 0; i &lt; n; i++) {
+        <span class="k">if</span> (count == 0) {
+            candidate = arr[i];
+            count = 1;
+        } <span class="k">else if</span> (arr[i] == candidate) {
+            count++;
+        } <span class="k">else</span> {
+            count−−;
+        }
+    }
+
+    <span class="c">// Phase 2: verify the candidate</span>
+    count = 0;
+    <span class="k">for</span> (<span class="k">int</span> i = 0; i &lt; n; i++) {
+        <span class="k">if</span> (arr[i] == candidate) count++;
+    }
+
+    <span class="k">if</span> (count &gt; n / 2) <span class="k">return</span> candidate;
+    <span class="k">return</span> −1;
+}</div>
+            <p><b>O(n) time</b> · <b>O(1) space</b></p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>G. Boyer–Moore worked example — [3, 3, 4, 2, 4, 4, 2, 4, 4]</summary>
+          <div class="sub-body">
+            <p><b>First pass — candidate selection</b></p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>i</th><th>arr[i]</th><th>count before</th><th>action</th><th>candidate</th><th>count after</th></tr></thead>
+                <tbody>
+                  <tr><td>0</td><td>3</td><td>0</td><td>set candidate</td><td>3</td><td>1</td></tr>
+                  <tr><td>1</td><td>3</td><td>1</td><td>match → ++</td><td>3</td><td>2</td></tr>
+                  <tr><td>2</td><td>4</td><td>2</td><td>mismatch → −−</td><td>3</td><td>1</td></tr>
+                  <tr><td>3</td><td>2</td><td>1</td><td>mismatch → −−</td><td>3</td><td>0</td></tr>
+                  <tr><td>4</td><td>4</td><td>0</td><td>set candidate</td><td>4</td><td>1</td></tr>
+                  <tr><td>5</td><td>4</td><td>1</td><td>match → ++</td><td>4</td><td>2</td></tr>
+                  <tr><td>6</td><td>2</td><td>2</td><td>mismatch → −−</td><td>4</td><td>1</td></tr>
+                  <tr><td>7</td><td>4</td><td>1</td><td>match → ++</td><td>4</td><td>2</td></tr>
+                  <tr><td>8</td><td>4</td><td>2</td><td>match → ++</td><td>4</td><td>3</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>After the first pass, the potential majority candidate is 4.</b></p>
+            <p><b>Second pass — verification</b></p>
+            <div class="code">Count occurrences of 4 in the array:
+    4 appears 5 times.
+
+Array length n = 9  →  n/2 = 4.5
+5 &gt; 4.5  →  4 is confirmed as the majority element ✓</div>
+            <div class="hook">Memory hook: Boyer–Moore = <b>candidate phase</b> (cancel pairs) + <b>verification phase</b> (count).</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 6. SIMULTANEOUS MAX & MIN ============ -->
+    <details class="branch b6" open>
+      <summary><span class="num">6</span> Simultaneous Max &amp; Min</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. D&amp;C approach</summary>
+          <div class="sub-body">
+            <ul>
+              <li><b>Divide:</b> split the array into two halves.</li>
+              <li><b>Conquer:</b> recursively find the maximum and minimum in each half.</li>
+              <li><b>Combine:</b> compare the results from both halves to get the final maximum and minimum.</li>
+            </ul>
+            <p><b>Key advantage:</b> the max of each group is compared with <b>only the max</b> of the other group, and min with <b>only the min</b> — that is what saves comparisons.</p>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Algorithm</summary>
+          <div class="sub-body">
+            <div class="code"><span class="k">findMinMaxDAC</span>(arr, low, high):
+
+    <span class="c">// Base case 1: only one element</span>
+    <span class="k">if</span> (low == high) {
+        min = arr[low];
+        max = arr[low];
+    }
+
+    <span class="c">// Base case 2: two elements → compare directly</span>
+    <span class="k">if</span> (high == low + 1) {
+        <span class="k">if</span> (arr[low] &lt; arr[high]) {
+            min = arr[low];   max = arr[high];
+        } <span class="k">else</span> {
+            min = arr[high];  max = arr[low];
+        }
+    }
+
+    <span class="c">// Divide: find middle index</span>
+    mid = (low + high) / 2
+
+    <span class="c">// Conquer: recursively find min &amp; max in left and right subarrays</span>
+    left  = findMinMaxDAC(arr, low, mid)
+    right = findMinMaxDAC(arr, mid + 1, high)
+
+    <span class="c">// Combine: merge results</span>
+    <span class="k">if</span> (left.min &lt; right.min)  min = left.min;
+    <span class="k">else</span>                      min = right.min;
+
+    <span class="k">if</span> (left.max &gt; right.max)  max = left.max;
+    <span class="k">else</span>                      max = right.max;</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Recurrence &amp; comparison count</summary>
+          <div class="sub-body">
+            <div class="code">T(n) = 2·T(n/2) + 2
+       ↑        ↑
+  2 halves   2 comparisons to merge min and max
+
+<span class="c">// base cases</span>
+T(1) = 0      <span class="c">// single element: min = max, no comparison</span>
+T(2) = 1      <span class="c">// two elements: one comparison</span>
+
+<span class="c">// solving:</span>
+T(n) = 2·T(n/2) + 2  →  T(n) = (3n/2) − 2 comparisons
+
+T(n) = O(n)          <span class="c">// linear time</span></div>
+            <div class="fix"><span class="tag">✎ Completed</span>
+              The notes state "uses <b>3n/2 − 2 comparisons</b>" and give the answer <b>748</b> for an exercise. Solving <code>3n/2 − 2 = 748</code> gives <code>3n/2 = 750</code> → <b>n = 500</b>. So the exercise was: how many comparisons for n = 500 elements? Answer = 748. ✓
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Linear approach vs D&amp;C approach</summary>
+          <div class="sub-body">
+            <p><b>Linear (naïve) approach</b> — initialise max and min to the first element, then scan:</p>
+            <div class="code">For input 1 2 3 4:
+    max = 1 → compare with 2, 3, 4
+    min = 1 → compare with 2, 3, 4
+
+For input 4 3 2 1:
+    max = 4
+    min = 4 → compare with 3, 2, 1</div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Approach</th><th>Comparisons</th><th>Best</th><th>Worst</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Linear</b></td><td>n−1 (best) to 2(n−1) (worst)</td><td>n−1</td><td>2(n−1)</td></tr>
+                  <tr><td><b>Divide &amp; Conquer</b></td><td>Always <b>3n/2 − 2</b></td><td>3n/2 − 2</td><td>3n/2 − 2</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><b>Why D&amp;C is better:</b> the linear approach can take up to <code>2(n−1)</code> comparisons in the worst case. D&amp;C guarantees <code>3n/2 − 2</code>, which is always fewer for n &gt; 2. It is a consistent improvement, not just an average one.</p>
+            <div class="hook">Memory hook: Max &amp; Min D&amp;C = <b>3n/2 − 2 comparisons</b>, always O(n).</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Worked example — [3, 1, 9, 4, 7, 2]</summary>
+          <div class="sub-body">
+            <div class="diagram">            [3, 1, 9, 4, 7, 2]
+             /              \
+       [3, 1, 9]         [4, 7, 2]
+       /       \          /      \
+    [3]      [1, 9]     [4]    [7, 2]
+     |        /  \       |      /  \
+  min=max=3  1   9    min=max=4  7   2
+             min=1,max=9         min=2,max=7
+       \       /              \      /
+      [3,1,9]: min=1, max=9   [4,7,2]: min=2, max=7
+             \                  /
+        final: min = min(1,2) = 1
+                max = max(9,7) = 9</div>
+            <p><b>Comparison count:</b> <code>3(6)/2 − 2 = 9 − 2 = 7</code> comparisons.</p>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 7. SELECTION PROBLEM / QUICKSELECT ============ -->
+    <details class="branch b7" open>
+      <summary><span class="num">7</span> Selection Problem &amp; QuickSelect</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. The problem &amp; two ways to solve it</summary>
+          <div class="sub-body">
+            <ul>
+              <li>Find the <b>k-th smallest</b> (or k-th largest) element in an <b>unsorted</b> array using Divide and Conquer.</li>
+            </ul>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Approach</th><th>Time</th><th>Notes</th></tr></thead>
+                <tbody>
+                  <tr><td>Sorting + picking k-th element</td><td><b>O(n log n)</b></td><td>Overkill — sorts the whole array</td></tr>
+                  <tr><td><b>QuickSelect</b></td><td><b>O(n)</b> average, O(n²) worst</td><td>Only processes one side of the partition</td></tr>
+                  <tr><td><b>Median of Medians</b></td><td><b>O(n)</b> worst case</td><td>Guarantees a good pivot</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Key insight: we only need <b>one element</b>, not the entire sorted array — so we use QuickSelect.</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. How QuickSelect works</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Choose a pivot</b> (e.g. last element).</li>
+              <li><b>Partition</b> — place elements smaller than the pivot on the left and larger on the right.</li>
+              <li><b>Compare the pivot position</b> with <code>k−1</code> (0-based index of the k-th smallest):
+                <ul>
+                  <li>If <code>pivotIndex == k−1</code> → <b>found</b>, return the pivot.</li>
+                  <li>If <code>pivotIndex &gt; k−1</code> → the answer is in the <b>left</b> sub-array.</li>
+                  <li>If <code>pivotIndex &lt; k−1</code> → the answer is in the <b>right</b> sub-array.</li>
+                </ul>
+              </li>
+              <li>Recurse on the <b>one</b> relevant side only — this is why QuickSelect beats QuickSort.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Worked example 1 — [8, 3, 7, 1, 5], find 3rd smallest</summary>
+          <div class="sub-body">
+            <p><b>Step 1: Choose pivot</b> — take the last element. Pivot = <b>5</b>.</p>
+            <p><b>Step 2: Partition</b> — elements smaller than 5 go left, larger go right.</p>
+            <div class="diagram">Before: [8, 3, 7, 1, 5]
+After : [3, 1, 5, 8, 7]
+         ↑  ↑  ↑  ↑  ↑
+index:   0  1  2  3  4
+
+3, 1 &lt; 5       8, 7 &gt; 5
+Pivot 5 is now at index 2.</div>
+            <p><b>Step 3: Compare pivot position</b></p>
+            <div class="code">We want: k = 3rd smallest
+In 0-based programming: k − 1 = 2
+
+Pivot index = 2
+Since  pivotIndex == k − 1  →  we found the answer
+
+3rd smallest = 5 ✓</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Worked example 2 — pivot is NOT the answer</summary>
+          <div class="sub-body">
+            <p><b>Array:</b> [10, 4, 5, 8, 6, 11, 26] — find the <b>5th smallest</b>.</p>
+            <p><b>Partition with pivot = 6:</b></p>
+            <div class="diagram">[4, 5, 6, 8, 10, 11, 26]
+       ↑
+  pivot index = 2</div>
+            <div class="code">Need : 5th smallest  →  k − 1 = 4
+Pivot index = 2
+
+Since  4 &gt; 2  →  the answer must be on the RIGHT side
+
+Search only: [8, 10, 11, 26]
+No need to process the left side again.
+
+→ This is why QuickSelect is faster than QuickSort.</div>
+            <div class="hook">Memory hook: QuickSelect recurses into <b>one side only</b> → O(n) average instead of O(n log n).</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Practice traces</summary>
+          <div class="sub-body">
+            <p><b>Trace 1 — [7, 10, 4, 3, 20, 15], k = 3</b></p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Step</th><th>Array state</th><th>Pivot</th><th>Pivot index</th><th>k−1</th><th>Action</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>7 10 4 3 20 15</td><td>15</td><td>4</td><td>2</td><td>4 &gt; 2 → search left</td></tr>
+                  <tr><td>2</td><td>7 10 4 3</td><td>3</td><td>0</td><td>2</td><td>0 &lt; 2 → search right</td></tr>
+                  <tr><td>3</td><td>7 10 4</td><td>4</td><td>1</td><td>2</td><td>1 &lt; 2 → search right</td></tr>
+                  <tr><td>4</td><td>7 10</td><td>10</td><td>2</td><td>2</td><td><b>2 == 2 → found</b></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="diagram">Sorted array: 3 4 7 10 15 20  →  3rd smallest = 7 ✓</div>
+            <p><b>Trace 2 — [54, 78, 63, 92, 45, 86, 15, 28, 37], k = 3</b></p>
+            <div class="fix"><span class="tag">✎ Corrected</span>
+              The notes show the partition result as <code>15 28 37 92 45 86 54 78 63</code> with "pivotIndex = k". This is inconsistent: with pivot 54 at index 3 (0-based), <code>k−1 = 2</code>, so <b>pivotIndex ≠ k−1</b> and the search should continue. Also, the right-hand group <code>92 45 86 78 63</code> is not fully partitioned (45 and 63 are smaller than 54 but sit on the right).
+              <br><br>
+              <b>Correct answer:</b> sorted array is <code>15, 28, 37, 45, 54, 63, 78, 86, 92</code> → the <b>3rd smallest = 37</b>. The algorithm would find 37 after recursing into the left part.
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>F. Complexity</summary>
+          <div class="sub-body">
+            <div class="code"><span class="c">// BEST / AVERAGE — pivot splits roughly in half each time</span>
+T(n) = T(n/2) + O(n)
+     = O(n) + O(n/2) + O(n/4) + …
+     = O(n)                          <span class="c">// geometric series</span>
+
+<span class="c">// WORST — pivot is always the smallest or largest</span>
+T(n) = T(n − 1) + O(n)
+     = O(n²)
+
+<span class="c">// SPACE</span>
+O(1) iterative · O(log n) recursion stack (average)</div>
+            <div class="hook">Memory hook: QuickSelect average <b>O(n)</b> · worst <b>O(n²)</b> when the pivot is repeatedly bad.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ 8. MEDIAN OF MEDIANS ============ -->
+    <details class="branch b8" open>
+      <summary><span class="num">8</span> Median of Medians</summary>
+      <div class="branch-body">
+
+        <details class="sub" open>
+          <summary>A. Why we need it</summary>
+          <div class="sub-body">
+            <ul>
+              <li>The Median of Medians algorithm finds the <b>k-th smallest element</b> (Selection Problem) in <b>O(n) worst-case time</b>.</li>
+              <li><b>Why not QuickSelect?</b>
+                <ul>
+                  <li>QuickSelect is usually fast, but if it picks a <b>bad pivot repeatedly</b>, it becomes <b>O(n²)</b>.</li>
+                  <li>Median of Medians <b>guarantees a good pivot</b>, so the worst case becomes O(n).</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>B. Algorithm steps</summary>
+          <div class="sub-body">
+            <ol>
+              <li><b>Divide into groups</b> — split the n elements into groups of <b>5</b> (the last group may be smaller).</li>
+              <li><b>Sort each group</b> — sorting 5 elements takes constant time.</li>
+              <li><b>Find each group's median</b> — the 3rd element of each sorted group.</li>
+              <li><b>Find the median of these medians</b> — recursively call the same algorithm on the list of <code>n/5</code> medians. This is the <b>pivot</b>.</li>
+              <li><b>Partition</b> the original array around this pivot.</li>
+              <li><b>Recurse</b> into one side, exactly like QuickSelect.</li>
+            </ol>
+            <div class="diagram">n elements
+   ↓ split into groups of 5
+[n/5 groups]
+   ↓ sort each group (O(1) each)
+[n/5 medians]
+   ↓ recursively find the median of these medians
+PIVOT  →  guaranteed good split
+   ↓ partition + recurse on one side</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>C. Recurrence &amp; complexity</summary>
+          <div class="sub-body">
+            <div class="code">T(n) = T(n/5)      <span class="c">// recurse on the n/5 medians</span>
+     + T(7n/10)    <span class="c">// recurse on the larger partition side</span>
+     + O(n)        <span class="c">// grouping, sorting groups of 5, partitioning</span>
+
+<span class="c">// why 7n/10? The pivot has at least 3n/10 elements below it</span>
+<span class="c">// and at least 3n/10 elements above it, so at most 7n/10</span>
+<span class="c">// remain on the larger side.</span>
+
+<span class="c">// Since n/5 + 7n/10 = 9n/10 &lt; n, the work forms a</span>
+<span class="c">// decreasing geometric series:</span>
+T(n) = O(n)</div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>D. Why sorting doesn't make it O(n log n)</summary>
+          <div class="sub-body">
+            <div class="fix"><span class="tag">✎ Key exam point</span>
+              <b>Q: Why doesn't Median of Medians take O(n log n) even though sorting is used?</b>
+              <br><br>
+              <b>A:</b> Because it sorts <b>only groups of 5 elements</b>. Sorting a group of 5 takes <b>constant time O(1)</b>. There are <code>n/5</code> groups, so the total sorting cost is <code>(n/5) × O(1) = O(n)</code>.
+              <br><br>
+              There is no global sort — only many tiny local sorts. That is why the overall complexity stays linear.
+            </div>
+          </div>
+        </details>
+
+        <details class="sub">
+          <summary>E. Comparison — all selection algorithms</summary>
+          <div class="sub-body">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Algorithm</th><th>Best</th><th>Average</th><th>Worst</th><th>Space</th></tr></thead>
+                <tbody>
+                  <tr><td>Sort + pick</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td></tr>
+                  <tr><td><b>QuickSelect</b></td><td>O(n)</td><td><b>O(n)</b></td><td>O(n²)</td><td>O(log n)</td></tr>
+                  <tr><td><b>Median of Medians</b></td><td>O(n)</td><td>O(n)</td><td><b>O(n)</b></td><td>O(log n)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="hook">Memory hook: QuickSelect is fast in practice; Median of Medians is <b>guaranteed</b> fast in the worst case.</div>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ============ MASTER SUMMARY ============ -->
+    <details class="branch summary wide" open>
+      <summary><span class="num">★</span> Master Summary — Divide &amp; Conquer at a Glance</summary>
+      <div class="branch-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Concept</th><th>Recurrence</th><th>Complexity</th><th>Key idea</th></tr></thead>
+            <tbody>
+              <tr><td>Divide &amp; Conquer</td><td><code>T(n) = a·T(n/b) + f(n)</code></td><td>Depends on a, b, f(n)</td><td>Divide → Conquer → Combine</td></tr>
+              <tr><td><b>Binary Search</b></td><td><code>T(n) = T(n/2) + 1</code></td><td>Best O(1) · Worst/Avg <b>O(log n)</b></td><td>Halve the search space each step; requires sorted input</td></tr>
+              <tr><td><b>Merge Sort</b></td><td><code>T(n) = 2T(n/2) + O(n)</code></td><td><b>O(n log n)</b> in all cases · space O(n)</td><td>Stable; consistent; needs temp array</td></tr>
+              <tr><td><b>Quick Sort — best</b></td><td><code>T(n) = 2T(n/2) + n</code></td><td>O(n log n)</td><td>Balanced pivot split</td></tr>
+              <tr><td><b>Quick Sort — worst</b></td><td><code>T(n) = T(n−1) + n</code></td><td><b>O(n²)</b></td><td>Pivot always smallest/largest (sorted input)</td></tr>
+              <tr><td><b>Quick Sort — average</b></td><td><code>T(n) = T(k) + T(n−k−1) + n</code></td><td>O(n log n)</td><td><code>≈ (2/n)ΣT(k) + n</code> → O(n log n)</td></tr>
+              <tr><td><b>Majority — naïve</b></td><td>—</td><td>O(n²) time · O(1) space</td><td>Double loop count</td></tr>
+              <tr><td><b>Majority — sorting</b></td><td>—</td><td>O(n log n) time</td><td>Majority sits at index n/2</td></tr>
+              <tr><td><b>Majority — D&amp;C</b></td><td><code>T(n) = 2T(n/2) + O(n)</code></td><td>O(n log n) time · O(log n) space</td><td>Same candidate → done; else count both</td></tr>
+              <tr><td><b>Majority — Boyer–Moore</b></td><td>—</td><td><b>O(n)</b> time · <b>O(1)</b> space</td><td>Candidate phase + verification phase</td></tr>
+              <tr><td><b>Max &amp; Min D&amp;C</b></td><td><code>T(n) = 2T(n/2) + 2</code></td><td><b>O(n)</b> · <b>3n/2 − 2</b> comparisons</td><td>Compare max↔max and min↔min</td></tr>
+              <tr><td><b>Max &amp; Min linear</b></td><td>—</td><td>O(n) · n−1 to 2(n−1) comparisons</td><td>Worse than D&amp;C in the worst case</td></tr>
+              <tr><td><b>QuickSelect</b></td><td><code>T(n) = T(n/2) + O(n)</code></td><td>Average <b>O(n)</b> · Worst O(n²)</td><td>Recurse into one side only</td></tr>
+              <tr><td><b>Median of Medians</b></td><td><code>T(n) = T(n/5) + T(7n/10) + O(n)</code></td><td><b>O(n)</b> worst case</td><td>Guaranteed good pivot; sorts only groups of 5</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============ MEMORY HOOKS ============ -->
+    <details class="branch hooks wide" open>
+      <summary><span class="num">🎯</span> Key Memory Hooks</summary>
+      <div class="branch-body">
+        <div class="hook-grid">
+          <div class="hook">D&amp;C = Divide → Conquer → Combine (uses recursion)</div>
+          <div class="hook">General recurrence: <code>T(n) = a·T(n/b) + f(n)</code></div>
+          <div class="hook">Binary search: <code>T(n) = T(n/2) + 1</code> → <b>O(log n)</b> · best O(1)</div>
+          <div class="hook">Binary search only works on <b>sorted</b> arrays</div>
+          <div class="hook">Safe mid: <code>mid = low + (high − low)/2</code> avoids overflow</div>
+          <div class="hook">Merge sort: <code>T(n) = 2T(n/2) + O(n)</code> → <b>O(n log n)</b> all cases · space O(n)</div>
+          <div class="hook">Merge sort = log n levels × O(n) merge per level</div>
+          <div class="hook">Quick sort worst: <code>T(n) = T(n−1) + n</code> → <b>O(n²)</b></div>
+          <div class="hook">Quick sort best: <code>T(n) = 2T(n/2) + n</code> → O(n log n)</div>
+          <div class="hook">Quick sort average: <code>T(n) = T(k) + T(n−k−1) + n</code> → O(n log n)</div>
+          <div class="hook">Quick sort has better constants but unstable; merge sort is stable but needs O(n) space</div>
+          <div class="hook">Majority element = appears &gt; n/2 times</div>
+          <div class="hook">Majority four ways: naïve O(n²) → sort O(n log n) → D&amp;C O(n log n) → <b>Boyer–Moore O(n)</b></div>
+          <div class="hook">Boyer–Moore: candidate phase (cancel) + verification phase (count)</div>
+          <div class="hook">Max &amp; Min D&amp;C: <code>T(n) = 2T(n/2) + 2</code> → <b>3n/2 − 2 comparisons</b></div>
+          <div class="hook">3n/2 − 2 = 748 → n = 500</div>
+          <div class="hook">QuickSelect: recurse into <b>one side only</b> → average O(n)</div>
+          <div class="hook">QuickSelect compares <code>pivotIndex</code> with <code>k−1</code> (0-based)</div>
+          <div class="hook">QuickSelect worst O(n²) when the pivot is repeatedly bad</div>
+          <div class="hook">Median of Medians: <code>T(n) = T(n/5) + T(7n/10) + O(n)</code> → <b>O(n) worst</b></div>
+          <div class="hook">Median of Medians sorts only groups of 5 → O(1) per group → total O(n)</div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <p class="no-results" id="noResults">No matching topics. Try another search term.</p>
+  <div class="foot">Single-file offline mindmap · Expand/collapse each branch · Search highlights matching topics · Print to PDF for a study copy</div>
+</main>
+
+<script>
+const allDetails = [...document.querySelectorAll('details')];
+
+function expandAll(open){ allDetails.forEach(d => d.open = open); }
+
+function resetView(){
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.hidden').forEach(e => e.classList.remove('hidden'));
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+  expandAll(true);
+  document.getElementById('noResults').style.display = 'none';
+}
+
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const q = search.value.trim().toLowerCase();
+  document.querySelectorAll('.hit').forEach(e => e.classList.remove('hit'));
+
+  if (!q){
+    document.querySelectorAll('.branch,.sub').forEach(e => e.classList.remove('hidden'));
+    document.getElementById('noResults').style.display = 'none';
+    return;
+  }
+
+  let count = 0;
+
+  document.querySelectorAll('.branch').forEach(branch => {
+    const branchMatch = branch.innerText.toLowerCase().includes(q);
+    const subMatches = [...branch.querySelectorAll('.sub')]
+      .filter(s => s.innerText.toLowerCase().includes(q));
+
+    if (branchMatch || subMatches.length){
+      branch.classList.remove('hidden');
+      branch.open = true;
+
+      subMatches.forEach(s => {
+        s.classList.remove('hidden');
+        s.open = true;
+        s.classList.add('hit');
+        count++;
+      });
+
+      branch.querySelectorAll('.sub').forEach(s => {
+        if (!subMatches.includes(s)) s.classList.add('hidden');
+      });
+
+      if (!subMatches.length){
+        branch.classList.add('hit');
+        count++;
+      }
+    } else {
+      branch.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('noResults').style.display = count ? 'none' : 'block';
+});
+</script>
+</body>
+</html>
