@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Portal | Cloud Computing & DAA</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --card-hover-border: #60a5fa;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --cc-color: #38bdf8;
+      --cc-glow: rgba(56, 189, 248, 0.15);
+      --daa-color: #a855f7;
+      --daa-glow: rgba(168, 85, 247, 0.15);
+      --ml-color: #34d399;
+      --ml-glow: rgba(52, 211, 153, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+      background: radial-gradient(circle at top, #1e293b 0%, #0f172a 70%);
+      border-bottom: 1px solid #1e293b;
+    }
+
+    header h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.4rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #1e293b;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+    }
+
+    .badge-cc {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--cc-color);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+
+    .badge-daa {
+      background: rgba(168, 85, 247, 0.2);
+      color: var(--daa-color);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+    }
+
+    .badge-ml {
+      background: rgba(52, 211, 153, 0.2);
+      color: var(--ml-color);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      transition: height 0.2s ease;
+    }
+
+    .card-cc::before {
+      background: var(--cc-color);
+    }
+
+    .card-daa::before {
+      background: var(--daa-color);
+    }
+
+    .card-ml::before {
+      background: var(--ml-color);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-cc:hover {
+      border-color: var(--cc-color);
+      background: linear-gradient(180deg, var(--card-bg) 0%, var(--cc-glow) 100%);
+    }
+
+    .card-daa:hover {
+      border-color: var(--daa-color);
+      background: linear-gradient(180deg, var(--card-bg) 0%, var(--daa-glow) 100%);
+    }
+
+    .card-ml:hover {
+      border-color: var(--ml-color);
+      background: linear-gradient(180deg, var(--card-bg) 0%, var(--ml-glow) 100%);
+    }
+
+    .card-unit {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+    }
+
+    .card-link-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-top: auto;
+    }
+
+    .card-cc .card-link-text {
+      color: var(--cc-color);
+    }
+
+    .card-daa .card-link-text {
+      color: var(--daa-color);
+    }
+
+    .card-ml .card-link-text {
+      color: var(--ml-color);
+    }
+
+    .card:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .arrow {
+      transition: transform 0.2s ease;
+      display: inline-block;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid #1e293b;
+      background-color: #0b1120;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Learning Resource Portal</h1>
+    <p>Select any unit below to access the study mindmaps and materials.</p>
+  </header>
+
+  <main>
+    <!-- Cloud Computing Section -->
+    <section>
+      <div class="section-title">
+        <span>☁️ Cloud Computing (CC)</span>
+        <span class="badge badge-cc">6 Units</span>
+      </div>
+      <div class="grid">
+        <a href="Cloud/Unit1.html" class="card card-cc">
+          <div>
+            <div class="card-unit">Unit 1</div>
+            <div class="card-title">Cloud Introduction & Fundamentals</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+
+        <a href="Cloud/Unit2.html" class="card card-cc">
+          <div>
+            <div class="card-unit">Unit 2</div>
+            <div class="card-title">Virtualization</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+
+        <a href="Cloud/Unit3.html" class="card card-cc">
+          <div>
+            <div class="card-unit">Unit 3</div>
+            <div class="card-title">Cloud Services & Architecture</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+
+        <a href="Cloud/Unit4.html" class="card card-cc">
+          <div>
+            <div class="card-unit">Unit 4</div>
+            <div class="card-title">Cloud Storage</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+
+        <a href="Cloud/Unit5.html" class="card card-cc">
+          <div>
+            <div class="card-unit">Unit 5</div>
+            <div class="card-title">Service Management</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+
+        <a href="Cloud/Unit6.html" class="card card-cc">
+          <div>
+            <div class="card-unit">Unit 6</div>
+            <div class="card-title">Cloud Network & Security</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- DAA Section -->
+    <section>
+      <div class="section-title">
+        <span>🧩 Design & Analysis of Algorithms (DAA)</span>
+        <span class="badge badge-daa">6 Units</span>
+      </div>
+      <div class="grid">
+        <a href="DAA/Unit1.html" class="card card-daa">
+          <div>
+            <div class="card-unit">Unit 1</div>
+            <div class="card-title">Introduction & Analysis</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+
+        <a href="DAA/Unit2.html" class="card card-daa">
+          <div>
+            <div class="card-unit">Unit 2</div>
+            <div class="card-title">Divide & Conquer</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+
+        <a href="DAA/Unit3.html" class="card card-daa">
+          <div>
+            <div class="card-unit">Unit 3</div>
+            <div class="card-title">Greedy Strategy</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+
+        <a href="DAA/Unit4.html" class="card card-daa">
+          <div>
+            <div class="card-unit">Unit 4</div>
+            <div class="card-title">Dynamic Programming</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+
+        <a href="DAA/Unit5.html" class="card card-daa">
+          <div>
+            <div class="card-unit">Unit 5</div>
+            <div class="card-title">Backtracking</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+
+        <a href="DAA/Unit6.html" class="card card-daa">
+          <div>
+            <div class="card-unit">Unit 6</div>
+            <div class="card-title">Exam Review & Problems</div>
+          </div>
+          <div class="card-link-text">Open Mindmap <span class="arrow">&rarr;</span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Additional Materials (ML) -->
+    <section>
+      <div class="section-title">
+        <span>📚 Machine Learning (ML) Resources</span>
+        <span class="badge badge-ml">PDFs</span>
+      </div>
+      <div class="grid">
+        <a href="ML/Unit 1 Numericals ML_Practice_Question_Bank.pdf" target="_blank" class="card card-ml">
+          <div>
+            <div class="card-unit">Numericals</div>
+            <div class="card-title">Unit 1 Numericals Practice Bank</div>
+          </div>
+          <div class="card-link-text">View PDF <span class="arrow">&rarr;</span></div>
+        </a>
+
+        <a href="ML/Unit 2 to 6 numerical Problems.pdf" target="_blank" class="card card-ml">
+          <div>
+            <div class="card-unit">Numericals</div>
+            <div class="card-title">Unit 2 to 6 Numerical Problems</div>
+          </div>
+          <div class="card-link-text">View PDF <span class="arrow">&rarr;</span></div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Ready for deployment &bull; Static Site
+  </footer>
+
+</body>
+</html>
